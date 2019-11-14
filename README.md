@@ -11,7 +11,7 @@
 - Decide on 1-loop inputs for validating linear bias model.
 - Decide on models for bias evolution within a lens bin for validation of all bias models.
 - Decide on two sets of scale cuts. 4,4 and 8,8 until there's some compelling reason to use something else?
-- Given the above, set up necessary ini files and run simulated likelihood chains for lcdm and wcdm
+- Given the above, set up necessary ini files (coordinating with 3x2pt methods) and run simulated likelihood chains for lcdm and wcdm
 
 # 4. Section 4.2
 - Set up Buzzard ini files.
