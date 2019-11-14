@@ -1,0 +1,278 @@
+% mnras_template.tex 
+%
+% LaTeX template for creating an MNRAS paper
+%
+% v3.0 released 14 May 2015
+% (version numbers match those of mnras.cls)
+%
+% Copyright (C) Royal Astronomical Society 2015
+% Authors:
+% Keith T. Smith (Royal Astronomical Society)
+
+% Change log
+%
+% v3.0 May 2015
+%    Renamed to match the new package name
+%    Version number matches mnras.cls
+%    A few minor tweaks to wording
+% v1.0 September 2013
+%    Beta testing only - never publicly released
+%    First version: a simple (ish) template for creating an MNRAS paper
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Basic setup. Most papers should leave these options alone.
+\documentclass[fleqn,usenatbib]{mnras}
+
+% MNRAS is set in Times font. If you don't have this installed (most LaTeX
+% installations will be fine) or prefer the old Computer Modern fonts, comment
+% out the following line
+\usepackage{newtxtext,newtxmath}
+% Depending on your LaTeX fonts installation, you might get better results with one of these:
+%\usepackage{mathptmx}
+%\usepackage{txfonts}
+
+% Use vector fonts, so it zooms properly in on-screen viewing software
+% Don't change these lines unless you know what you are doing
+\usepackage[T1]{fontenc}
+\usepackage{ae,aecompl}
+
+
+
+
+%%%%% AUTHORS - PLACE YOUR OWN PACKAGES HERE %%%%%
+
+% Only include extra packages if you really need them. Common packages are:
+\usepackage{graphicx}	% Including figure files
+\usepackage{amsmath}	% Advanced maths commands
+\usepackage{amssymb}	% Extra maths symbols
+\usepackage{siunitx} %v. useful units package 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%% AUTHORS - PLACE YOUR OWN COMMANDS HERE %%%%%
+
+% Please keep new commands to a minimum, and use \newcommand not \def to avoid
+% overwriting existing commands. Example:
+%\newcommand{\pcm}{\,cm$^{-2}$}	% per cm-squared
+\newcommand{\xip}{\ensuremath{\xi_{+}}}
+\newcommand{\xim}{\ensuremath{\xi_{-}}}
+\newcommand{\xipm}{\ensuremath{\xi_{\pm}}}
+\newcommand{\gammat}{\ensuremath{\gamma_{t}(\theta)}}
+\newcommand{\wtheta}{\ensuremath{w(\theta)}}
+\newcommand{\dsigr}{\ensuremath{\Delta\Sigma(R)}}
+\newcommand{\dsigobsr}{\ensuremath{\Delta\Sigma^{\mathrm{obs}}(R)}}
+\newcommand{\dsigmodr}{\ensuremath{\Delta\Sigma^{\mathrm{model}}(R)}}
+
+\newcommand{\pgg}{\ensuremath{P_{\mathrm{gg}}}}
+\newcommand{\pgm}{\ensuremath{P_{\mathrm{gm}}}}
+\newcommand{\xigg}{\ensuremath{\xi_{\mathrm{gg}}}}
+\newcommand{\xigm}{\ensuremath{\xi_{\mathrm{gm}}}}
+
+%units
+\DeclareSIUnit \megaparsec {Mpc}
+\DeclareSIUnit \h {\mbox{$h$}}
+
+%cosmo parameters
+\newcommand{\om}{\ensuremath{\Omega_{\mathrm m}}}
+\newcommand{\ol}{\Omega_{\mathrm \Lambda}}
+\newcommand{\omb}{\Omega_{\mathrm b}}
+\newcommand{\sig}{\ensuremath{\sigma_8}}
+\newcommand{\lcdm}{$\Lambda$CDM}
+\newcommand{\wcdm}{$w$CDM}
+\newcommand{\ns}{n_s}
+\newcommand{\w}{w_0}
+\newcommand{\wa}{w_a}
+
+% eqn and figures
+\newcommand\eqn[1]{equation~\ref{#1}}
+\newcommand\eqnb[2]{equations~\ref{#1}~\& \ref{#2}}
+\newcommand\eqnc[2]{equations~\ref{#1}--\ref{#2}}
+\newcommand\Eqn[1]{Equation~\ref{#1}}   % If you need to start a sentence with this...
+\newcommand\Eqnb[2]{Equations~\ref{#1}~\& \ref{#2}}
+
+% Likewise for figures and tables
+\newcommand\fig[1]{Figure~\ref{#1}}
+\newcommand\figb[2]{Figures~\ref{#1}~\& \ref{#2}}
+\newcommand\chap[1]{Chapter~\ref{#1}}
+\newcommand\sect[1]{Section~\ref{#1}}
+\newcommand\tab[1]{Table~\ref{#1}}
+\newcommand\app[1]{Appendix~\ref{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%% TITLE PAGE %%%%%%%%%%%%%%%%%%%
+
+% Title of the paper, and the short title which is used in the headers.
+% Keep the title short and informative.
+\title[Short title, max. 45 characters]{DES Y3 results: Constraints on cosmological parameters and galaxy bias models from galaxy clustering and galaxy-galaxy lensing}
+
+% The list of authors, and the short list which is used in the headers.
+% If you need two or more lines of authors, add an extra line using \newauthor
+\author[DES et al.]{
+DES
+}
+
+% These dates will be filled out by the publisher
+\date{Accepted XXX. Received YYY; in original form ZZZ}
+
+% Enter the current year, for the copyright statements etc.
+\pubyear{2015}
+
+% Don't change these lines
+\begin{document}
+\label{firstpage}
+\pagerange{\pageref{firstpage}--\pageref{lastpage}}
+\maketitle
+
+% Abstract of the paper
+\begin{abstract}
+We present cosmological constraints from the combination of galaxy clustering and galaxy-galaxy lensing measurements from the DES Y3 data. We describe our modeling framework and choice of scales, validating their robustness to small-scale theoretical uncertainties by analysing simulated data. We implement nonlinear bias models that include parameterizations based on Lagrangian perturbation theory. We present cosmological constraints when using various (coupled) choices of scale cuts and bias models and demonstrate stability of the constraints. We reproduce the baseline choices of the 3x2 cosmology paper, and consider additional choices that make use of small scale information.  Combining with external datasets including Planck, we show constraints on w, as well as higher order galaxy bias parameters
+\end{abstract}
+
+% Select between one and six entries from the list of approved keywords.
+% Don't make up new ones.
+\begin{keywords}
+keyword1 -- keyword2 -- keyword3
+\end{keywords}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%% BODY OF PAPER %%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+
+\begin{itemize}
+    \item LSS can tell us about dark energy.
+    \item Galaxy clustering and galaxy-galaxy lensing is a good combo for probing LSS.
+    \item Modeling galaxy bias is the main theoretical challenge for this.
+\end{itemize}
+
+\section{Statistics and theory}
+
+\subsection{Two-point statistics}
+
+\begin{itemize}
+    \item Describe the statistics we use, \wtheta\ and \gammat.
+    \item Show their relation to the underlying 3d correlation functions $\xigg(r)$ and $\xigm(r)$
+\end{itemize}
+
+\subsection{P(k) predictions}
+\begin{itemize}
+    \item Heavily referencing Shivam's paper, describe range of perturbation theory models for $\xigg(r)$ and $\xigm(r)$ and their expected scales of applicability. 
+    \item To aid discussion, include some plots showing the sensitivity of our statistics to scales in $\xigg(r)$ and $\xigm(r)$.
+\end{itemize}
+
+\subsection{The rest of the model}
+Describe the rest of the modelling framework:
+\begin{itemize}
+    \item IAs (NLA)
+    \item Magnification
+    \item RSD
+    \item Point-mass marginalization
+    \item Shear-ratio information
+    \item projection of $P(k)$s to $C_l$ and conversion of $C_l$s to $w(\theta),\gamma_t(\theta)$.
+\end{itemize}
+
+\section{The datavector}
+We describe the Y3 2x2pt datavector (and it's input data).
+
+\section{Validation of parameter inference}
+
+\subsection{Models, scale cuts, priors and external datasets}
+We describe the models, scale cuts, priors and external datasets we'll use.
+
+\subsubsection{DES 2x2pt models + priors}
+For DES 2x2pt, we test 3 different galaxy bias model + prior choices:
+\begin{enumerate}
+    \item Linear bias
+    \item 1-loop with a free $-5<b_2<5$ for each lens bin, and $b_s, b_{3nl}$ fixed to co-evolution Lagrangian values.
+    \item Free $-5<b_2<5, -5<b_s<5, -5<b_{3nl}<5$ ($b_k$?).
+\end{enumerate}
+
+\subsubsection{Scale cuts}
+Motivated by Shivam's bias modelling paper, we choose 2 or 3 sets of scale cuts.
+
+\subsection{Cosmological models, external datasets and priors}
+We test the following cosmological model and prior combinations
+\begin{enumerate}
+    \item Flat \lcdm\ with uninformative priors
+    \item Flat \lcdm\ with informative priors on some combination of $\Omega_m$, $H_0$ and $n_s$ TBD.
+    \item Flat \wcdm 
+    \item Flat \wcdm\ with Planck.
+\end{enumerate}
+
+\subsection{Simulated Likelihood tests}
+
+We perform simulated likelihood tests to reveal which of our analysis choice combinations (i.e. scale cuts + bias model + priors + external dataset + cosmological model) return unbiased cosmological parameters.
+
+\subsection{Results on simulations}
+
+For those analysis choice combos passing the simulated likelihood tests, we validate on the suite of Y3 buzzard simuulations. Select analysis choice combinations that return unbiased cosmological parameters to run on the data. 
+
+\subsubsection{DES-only \lcdm}
+
+In \fig{fig:bcc_des_lcdm} we show the constraints on $\Omega_m$ and $S_8$ from the mean (over all N realizations) Buzzard 2x2pt measurements, with cosmological parameter priors set I (i.e. wide, ~uninformative priors) in the top panels, and set II in the bottom panels. We show constraints with two sets of scale cuts: 4,4 (left panels) and 8,8 (right panels). In each panel we show constraints for all galaxy bias models (i)-(iv). Comment on which of the options give unbiased cosmology. 
+
+In \fig{fig:bcc_des_wcdm} we show the constraints on $\Omega_m$ and $w$ from the Buzzard 2x2pt measurements, and also simualted Planck CMB data (simulated at the Buzzard cosmology). We use only cosmological prior set I here (but now with free $w$). Again the left panels 
+
+
+Also validate bias modelling choices at fixed cosmology?
+
+
+\section{Results}
+
+\subsection{DES-only constraints}
+
+Compare DES-only constraints for the three or four analysis variations. Hopefully they agree. Compare performance of different models and present fiducial constraint.
+
+\subsection{Consistency with external datasets}
+
+\subsection{DES+external constraints}
+
+Cosmology and galaxy bias constraints from DES+external. Again compare performance of different analysis choices.
+
+\section*{Acknowledgements}
+
+The Acknowledgements section is not numbered. Here you can thank helpful
+colleagues, acknowledge funding agencies, telescopes and facilities used etc.
+Try to keep it short.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%% REFERENCES %%%%%%%%%%%%%%%%%%
+
+% The best way to enter references is to use BibTeX:
+
+%\bibliographystyle{mnras}
+%\bibliography{example} % if your bibtex file is called example.bib
+
+
+% Alternatively you could enter them by hand, like this:
+% This method is tedious and prone to error if you have lots of references
+\begin{thebibliography}{99}
+\bibitem[\protect\citeauthoryear{Author}{2012}]{Author2012}
+Author A.~N., 2013, Journal of Improbable Astronomy, 1, 1
+\bibitem[\protect\citeauthoryear{Others}{2013}]{Others2013}
+Others S., 2012, Journal of Interesting Stuff, 17, 198
+\end{thebibliography}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%% APPENDICES %%%%%%%%%%%%%%%%%%%%%
+
+\appendix
+
+\section{Some extra material}
+
+If you want to present additional material which would interrupt the flow of the main paper,
+it can be placed in an Appendix which appears after the list of references.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Don't change these lines
+\bsp	% typesetting comment
+\label{lastpage}
+\end{document}
+
+% End of mnras_template.tex
