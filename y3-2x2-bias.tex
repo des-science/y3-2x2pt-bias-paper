@@ -57,8 +57,8 @@
 \newcommand{\xip}{\ensuremath{\xi_{+}}}
 \newcommand{\xim}{\ensuremath{\xi_{-}}}
 \newcommand{\xipm}{\ensuremath{\xi_{\pm}}}
-\newcommand{\gammat}{\ensuremath{\gamma_{t}(\theta)}}
-\newcommand{\wtheta}{\ensuremath{w(\theta)}}
+\newcommand{\gammat}{\ensuremath{\gamma_{t}(\theta)} }
+\newcommand{\wtheta}{\ensuremath{w(\theta)} }
 \newcommand{\dsigr}{\ensuremath{\Delta\Sigma(R)}}
 \newcommand{\dsigobsr}{\ensuremath{\Delta\Sigma^{\mathrm{obs}}(R)}}
 \newcommand{\dsigmodr}{\ensuremath{\Delta\Sigma^{\mathrm{model}}(R)}}
@@ -67,6 +67,9 @@
 \newcommand{\pgm}{\ensuremath{P_{\mathrm{gm}}}}
 \newcommand{\xigg}{\ensuremath{\xi_{\mathrm{gg}}}}
 \newcommand{\xigm}{\ensuremath{\xi_{\mathrm{gm}}}}
+
+
+
 
 %units
 \DeclareSIUnit \megaparsec {Mpc}
@@ -103,6 +106,7 @@
 \newcommand{\buzzard}{\texttt{Buzzard}\,}
 
 \newcommand{\SP}[1]{{\color{brown}[SP: #1]}}
+\newcommand{\brown}[1]{\textcolor{brown}{#1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -164,22 +168,15 @@ keyword1 -- keyword2 -- keyword3
 
 \brown{Using the catalog of the positions of foreground lens galaxies and the catalog of shape and positions of background source galaxies, one can construct three two point summary statistics. The two point auto-correlation of the positions of lens galaxies (galaxy clustering), auto-correlation of the lensing shear estimated from shape of background source galaxies (cosmic shear) and  cross-correlation of this lensing shear field and position of lens galaxies (galaxy-galaxy lensing). 
 
-For the galaxy clustering we use the $w(\theta)$ statistic which quantifies the average excess number of galaxy pairs at a separation $\theta$ over a random distribution. For galaxy-galaxy lensing, we use the statistic of $\gamma_{\rm t}(\theta)$ that describes the average tangential component of the shear with respect to the lens-source separation direction. For cosmic shear, which is a spin-2 field, we use the statistic of $\xi_{+}$ and $\xi_{-}$. 
-
-
-
-
-}
+For the galaxy clustering we use the $w(\theta)$ statistic which quantifies the average excess number of galaxy pairs at a separation $\theta$ over a random distribution. For galaxy-galaxy lensing, we use the statistic of $\gamma_{\rm t}(\theta)$ that describes the average tangential component of the shear with respect to the lens-source separation direction. For cosmic shear, which is a spin-2 field, we use the statistic of $\xi_{+}$ and $\xi_{-}$. }
 
 
 \subsection{P(k) predictions}
 \begin{itemize}
-    \item Heavily referencing Shivam's paper, describe range of perturbation theory models for $\xigg(r)$ and $\xigm(r)$ and their expected scales of applicability. 
+    \item Heavily referencing the 3D bias paper, describe range of perturbation theory models for $\xigg(r)$ and $\xigm(r)$ and their expected scales of applicability. 
     \item To aid discussion, include some plots showing the sensitivity of our statistics to scales in $\xigg(r)$ and $\xigm(r)$.
     
-    \brown{As we saw in the previous section, the statistics of our main interest here $w(\theta)$ and $\gammat$ is related to the underlying 3D correlation functions \xigg and \xigm respectively. 
-    
-    }
+    \brown{As we saw in the previous section, the statistics of our main interest here $w(\theta)$ and $\gammat$ is related to the underlying 3D correlation functions \xigg and \xigm respectively. }
     
 \end{itemize}
 
@@ -224,11 +221,7 @@ Describe the rest of the modelling framework:
     Here $B_i$ is the PM for lens bin $i$, $n_{{\rm l},i}$ is the redshift distribution of lenses for tomographic bin $i$, $n_{{\rm s},j}$ is the redshift distribution of sources for tomographic bin $j$ and $chi(z_{\rm l})$ is the comoving distance to lens redshift $z_{\rm l}$. We find that for tomographic bins of our lens sample, we can make the approximation that PM evolves slowly with redshift and hence take $B_i$ out of the double integral in Eq.~\ref{eq:pm_Cij}. Therefore, in our fiducial analysis, we treat the parameters $B_i$ as a constant to marginalize over for any lens bin $i$ and is independent of the redshift distribution of sources. 
     }
     
-    \begin{figure}
-    \includegraphics[width=\columnwidth]{figs/compare_cosmo_pm_marg_2x2pt_3x2pt_fullspace.pdf}
-    \caption[]{Effect of point mass marginalization on the constraining power of 2x2pt and 3x2pt. We see that the constraining power of 2x2pt degrades significantly with point mass marginalization, while for 3x2pt the change is minimal. Including the shear-shear correlation information breaks the degeneracy between point-mass (we show PM for third bin, $M_{\rm halo}[3]$) and $S_8$, leading to smaller sensitivity of cosmology constraints on point mass constraints. }
-    \label{fig:pm_effect}
-    \end{figure}
+
 \begin{itemize}
     \item Shear-ratio information
     \brown{As we are using }
@@ -245,6 +238,16 @@ Describe the rest of the modelling framework:
 \section{The datavector}
 We describe the Y3 2x2pt datavector (and it's input data).
 
+The n(z)'s are comapred in the Fig.~\ref{fig:nz_comp}.
+
+\begin{figure}
+\includegraphics[width=0.5\textwidth,draft]{figs/temp.png}
+\caption[]{Comparison of n(z)'s of sources and lenses in the data and in the \buzzard/\mice simulation. }
+\label{fig:nz_comp}
+\end{figure}
+
+The datavectors, along with the best-fit theory models, for both the simulations and DES data are shown in the Appendix~\ref{app:2x2pt_measure}. 
+
 \section{Validation of parameter inference}
 
 \subsection{Models, scale cuts, priors and external datasets}
@@ -259,7 +262,7 @@ For DES 2x2pt, we test 3 different galaxy bias model + prior choices:
 \end{enumerate}
 
 \subsubsection{Scale cuts}
-Motivated by Shivam's bias modelling paper, we choose 2 or 3 sets of scale cuts.
+Motivated by the 3D bias modelling paper, we choose 2 or 3 sets of scale cuts.
 
 \subsection{Cosmological models, external datasets and priors}
 We test the following cosmological model and prior combinations
@@ -270,11 +273,14 @@ We test the following cosmological model and prior combinations
     \item Flat \wcdm\ with Planck.
 \end{enumerate}
 
-\subsection{Simulated Likelihood tests}
+
+
+\subsection{Simulated Likelihood tests}\label{sec:simlike_analysis}
+
 
 We perform simulated likelihood tests to reveal which of our analysis choice combinations (i.e. scale cuts + bias model + priors + external dataset + cosmological model) return unbiased cosmological parameters.
 
-\brown{In this section we analyze linear bias model using a simulated datavector having contamination from higher order non-linearities. We simulate a datavector which receives contribution from non-linear bias and baryonic physics. For non-linear bias, we use the bestfit $b_1$ and $b_2$, as esitmated from 3D analysis of \mice simulation.  }
+\brown{Our baseline case assumes linear galaxy biasing and no baryon impact on the matter-matter autopower spectrum. The linear bias values that we use for the five lens bins are $b_1 = 1.7, 1.7, 1.7, 2.0$ and  $2.0$  respectively. We compare the cosmology constraints from the baseline datavector with a simulated datavector having contamination from higher order non-linearities. The contaminated datavector receives contribution from non-linear bias and baryonic physics. For non-linear bias we use the Model-X with non-zero $b_2, b_s$ and $b_{\rm 3nl}$ terms. The value of $b_2$ used in the contaminated datavector is given by the $b_1-b_2$ relation extracted from 3D tests in \mice simulations (see Fig.X of 3D draft) at above mentioned $b_1$ for each tomographic bin. We also fix the bias parameters $b_s$ and $b_{\rm 3nl}$ to their co-evolution values. For capturing the impact of baryons on the matter-matter power spectra, we use the feedback model of OWLS-AGN.  }
 
 \SP{\begin{itemize}
     \item \textbf{\textit{Figure}} Linear bias recovering unbiased cosmology (for $\Lambda$CDM) at Scale Cut (X,Y) Mpc/$h$. Show contours also for one scale cut smaller and one scale cut bigger than this. 
@@ -283,24 +289,34 @@ We perform simulated likelihood tests to reveal which of our analysis choice com
 \end{itemize}
 }
 
+
+
+
 \begin{figure*}
-\includegraphics[width=\columnwidth]{figs/compare_cosmo_lcdm_8_8-6-4_simple.pdf}
-\includegraphics[width=\columnwidth]{figs/compare_cosmo_wcdm_8_8-6-4_simple.pdf}
-\caption[]{\lcdm\ Simulated likelihood analysis when analyzing a datavector contaminated with non-linear bias + baryons and analyzed with linear bias + halofit as model. We see that we get unbiased cosmology with a scale cut of (8,6)Mpc/$h$ for both \lcdm and $w$CDM cosmology. }
+\includegraphics[width=\columnwidth]{figs/2x2pt_1dmarg_lcdm_paper.pdf}
+\includegraphics[width=\columnwidth]{figs/2x2pt_1dmarg_wcdm_paper.pdf}
+\caption[]{Simulated likelihood analysis when analyzing a datavector contaminated with non-linear bias + baryons and analyzed with linear bias + halofit as the model. The two panels on the left show \lcdm while the panels on the right show \wcdm. For each scale cut for (\wtheta,\gammat) as indicated on the y-axis labels, we compare the recovered cosmological  constraints for the contaminated datavector and baseline datavector (with zero contamination). There are residual biases in both $\Omega_m$ and $S_8$ even in baseline case (due to projection effects, see \S\ref{sec:simlike_analysis} and Appendix \ref{app:projection_effects}), the difference between constraints from the baseline and contaminated datavector gets larger as we go down in scale cuts along y-axis. We use the criterion of difference between contaminated and baseline being greater than X$\sigma$, to choose our fiducial scale cuts for the linear bias model as (X,Y)Mpc/$h$.    }
 \label{fig:sim_lin}
 \end{figure*}
 
+
+\begin{figure}
+\includegraphics[width=0.5\textwidth,draft]{figs/temp.png}
+\caption[]{Comparison of 1D or 2D $\Omega_m-S_8$ contours when analyzing with fiducial non-linear bias model ($b_s$ and $b_{\rm 3nl}$ fixed to co-evolution value) a datavector with $b_s$ and $b_{\rm 3nl}$ shifted by 1$\sigma$ (as given by 3D tests). This will validate our fiducial non-linear bias model from a simulated likelihood method. }
+\label{fig:nlbias_comp}
+\end{figure}
+
 \subsection{Results on Buzzard simulations}
 
-For those analysis choice combos passing the simulated likelihood tests, we validate on the suite of Y3 buzzard simuulations. Select analysis choice combinations that return unbiased cosmological parameters to run on the data. 
+For those analysis choice combos passing the simulated likelihood tests, we validate on the suite of Y3 buzzard simulations. Select analysis choice combinations that return unbiased cosmological parameters to run on the data. 
 
 \subsubsection{DES-only \lcdm}
 
 \begin{figure*}
 \includegraphics[width=\columnwidth]{figs/buzzard_lcdm_om-s8.png}
 \includegraphics[width=\columnwidth]{figs/buzzard_lcdm_om-s8.png}
-\caption[]{\lcdm\ Buzzard constraints }
-\label{fig:color_ims}
+\caption[]{\lcdm\ Buzzard constraints, we show the constraints on $\Omega_m$ and $S_8$ from the mean (over all N realizations) Buzzard 2x2pt measurements, with cosmological parameter priors set I (i.e. wide, ~uninformative priors) in the left panel, and set II in the right panel. We show constraints with two sets of scale cuts: 4,4 and 8,6. In each panel we show constraints for linear and non-linear galaxy bias models. Comment on which of the options give unbiased cosmology. Use this figure to set the scale cuts for non-linear bias model as well.  }
+\label{fig:bcc_des_lcdm}
 \end{figure*}
 
 In \fig{fig:bcc_des_lcdm} we show the constraints on $\Omega_m$ and $S_8$ from the mean (over all N realizations) Buzzard 2x2pt measurements, with cosmological parameter priors set I (i.e. wide, ~uninformative priors) in the top panels, and set II in the bottom panels. We show constraints with two sets of scale cuts: 4,4 (left panels) and 8,8 (right panels). In each panel we show constraints for all galaxy bias models (i)-(iv). Comment on which of the options give unbiased cosmology. 
@@ -318,7 +334,7 @@ In \fig{fig:bcc_des_lcdm} we show the constraints on $\Omega_m$ and $S_8$ from t
 \begin{figure*}
 \includegraphics[width=\columnwidth]{figs/buzzard_wcdm_lin_om-w.png}
 \includegraphics[width=\columnwidth]{figs/buzzard_wcdm_lin_om-w.png}
-\caption[]{\wcdm\ Buzzard constraints, linear bias (left panel), non-linear bias (right-panel)}
+\caption[]{\wcdm\ Buzzard constraints, linear bias (left panel), non-linear bias (right-panel). Show the constraints with DES alone as well as when using with Planck.}
 \label{fig:color_ims}
 \end{figure*}
 
@@ -341,15 +357,50 @@ Also validate bias modelling choices at fixed cosmology?
 Compare DES-only constraints for the three or four analysis variations. Hopefully they agree. Compare performance of different models and present fiducial constraint.
 
 \SP{\begin{itemize}
-    \item \textbf{\textit{Figure}} Compare the 1x2pt, 2x2pt and 3x2pt constraints at the 3x2pt defined scale cuts for $\Lambda$CDM. Explain the loss of constraining power in 2x2pt compared to 3x2pt due to PM. Show for both linear bias and non-linear bias. 
+    \item \textbf{\textit{Figure}} Compare the constraints from cosmic shear, 2x2pt and 3x2pt datavectors for the scale cuts defined for the 3x2pt $\Lambda$CDM analysis. Explain the loss of constraining power in 2x2pt compared to 3x2pt due to PM. Show for both linear bias and non-linear bias. 
 \end{itemize}
 }
+
+\begin{figure}
+\includegraphics[width=\columnwidth]{figs/compare_all_cosmo_3x2pt_lcdm_contaminated.pdf}
+\caption[]{Compare the constraints from cosmic shear,  2x2pt and 3x2pt  with linear bias + halofit model with the same scale cuts (preferably fiducial 3x2pt cuts) for $\Lambda$CDM. Show that cosmic shear and 2x2pt add complementary information with 2x2pt providing stronger constraints on $\Omega_m$ and cosmic shear providing constraints on $S_8$.}
+\label{fig:des_comp}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=\columnwidth]{figs/compare_cosmo_pm_marg_2x2pt_3x2pt_fullspace.pdf}
+\caption[]{Effect of point mass marginalization on the constraining power of 2x2pt and 3x2pt. We see that the constraining power of 2x2pt degrades significantly with point mass marginalization, while for 3x2pt the change is minimal. Including the shear-shear correlation  breaks the degeneracy between point-mass (we show PM for third bin, $M_{\rm halo}[3]$) and $S_8$, leading to smaller sensitivity of cosmology constraints on point mass constraints. \SP{update the plot with non-zero PM in DV, to show the biases as well} }
+\label{fig:pm_effect}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=\columnwidth]{figs/compare_cosmo_nl44_lin86.pdf}
+\caption[]{Compare the 2x2pt $\Lambda$CDM constraints for both linear bias and non-linear bias at their respectively defined scale cuts. Show that using non-linear bias leads to more constraining power, especially in $\Omega_m$, with the ability to push down to smaller scales. }
+\label{fig:des_comp}
+\end{figure}
+
+
 
 \subsection{Consistency with external datasets}
 
 \subsection{DES+external constraints}
 
 Cosmology and galaxy bias constraints from DES+external. Again compare performance of different analysis choices. Compare bias constraints with some theoretical expectations.
+
+\begin{figure}
+\includegraphics[width=\columnwidth,draft]{figs/temp.png}
+\caption[]{Show the DES+external constraints for both \lcdm \ and \wcdm \ cosmologies. Show DES and external alone and their combination. Comment of their consistency and on their tension. }
+\label{fig:bias_relation}
+\end{figure}
+
+
+
+\begin{figure}
+\includegraphics[width=\columnwidth,draft]{figs/temp.png}
+\caption[]{Show the recovered bias values and the estimate from expected halo bias convolved with measured HOD from either small scales gglensing or in MICE. }
+\label{fig:bias_relation}
+\end{figure}
+
 
 \section*{Acknowledgements}
 
@@ -382,10 +433,63 @@ Try to keep it short.
 
 \appendix
 
-\section{Some extra material}
+\section{2$\times$2pt Measurements}\label{app:2x2pt_measure}
 
-If you want to present additional material which would interrupt the flow of the main paper,
-it can be placed in an Appendix which appears after the list of references.
+\subsection{Point mass marginalization}
+\begin{figure}
+% \includegraphics[width=\columnwidth]{figs/compare_cosmo_pm_signal_loss_88.pdf}
+\includegraphics[width=\columnwidth]{figs/PM_contribution_radial.pdf}
+\caption[]{We show the contribution of the PM to the galaxy-matter correlation in different radial regimes. The input is a halo-matter correlation function generated for a halo mass of $2.5 \times 10^{13} M_{\odot}/h$ using the NFW profile in the 1-halo regime ($r < 0.5 Mpc/h$) and 1Loop PT in the 2-halo regime ($r > 0.5 Mpc/h$). The model curve is generated from parameters within 1$\sigma$ of the truth. We show the contribution of the PM term separately for the 1-halo  and 2-halo regimes (up to the scale cut of 8Mpc/$h$). We find that the 2-halo regime contributes significantly. Therefore to put informative prior on the PM, the exact dependence of PM on cosmology and bias has to be known. 
+% how that to put the prior on the PM, one needs to know the dependence of PM on all the cosmology/bias parameters to high accuracy in order to put informative priors that will lead to gain in constraining power.
+}
+\label{fig:pm_prior}
+\end{figure}
+
+
+\subsection{Simulations}
+
+\begin{figure}
+\includegraphics[width=0.5\textwidth,draft]{figs/temp.png}
+\caption[]{Measurements of \wtheta and \gammat for \buzzard \ simulations. Show results for mean of N realizations and bestfit theory }
+\label{fig:buzzard_2pt}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=0.5\textwidth,draft]{figs/temp.png}
+\caption[]{Measurements of \wtheta and \gammat for \mice \  simulations }
+\label{fig:mice_2pt}
+\end{figure}
+
+\subsection{DES Y3}
+\begin{figure}
+\includegraphics[width=0.5\textwidth,draft]{figs/temp.png}
+\caption[]{Measurements of \wtheta and \gammat for DES Y3 data }
+\label{fig:data_2pt}
+\end{figure}
+
+\section{Scale cuts validation}\label{app:scale_cuts}
+\subsection{Projection effects}\label{app:projection_effects}
+
+\begin{figure}
+\includegraphics[width=0.5\textwidth,draft]{figs/temp.png}
+\caption[]{Show profile likelihood plots to show that we recover correct likelihood for cosmology parameters, while the posteriors are biased}
+\label{fig:prof_like}
+\end{figure}
+
+\begin{figure*}
+\includegraphics[width=\columnwidth]{figs/contour_2x2pt_sc_8_6.pdf}
+\includegraphics[width=\columnwidth]{figs/contour_2x2pt_sc_8_6_wcdm.pdf}
+\caption[]{Show the contour plots and biases in cosmology in the 2D space. Left is for $\Lambda$CDM and right is for $w$CDM. Show that the projection effects are much smaller in the 2D space}
+\label{fig:2d_simlike}
+\end{figure*}
+
+\begin{figure}
+\includegraphics[width=0.5\textwidth,draft]{figs/temp.png}
+\caption[]{Show that the projection effects are smaller when using the prior set (ii), i.e. informative priors on $\theta_{\star}$, $\Omega_{\rm b} h^2$ and $n_s$.}
+\label{fig:simlike_cosmoprior}
+\end{figure}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
