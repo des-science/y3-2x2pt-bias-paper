@@ -150,17 +150,30 @@ keyword1 -- keyword2 -- keyword3
 %%%%%%%%%%%%%%%%% BODY OF PAPER %%%%%%%%%%%%%%%%%%
 
 \section{Introduction}
-
+\label{sec:intro}
 \begin{itemize}
     \item LSS can tell us about dark energy.
     \item Galaxy clustering and galaxy-galaxy lensing is a good combo for probing LSS.
     \item Modeling galaxy bias is the main theoretical challenge for this.
 \end{itemize}
 
+Wide area imaging surveys of galaxies provide cosmological information through measurements of galaxy clustering and weak gravitational lensing. In recent years, two-point correlations and cross-correlations of the galaxy positions and lensing shear have been used to constrain cosmological parameters in the late time universe. The Dark Energy Survey (DES) analyzed the lensing two-point correlation (cosmic shear) and all three two-point correlations from its Year 1 (Y1) dataset in separate papers. 
+
+The relationship of galaxies to the mass distribution, called galaxy bias, has been a limiting factor in interpreting the galaxy autocorrelation function (denoted) $w(\theta)$) and the galaxy-shear cross-correlation, also called galaxy-galaxy lensing (and denoted $\gamma_t(\theta)$). At large scales, galaxy bias can be described by a single number, the linear bias $b_1$. On smaller scales bias is nonlocal and nonlinear and its description is complicated. Perturbation theory (PT) approaches have been developed for quasilinear scales $\sim 10$ Mpc, though the precise range of scales of its validity is a subtle question that depends on the galaxy population, the theoretical model and the statistical power of the survey. 
+
+With a model for galaxy bias, $w(\theta)$ and $\gamma_t$ measurements, called the ``2x2'' datavector,   can probe the underlying matter power spectrum. They are also sensitive to the distance-redshift relation over the redshift range of the lens and source galaxy distributions.  These two datavectors constitute a useful subset of the full ``3x2'' datavector, which includes cosmic shear, since bias and cosmological parameters can both be constrained (though either $w(\theta)$ or $\gamma_t(\theta)$ individually would be limited by the uncertainty in galaxy bias). 
+
+PT models of galaxy bias are validated using mock catalogs based on N-body simulations with various schemes of populating galaxies. The halo occupation distribution (HOD) approach has been widely developed and is used for the DES galaxy samples. For the Year 3 (Y3) dataset of DES, two independent sets of mock catalogs have been developed, basd on the \buzzard and \mice simulations. 
+
+In this study, we will use PT models for galaxy bias, validate them with mock catalogs and carry out a cosmological analysis of the DES Y3 $w(\theta)$ and $\gamma_t$ measurements.
+
+
+
+
 \section{Statistics and theory}
-
+\label{sec:stat_theory}
 \subsection{Two-point statistics}
-
+\label{sec:2pt}
 \begin{itemize}
     \item Describe the statistics we use, \wtheta\ and \gammat.
     \item Show their relation to the underlying 3d correlation functions $\xigg(r)$ and $\xigm(r)$
@@ -172,6 +185,7 @@ For the galaxy clustering we use the $w(\theta)$ statistic which quantifies the 
 
 
 \subsection{P(k) predictions}
+\label{sec:Pk_pred}
 \begin{itemize}
     \item Heavily referencing the 3D bias paper, describe range of perturbation theory models for $\xigg(r)$ and $\xigm(r)$ and their expected scales of applicability. 
     \item To aid discussion, include some plots showing the sensitivity of our statistics to scales in $\xigg(r)$ and $\xigm(r)$.
@@ -181,6 +195,7 @@ For the galaxy clustering we use the $w(\theta)$ statistic which quantifies the 
 \end{itemize}
 
 \subsection{The rest of the model}
+\label{sec:full_pk_th}
 Describe the rest of the modelling framework:
 \begin{itemize}
     \item IAs (NLA)\brown{TATT?}
@@ -251,25 +266,28 @@ The datavectors, along with the best-fit theory models, for both the simulations
 \section{Validation of parameter inference}
 
 \subsection{Models, scale cuts, priors and external datasets}
-We describe the models, scale cuts, priors and external datasets we'll use.
+In this section we describe the models, scale cuts, priors and external datasets used.
 
 \subsubsection{DES 2 $\times$ 2pt models + priors}
-For DES 2x2pt, we test 3 different galaxy bias model + prior choices:
+\label{sec:2x2pt_models}
+We test three different galaxy bias model and prior choice combinations:
 \begin{enumerate}
-    \item Linear bias
-    \item 1-loop with a free $-5<b_2<5$ for each lens bin, and $b_s, b_{3nl}$ fixed to co-evolution Lagrangian values.
-    \item Free $-5<b_2<5, -5<b_s<5, -5<b_{3nl}<5$ ($b_k$?).
+    \item Model A: Linear bias: As described in \S~\ref{sec:2pt}, the simplest model galaxy bias model is the  linear bias model. For each lens tomographic bin, the average bias of galaxies is given by a single free parameter $b_1$. We use a wide uninformative and uniform prior on the parameter for each lens tomographic bin $j$, given by $0.5 < b^{j}_1 < 4$. 
+    \item Model B: 1-loop PT with the uninformative prior $-5<b_2<5$ for each lens bin, and $b_s, b_{3nl}$ fixed to the co-evolution Lagrangian values. This is a more complete model motivated by 1-loop effective field theory. In general, this model has five free bias parameters for each lens tomographic bin. However, from our tests on DES simulations (see 3D bias), we find that fixing two of them to their co-evolution value and the higher-derivative $k^2$ term to zero is sufficient to model our datavector down to 4Mpc/$h$. We use this  approximation to fit $w(\theta)$ and $\gamma_t$. However, we find that using a uniform prior on the linear and non-linear bias parameters leads to large projection effects. We choose to sample the parameters $b^{j}_1 \sigma_8$ and $b^{j}_2 \sigma^2_8$ which helps in removing much of the projection effect. We use wide uninformative uniform priors on these parameters for each tomographic bin $j$ given by : $0.67 < b^{j}_1 \sigma_8 < 3.0$ and $-4.2 < b^{j}_2 \sigma^2_8 < 4.2$. 
+    \item Model C: Free all bias parameters, with the uninformative priors $-5<b_2<5, -5<b_s<5, -5<b_{3nl}<5$ ($b_k$?).
 \end{enumerate}
 
 \subsubsection{Scale cuts}
 Motivated by the 3D bias modelling paper, we choose 2 or 3 sets of scale cuts.
 
+From the tests on 3D correlation functions at fixed cosmology in simulations, we find that the linear bias approximation (Model A) is a good description above 8Mpc/$h$ while the two parameter non-linear bias model (Model B) can describe the correlations above 4Mpc/$h$.
+
 \subsection{Cosmological models, external datasets and priors}
 We test the following cosmological model and prior combinations
 \begin{enumerate}
-    \item Flat \lcdm\ with uninformative priors
-    \item Flat \lcdm\ with informative priors on some combination of $\Omega_m$, $H_0$ and $n_s$ TBD.
-    \item Flat \wcdm 
+    \item Flat \lcdm\ with uninformative priors: We free five cosmological parameters $\Omega_m$, $\Omega_b$, $n_s$, $h_0$ and $A_s$. (\SP{or will we update all the results with free neutrinos?})
+    % \item Flat \lcdm\ with informative priors on some combination of $\Omega_m$, $H_0$ and $n_s$ TBD.
+    \item Flat \wcdm : In addition to above mentioned five parameters, we also free $w_0$.
     \item Flat \wcdm\ with Planck.
 \end{enumerate}
 
@@ -280,10 +298,17 @@ We test the following cosmological model and prior combinations
 
 We perform simulated likelihood tests to reveal which of our analysis choice combinations (i.e. scale cuts + bias model + priors + external dataset + cosmological model) return unbiased cosmological parameters.
 
-\brown{Our baseline case assumes linear galaxy biasing and no baryon impact on the matter-matter autopower spectrum. The linear bias values that we use for the five lens bins are $b_1 = 1.7, 1.7, 1.7, 2.0$ and  $2.0$  respectively. We compare the cosmology constraints from the baseline datavector with a simulated datavector having contamination from higher order non-linearities. The contaminated datavector receives contribution from non-linear bias and baryonic physics. For non-linear bias we use the Model-X with non-zero $b_2, b_s$ and $b_{\rm 3nl}$ terms. The value of $b_2$ used in the contaminated datavector is given by the $b_1-b_2$ relation extracted from 3D tests in \mice simulations (see Fig.X of 3D draft) at above mentioned $b_1$ for each tomographic bin. We also fix the bias parameters $b_s$ and $b_{\rm 3nl}$ to their co-evolution values. For capturing the impact of baryons on the matter-matter power spectra, we use the feedback model of OWLS-AGN.  }
+\subsubsection{Scale cuts for linear bias model}
+Motivated by the 3D bias modelling paper, we choose 2 or 3 sets of scale cuts.
+
+% Due to an increase in the parameter space (as we sample over cosmological parameters as well as other systematics parameters described in \S~\ref{sec:full_pk_th}) as well as decrease in signal to noise (compared to noiseless 3D correlation functions), 
+
+Our baseline case assumes linear galaxy bias and no baryon impact on the matter-matter auto power spectrum. The linear bias values that we use for the five lens bins are $b_1 = 1.7, 1.7, 1.7, 2.0$ and  $2.0$  respectively. We compare the cosmology constraints from the baseline datavector with a simulated datavector having contamination from higher order non-linearities. The contaminated datavector receives contribution from non-linear bias and baryonic physics. For non-linear bias we use  Model B (see \S~\ref{sec:2x2pt_models}) with non-zero $b_2, b_s$ and $b_{\rm 3nl}$ terms. The value of $b_2$ used in the contaminated datavector is given by the interpolated $b_1-b_2$ relation extracted from 3D tests in \mice simulations (see Fig.8 of 3D draft) for each tomographic bin. We also fix the bias parameters $b_s$ and $b_{\rm 3nl}$ to their co-evolution values. To capture the impact of baryons on the matter-matter power spectra, we use the feedback model of OWLS-AGN.
+
+We define our criteria to identify  scale cuts in the 2D plane of the most constrained cosmological parameters. For $\Lambda$CDM cosmology, we use $\Omega_m - S_8$ while for $w$CDM cosmology we use $\Omega_m-S_8$, $\Omega_m-w_0$ and $S_8-w_0$. Our criteria for scale cuts is defined as the minimum scales which results in distance of the peak of 2D marginalized contours when analyzing the baseline datavector from the peak of contours when analyzing the contaminated datavector be less than 0.3$\sigma$. We find that for our linear bias model, the angular cuts corresponding to (8,6) Mpc/$h$ for $w(\theta)$ and $\gamma_t$ pass the above mentioned criteria. The resulting contours and the distances between the peak of the marginalized baseline contours, the peak of the marginalized contaminated contours and the input truth value for cosmological parameters is shown in Fig.~\ref{fig:sim_lin}. 
 
 \SP{\begin{itemize}
-    \item \textbf{\textit{Figure}} Linear bias recovering unbiased cosmology (for $\Lambda$CDM) at Scale Cut (X,Y) Mpc/$h$. Show contours also for one scale cut smaller and one scale cut bigger than this. 
+    \item \textbf{\textit{Figure}} Linear bias recovering unbiased cosmology (for $\Lambda$CDM) at scale cut (X,Y) Mpc/$h$. Show contours also for one scale cut smaller and one scale cut bigger than this. 
     \item \textbf{\textit{Figure}} Linear bias $w$CDM: Show results for $w$CDM with and without Planck
     \item \textbf{\textit{Figure}} Non-linear bias $\Lambda$CDM: Show the results for non-linear bias LCDM recovering true cosmology when the input bs and b3nl are not given by co-evolution relation but model uses those relations.
 \end{itemize}
@@ -308,7 +333,7 @@ We perform simulated likelihood tests to reveal which of our analysis choice com
 
 \subsection{Results on Buzzard simulations}
 
-For those analysis choice combos passing the simulated likelihood tests, we validate on the suite of Y3 buzzard simulations. Select analysis choice combinations that return unbiased cosmological parameters to run on the data. 
+For  analysis choice combinations that pass the simulated likelihood tests, we validate on the suite of Y3 \buzzard simulations. We will select analysis choice combinations that return unbiased cosmological parameters to run on the data. 
 
 \subsubsection{DES-only \lcdm}
 
@@ -350,6 +375,7 @@ Also validate bias modelling choices at fixed cosmology?
 }
 
 
+
 \section{Results}
 
 \subsection{DES-only constraints}
@@ -368,7 +394,7 @@ Compare DES-only constraints for the three or four analysis variations. Hopefull
 \end{figure}
 
 \begin{figure}
-\includegraphics[width=\columnwidth]{figs/compare_cosmo_pm_marg_2x2pt_3x2pt_fullspace.pdf}
+\includegraphics[width=\columnwidth]{figs/PM_constraints_2x2pt_3x2pt.pdf}
 \caption[]{Effect of point mass marginalization on the constraining power of 2x2pt and 3x2pt. We see that the constraining power of 2x2pt degrades significantly with point mass marginalization, while for 3x2pt the change is minimal. Including the shear-shear correlation  breaks the degeneracy between point-mass (we show PM for third bin, $M_{\rm halo}[3]$) and $S_8$, leading to smaller sensitivity of cosmology constraints on point mass constraints. \SP{update the plot with non-zero PM in DV, to show the biases as well} }
 \label{fig:pm_effect}
 \end{figure}
@@ -437,13 +463,28 @@ Try to keep it short.
 
 \subsection{Point mass marginalization}
 \begin{figure}
-% \includegraphics[width=\columnwidth]{figs/compare_cosmo_pm_signal_loss_88.pdf}
 \includegraphics[width=\columnwidth]{figs/PM_contribution_radial.pdf}
 \caption[]{We show the contribution of the PM to the galaxy-matter correlation in different radial regimes. The input is a halo-matter correlation function generated for a halo mass of $2.5 \times 10^{13} M_{\odot}/h$ using the NFW profile in the 1-halo regime ($r < 0.5 Mpc/h$) and 1Loop PT in the 2-halo regime ($r > 0.5 Mpc/h$). The model curve is generated from parameters within 1$\sigma$ of the truth. We show the contribution of the PM term separately for the 1-halo  and 2-halo regimes (up to the scale cut of 8Mpc/$h$). We find that the 2-halo regime contributes significantly. Therefore to put informative prior on the PM, the exact dependence of PM on cosmology and bias has to be known. 
-% how that to put the prior on the PM, one needs to know the dependence of PM on all the cosmology/bias parameters to high accuracy in order to put informative priors that will lead to gain in constraining power.
 }
 \label{fig:pm_prior}
 \end{figure}
+
+
+
+
+\subsection{Model stress test}
+\subsubsection{Evolution of Point-mass parameters}
+The baseline model parameterization assumes the point mass parameter to be constant within each tomographic bin. We test this assumption by estimating the contribution that evolution of the galaxy-matter correlation function will have on the point mass parameters. Using a similar procedure as shown in Fig.~\ref{fig:pm_prior}, we estimate the integrand ($\delta_{\rm ev} M^{j}_{\rm halo}$) between evolved galaxy-matter correlation functions at edges of each tomographic bin $j$. These measured $\delta_{\rm ev} M^{j}_{\rm halo}$ quantify the expected bias in PM parameters due to evolution of the galaxy-matter correlations. These biases in PM parameters can potentially result in biased cosmology if it is a significant fraction of uncertainty in PM parameters ($\delta M^{j}_{\rm halo}$) for each tomographic bin $j$ (see Fig.~\ref{fig:pm_effect} for third tomographic bin) at our scale cuts. We compare the $\delta_{\rm ev} M^{j}_{\rm halo}$ to $\delta M^{j}_{\rm halo}$ in Fig.~\ref{fig:pm_evolve}. We see that for 2x2pt, the uncertainty in PM parameters is significantly greater than the expected bias. For 3x2pt, this bias is a significant fraction of the uncertainty but that will not bias our cosmology inference because as we have seen from Fig.~\ref{fig:pm_effect}, using shear information breaks the degeneracy between PM parameters and cosmological parameters.
+
+
+\begin{figure}
+\includegraphics[width=\columnwidth]{figs/PM_evolve_impact.pdf}
+\caption[]{We show the bias incurred from evolution of galaxy matter correlation on the PM parameters for each tomographic bin in black line. The red errorbars show the expected errorbars on PM parameters for 2x2pt as shown in Fig.~\ref{fig:pm_effect}. The blue errorbars are the constraints from 3x2pt. \SP{need to make this figure with non-zero PM values and at (8,6,0.5) scale cuts. It seems the impact will be even smaller there probably.}
+}
+\label{fig:pm_evolve}
+\end{figure}
+
+
 
 
 \subsection{Simulations}
