@@ -46,8 +46,15 @@
 \usepackage{amsmath}	% Advanced maths commands
 \usepackage{amssymb}	% Extra maths symbols
 \usepackage{siunitx} %v. useful units package 
-
+% \usepackage{caption}
+\usepackage[caption = false]{subfig}
+% \usepackage{subcaption}
+% \captionsetup{compatibility=false}
+% \usepackage{subfigure}
+% \usepackage{mwe}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 
 %%%%% AUTHORS - PLACE YOUR OWN COMMANDS HERE %%%%%
 
@@ -105,7 +112,7 @@
 \newcommand{\maglim}{\texttt{Maglim}\,}
 \newcommand{\buzzard}{\texttt{Buzzard}\,}
 
-\newcommand{\SP}[1]{{\color{brown}[SP: #1]}}
+\newcommand{\SP}[1]{{\color{red}[SP: #1]}}
 \newcommand{\brown}[1]{\textcolor{brown}{#1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -157,13 +164,14 @@ keyword1 -- keyword2 -- keyword3
     \item Modeling galaxy bias is the main theoretical challenge for this.
 \end{itemize}
 
-Wide area imaging surveys of galaxies provide cosmological information through measurements of galaxy clustering and weak gravitational lensing. In recent years, two-point correlations and cross-correlations of the galaxy positions and lensing shear have been used to constrain cosmological parameters in the late time universe. The Dark Energy Survey (DES) analyzed the lensing two-point correlation (cosmic shear) and all three two-point correlations from its Year 1 (Y1) dataset in separate papers. 
+Wide area imaging surveys of galaxies provide cosmological information through measurements of galaxy clustering and weak gravitational lensing. In recent years, two-point correlations and cross-correlations of the galaxy positions and lensing shear have been \SP{developed in a theoretical framework\citep{Cacciato_2009,Baldauf_2010,Cacciato_2012,van_den_Bosch_2013} and} used to constrain cosmological parameters in the late time universe \citep{Cacciato_2013,Mandelbaum_2013,Kwan_2016,More_2015,Dvornik_2018,Coupon_2015}. The Dark Energy Survey (DES) analyzed the lensing two-point correlation (cosmic shear) and all three two-point correlations from its Year 1 (Y1) dataset in separate papers \citep{Abbott_2018,Troxel_2018}. 
 
-The relationship of galaxies to the mass distribution, called galaxy bias, has been a limiting factor in interpreting the galaxy autocorrelation function (denoted) $w(\theta)$) and the galaxy-shear cross-correlation, also called galaxy-galaxy lensing (and denoted $\gamma_t(\theta)$). At large scales, galaxy bias can be described by a single number, the linear bias $b_1$. On smaller scales bias is nonlocal and nonlinear and its description is complicated. Perturbation theory (PT) approaches have been developed for quasilinear scales $\sim 10$ Mpc, though the precise range of scales of its validity is a subtle question that depends on the galaxy population, the theoretical model and the statistical power of the survey. 
+
+The relationship of galaxies to the mass distribution, called galaxy bias, has been a limiting factor in interpreting the galaxy autocorrelation function (denoted) $w(\theta)$) and the galaxy-shear cross-correlation, also called galaxy-galaxy lensing (and denoted $\gamma_t(\theta)$). At large scales, galaxy bias can be described by a single number, the linear bias $b_1$. On smaller scales bias is nonlocal and nonlinear and its description is complicated \citep{Fry_93,Scherrer_98}. Perturbation theory (PT) approaches have been developed for quasilinear scales $\sim 10$ Mpc, though the precise range of scales of its validity is a subtle question that depends on the galaxy population, the theoretical model and the statistical power of the survey. 
 
 With a model for galaxy bias, $w(\theta)$ and $\gamma_t$ measurements, called the ``2x2'' datavector,   can probe the underlying matter power spectrum. They are also sensitive to the distance-redshift relation over the redshift range of the lens and source galaxy distributions.  These two datavectors constitute a useful subset of the full ``3x2'' datavector, which includes cosmic shear, since bias and cosmological parameters can both be constrained (though either $w(\theta)$ or $\gamma_t(\theta)$ individually would be limited by the uncertainty in galaxy bias). 
 
-PT models of galaxy bias are validated using mock catalogs based on N-body simulations with various schemes of populating galaxies. The halo occupation distribution (HOD) approach has been widely developed and is used for the DES galaxy samples. For the Year 3 (Y3) dataset of DES, two independent sets of mock catalogs have been developed, basd on the \buzzard and \mice simulations. 
+PT models of galaxy bias are validated using mock catalogs based on N-body simulations with various schemes of populating galaxies. The halo occupation distribution (HOD) approach has been widely developed and is used for the DES galaxy samples. For the Year 3 (Y3) dataset of DES, two independent sets of mock catalogs have been developed, based on the \buzzard and \mice simulations. 
 
 In this study, we will use PT models for galaxy bias, validate them with mock catalogs and carry out a cosmological analysis of the DES Y3 $w(\theta)$ and $\gamma_t$ measurements.
 
@@ -179,10 +187,11 @@ In this study, we will use PT models for galaxy bias, validate them with mock ca
     \item Show their relation to the underlying 3d correlation functions $\xigg(r)$ and $\xigm(r)$
 \end{itemize}
 
-\brown{Using the catalog of the positions of foreground lens galaxies and the catalog of shape and positions of background source galaxies, one can construct three two point summary statistics. The two point auto-correlation of the positions of lens galaxies (galaxy clustering), auto-correlation of the lensing shear estimated from shape of background source galaxies (cosmic shear) and  cross-correlation of this lensing shear field and position of lens galaxies (galaxy-galaxy lensing). 
+Using the catalog of the positions of foreground lens galaxies and the catalog of shape and positions of background source galaxies, one can construct three two point summary statistics. The two point auto-correlation of the positions of lens galaxies (galaxy clustering), auto-correlation of the lensing shear estimated from shape of background source galaxies (cosmic shear) and  cross-correlation of this lensing shear field and position of lens galaxies (galaxy-galaxy lensing). 
 
-For the galaxy clustering we use the $w(\theta)$ statistic which quantifies the average excess number of galaxy pairs at a separation $\theta$ over a random distribution. For galaxy-galaxy lensing, we use the statistic of $\gamma_{\rm t}(\theta)$ that describes the average tangential component of the shear with respect to the lens-source separation direction. For cosmic shear, which is a spin-2 field, we use the statistic of $\xi_{+}$ and $\xi_{-}$. }
+For the galaxy clustering we use the $w(\theta)$ statistic which quantifies the average excess number of galaxy pairs at a separation $\theta$ over a random distribution. For galaxy-galaxy lensing, we use the statistic of $\gamma_{\rm t}(\theta)$ that describes the average tangential component of the shear with respect to the lens-source separation direction. For cosmic shear, which is a spin-2 field, we use the statistic of $\xi_{+}$ and $\xi_{-}$. 
 
+In this study we focus on modeling and analyzing $w(\theta)$ and $\gamma_{\rm t}(\theta)$ 
 
 \subsection{P(k) predictions}
 \label{sec:Pk_pred}
@@ -190,7 +199,7 @@ For the galaxy clustering we use the $w(\theta)$ statistic which quantifies the 
     \item Heavily referencing the 3D bias paper, describe range of perturbation theory models for $\xigg(r)$ and $\xigm(r)$ and their expected scales of applicability. 
     \item To aid discussion, include some plots showing the sensitivity of our statistics to scales in $\xigg(r)$ and $\xigm(r)$.
     
-    \brown{As we saw in the previous section, the statistics of our main interest here $w(\theta)$ and $\gammat$ is related to the underlying 3D correlation functions \xigg and \xigm respectively. }
+    As we saw in the previous section, the statistics of our main interest here $w(\theta)$ and $\gammat$ is related to the underlying 3D correlation functions \xigg and \xigm respectively. 
     
 \end{itemize}
 
@@ -198,12 +207,11 @@ For the galaxy clustering we use the $w(\theta)$ statistic which quantifies the 
 \label{sec:full_pk_th}
 Describe the rest of the modelling framework:
 \begin{itemize}
-    \item IAs (NLA)\brown{TATT?}
-    \brown{Galaxy galaxy lensing aims to isolate the percent-level coherent shape distortions, or shear, of background source galaxies due to graviataional field of foreground lens galaxies. However, the local environment can align the source galaxies as well as also contribute to the shear signal through lensing distortions. Since this interaction between the source galaxies and their local environment is non-random, it has non-zero contribution to the galaxy-galaxy lensing signal which we need to model. In this analysis we follow the mixed alignment methodolgy of \cite{Blazek_2019}. }
+    \item IAs (NLA)\SP{TATT?}
+    Galaxy galaxy lensing aims to isolate the percent-level coherent shape distortions, or shear, of background source galaxies due to graviataional field of foreground lens galaxies. However, the local environment can align the source galaxies as well as also contribute to the shear signal through lensing distortions. Since this interaction between the source galaxies and their local environment is non-random, it has non-zero contribution to the galaxy-galaxy lensing signal which we need to model. In this analysis we follow the mixed alignment methodolgy of \cite{Blazek_2019}. 
     \item Magnification
-    \brown{All the matter between observed galaxy and the observer acts as a gravitational lens. Hence the galaxies get magnified which results in an increase in the size of galaxy images as well as increase in their total flux. The increase in the size of galaxies results in decrease in observed number density (due to stretching of local sky), whereas due to increase in total flux results in increase in number density (as intrinsically fainter galaxies, which are more numerous, can be observed).  }
+    All the matter between observed galaxy and the observer acts as a gravitational lens. Hence the galaxies get magnified which results in an increase in the size of galaxy images as well as increase in their total flux. The increase in the size of galaxies results in decrease in observed number density (due to stretching of local sky), whereas due to increase in total flux results in increase in number density (as intrinsically fainter galaxies, which are more numerous, can be observed).  
     \item RSD
-    \brown{}
 \end{itemize}    
 
     
@@ -216,7 +224,7 @@ Describe the rest of the modelling framework:
     }
     
         
-    \brown{The galaxy-galaxy lensing signal is related to the mass density of lenses by:
+    The galaxy-galaxy lensing signal is related to the mass density of lenses by:
     \begin{equation}
         \gamma_{\rm t}(R;z_{\rm l},z_{\rm s}) = \frac{\Delta \Sigma (R;z_{\rm l})}{\Sigma_{\rm crit} (z_{\rm l},z_{\rm s})},
     \end{equation}
@@ -234,12 +242,12 @@ Describe the rest of the modelling framework:
         C_{ij} = \int dz_{\rm l} \ dz_{\rm s} \ n_{{\rm l},i} \ n_{{\rm s},j} \ B_i(z_{\rm l}) \ \Sigma^{-1}_{\rm crit}(z_{\rm l},z_{\rm s}) \ \chi^{-2}(z_{\rm l}).
     \end{equation}
     Here $B_i$ is the PM for lens bin $i$, $n_{{\rm l},i}$ is the redshift distribution of lenses for tomographic bin $i$, $n_{{\rm s},j}$ is the redshift distribution of sources for tomographic bin $j$ and $chi(z_{\rm l})$ is the comoving distance to lens redshift $z_{\rm l}$. We find that for tomographic bins of our lens sample, we can make the approximation that PM evolves slowly with redshift and hence take $B_i$ out of the double integral in Eq.~\ref{eq:pm_Cij}. Therefore, in our fiducial analysis, we treat the parameters $B_i$ as a constant to marginalize over for any lens bin $i$ and is independent of the redshift distribution of sources. 
-    }
+    
     
 
 \begin{itemize}
     \item Shear-ratio information
-    \brown{As we are using }
+    
     \item projection of $P(k)$s to $C_l$ and conversion of $C_l$s to $w(\theta),\gamma_t(\theta)$.
 \end{itemize}
 
@@ -313,16 +321,62 @@ We define our criteria to identify  scale cuts in the 2D plane of the most const
     \item \textbf{\textit{Figure}} Non-linear bias $\Lambda$CDM: Show the results for non-linear bias LCDM recovering true cosmology when the input bs and b3nl are not given by co-evolution relation but model uses those relations.
 \end{itemize}
 }
-
-
-
-
 \begin{figure*}
-\includegraphics[width=\columnwidth]{figs/2x2pt_1dmarg_lcdm_paper.pdf}
-\includegraphics[width=\columnwidth]{figs/2x2pt_1dmarg_wcdm_paper.pdf}
-\caption[]{Simulated likelihood analysis when analyzing a datavector contaminated with non-linear bias + baryons and analyzed with linear bias + halofit as the model. The two panels on the left show \lcdm while the panels on the right show \wcdm. For each scale cut for (\wtheta,\gammat) as indicated on the y-axis labels, we compare the recovered cosmological  constraints for the contaminated datavector and baseline datavector (with zero contamination). There are residual biases in both $\Omega_m$ and $S_8$ even in baseline case (due to projection effects, see \S\ref{sec:simlike_analysis} and Appendix \ref{app:projection_effects}), the difference between constraints from the baseline and contaminated datavector gets larger as we go down in scale cuts along y-axis. We use the criterion of difference between contaminated and baseline being greater than X$\sigma$, to choose our fiducial scale cuts for the linear bias model as (X,Y)Mpc/$h$.    }
-\label{fig:sim_lin}
+\centering
+\subfloat{%
+       \includegraphics[width=0.49\textwidth]{figs/compare_cosmo_all_2x2pt_lcdm_sc_8_6_OmS8_draftv1.pdf}
+     }
+\hfill
+\subfloat{%
+      \includegraphics[width=0.49\textwidth]{figs/compare_cosmo_all_2x2pt_wcdm_sc_8_6_OmS8_draftv1.pdf}
+     }
+\vskip\baselineskip
+\subfloat{%
+       \includegraphics[width=0.49\textwidth]{figs/compare_cosmo_all_2x2pt_wcdm_sc_8_6_S8w_draftv1.pdf}
+     }
+\hfill
+\subfloat{%
+      \includegraphics[width=0.49\textwidth]{figs/compare_cosmo_all_2x2pt_wcdm_sc_8_6_Omw_draftv1.pdf}
+     }
+    \caption[]{Simulated likelihood analysis when analyzing a datavector contaminated with non-linear bias + baryons and analyzed with linear bias + halofit as the model. The panels on the top-left shows contours for \lcdm cosmology while rest of the panels show \wcdm cosmology at (8,6) Mpc/$h$ scale cut for $w(\theta)$ and $\gamma_t$ respectively. In each panel we compare the peak of the marginalized constraints in the 2D cosmological parameters plane when analyzing the contaminated datavector (blue circle) and the baseline datavector with zero contamination (red square). We see that the distance of the peak of marginalized baseline contours is within 0.3$\sigma$ of marginalized contaminated contours which is our threshold criteria for finding the minimum acceptable scales to be used for cosmological analysis.}
 \end{figure*}
+
+%  \begin{figure*}
+%     \centering
+%     \begin{subfigure}[b]{0.475\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{figs/compare_cosmo_all_2x2pt_lcdm_sc_8_6_OmS8_draftv1.pdf}
+%         \label{fig:mean and std of net14}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.475\textwidth}  
+%         \centering 
+%         \includegraphics[width=\textwidth]{figs/compare_cosmo_all_2x2pt_wcdm_sc_8_6_OmS8_draftv1.pdf}
+%         \caption[]
+%     \end{subfigure}
+%     \vskip\baselineskip
+%     \begin{subfigure}[b]{0.475\textwidth}   
+%         \centering 
+%         \includegraphics[width=\textwidth]{figs/compare_cosmo_all_2x2pt_wcdm_sc_8_6_S8w_draftv1.pdf}
+%         \label{fig:mean and std of net34}
+%     \end{subfigure}
+%     \quad
+%     \begin{subfigure}[b]{0.475\textwidth}   
+%         \centering 
+%         \includegraphics[width=\textwidth]{figs/compare_cosmo_all_2x2pt_wcdm_sc_8_6_Omw_draftv1.pdf}
+%         \label{fig:mean and std of net44}
+%     \end{subfigure}
+%     % \caption[]{Simulated likelihood analysis when analyzing a datavector contaminated with non-linear bias + baryons and analyzed with linear bias + halofit as the model. The two panels on the left show \lcdm while the panels on the right show \wcdm. For each scale cut for (\wtheta,\gammat) as indicated on the y-axis labels, we compare the recovered cosmological  constraints for the contaminated datavector and baseline datavector (with zero contamination). There are residual biases in both $\Omega_m$ and $S_8$ even in baseline case (due to projection effects, see \S\ref{sec:simlike_analysis} and Appendix \ref{app:projection_effects}), the difference between constraints from the baseline and contaminated datavector gets larger as we go down in scale cuts along y-axis. We use the criterion of difference between contaminated and baseline being greater than X$\sigma$, to choose our fiducial scale cuts for the linear bias model as (X,Y)Mpc/$h$.    }
+%     % \label{fig:mean and std of nets}
+% \end{figure*}
+
+
+% \begin{figure*}
+% \includegraphics[width=\columnwidth]{figs/2x2pt_1dmarg_lcdm_paper.pdf}
+% \includegraphics[width=\columnwidth]{figs/2x2pt_1dmarg_wcdm_paper.pdf}
+% \caption[]{Simulated likelihood analysis when analyzing a datavector contaminated with non-linear bias + baryons and analyzed with linear bias + halofit as the model. The two panels on the left show \lcdm while the panels on the right show \wcdm. For each scale cut for (\wtheta,\gammat) as indicated on the y-axis labels, we compare the recovered cosmological  constraints for the contaminated datavector and baseline datavector (with zero contamination). There are residual biases in both $\Omega_m$ and $S_8$ even in baseline case (due to projection effects, see \S\ref{sec:simlike_analysis} and Appendix \ref{app:projection_effects}), the difference between constraints from the baseline and contaminated datavector gets larger as we go down in scale cuts along y-axis. We use the criterion of difference between contaminated and baseline being greater than X$\sigma$, to choose our fiducial scale cuts for the linear bias model as (X,Y)Mpc/$h$.    }
+% \label{fig:sim_lin}
+% \end{figure*}
 
 
 \begin{figure}
@@ -529,6 +583,8 @@ The baseline model parameterization assumes the point mass parameter to be const
 \caption[]{Show that the projection effects are smaller when using the prior set (ii), i.e. informative priors on $\theta_{\star}$, $\Omega_{\rm b} h^2$ and $n_s$.}
 \label{fig:simlike_cosmoprior}
 \end{figure}
+
+
 
 
 
