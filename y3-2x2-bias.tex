@@ -45,7 +45,12 @@
 \usepackage{graphicx}	% Including figure files
 \usepackage{amsmath}	% Advanced maths commands
 \usepackage{amssymb}	% Extra maths symbols
+\usepackage{braket}
 \usepackage{siunitx} %v. useful units package 
+\usepackage{multirow}
+\usepackage{mathtools}
+\usepackage{makecell}
+\renewcommand{\cellalign}{l}
 % \usepackage{caption}
 \usepackage[caption = false]{subfig}
 % \usepackage{subcaption}
@@ -64,16 +69,16 @@
 \newcommand{\xip}{\ensuremath{\xi_{+}}}
 \newcommand{\xim}{\ensuremath{\xi_{-}}}
 \newcommand{\xipm}{\ensuremath{\xi_{\pm}}}
-\newcommand{\gammat}{\ensuremath{\gamma_{t}(\theta)} }
-\newcommand{\wtheta}{\ensuremath{w(\theta)} }
+\newcommand{\gammat}{\ensuremath{\gamma_{t}(\theta)}}
+\newcommand{\wtheta}{\ensuremath{w(\theta)}}
 \newcommand{\dsigr}{\ensuremath{\Delta\Sigma(R)}}
 \newcommand{\dsigobsr}{\ensuremath{\Delta\Sigma^{\mathrm{obs}}(R)}}
 \newcommand{\dsigmodr}{\ensuremath{\Delta\Sigma^{\mathrm{model}}(R)}}
 
 \newcommand{\pgg}{\ensuremath{P_{\mathrm{gg}}}}
 \newcommand{\pgm}{\ensuremath{P_{\mathrm{gm}}}}
-\newcommand{\xigg}{\ensuremath{\xi_{\mathrm{gg}}}}
-\newcommand{\xigm}{\ensuremath{\xi_{\mathrm{gm}}}}
+\newcommand{\xigg}{\ensuremath{\xi_{\mathrm{gg}}} }
+\newcommand{\xigm}{\ensuremath{\xi_{\mathrm{gm}}} }
 
 
 
@@ -107,14 +112,14 @@
 \newcommand\sect[1]{Section~\ref{#1}}
 \newcommand\tab[1]{Table~\ref{#1}}
 \newcommand\app[1]{Appendix~\ref{#1}}
-\newcommand{\redmagic}{\texttt{redMaGiC}\,}
-\newcommand{\mice}{\texttt{MICE}\,}
-\newcommand{\maglim}{\texttt{Maglim}\,}
-\newcommand{\buzzard}{\texttt{Buzzard}\,}
+\newcommand{\redmagic}{\texttt{redMaGiC} }
+\newcommand{\mice}{\texttt{MICE} }
+\newcommand{\maglim}{\texttt{Maglim} }
+\newcommand{\buzzard}{\texttt{Buzzard} }
 
 \newcommand{\SP}[1]{{\color{red}[SP: #1]}}
 \newcommand{\brown}[1]{\textcolor{brown}{#1}}
-
+\newcommand{\myvec}[1]{\hat{\mathbf{#1}}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%% TITLE PAGE %%%%%%%%%%%%%%%%%%%
@@ -136,6 +141,7 @@ DES
 \pubyear{2015}
 
 % Don't change these lines
+\hypersetup{draft}
 \begin{document}
 \label{firstpage}
 \pagerange{\pageref{firstpage}--\pageref{lastpage}}
@@ -181,34 +187,69 @@ In this study, we will use PT models for galaxy bias, validate them with mock ca
 \section{Statistics and theory}
 \label{sec:stat_theory}
 \subsection{Two-point statistics}
-\label{sec:2pt}
+Using the catalog of the positions of foreground lens galaxies and the catalog of shape and positions of background source galaxies, one can construct three two point summary statistics. The two point auto-correlation of the positions of lens galaxies (galaxy clustering), auto-correlation of the lensing shear estimated from shape of background source galaxies (cosmic shear) and  cross-correlation of this lensing shear field and position of lens galaxies (galaxy-galaxy lensing). 
+
+For the galaxy clustering we use the $w(\theta)$ statistic which quantifies the average excess number of galaxy pairs at a separation $\theta$ over a random distribution. For galaxy-galaxy lensing, we use the statistic of $\gamma_{\rm t}(\theta)$ that describes the average tangential component of the shear with respect to the lens-source separation direction. For cosmic shear, which is a spin-2 field, we use the statistic of $\xi_{+}$ and $\xi_{-}$. In this analysis we focus on $\wtheta$ and $\gammat$. 
+
+We use perturbation theory (PT) to make theoretical predictions for these two-point statistics as detailed below. 
+
+\subsubsection{Power spectrum}
+\label{sec:Pk_pred}
+
+To compute the two-point porjected statistics $\wtheta$ and $\gammat$, we first describe our methodology of predicting galaxy-galaxy and galaxy-matter power spectrum ($\pgg$ and $\pgm$ respectively). PT is a powerful framework that describes the distribution of any biased tracer of underlying dark matter field in quasi-linear and linear scales. This framework allows for an order-by-order controlled expansion of the overdensity of biased tracer (here galaxies) in terms of overdensity of dark matter field where successively higher-order non-linearities dominate only in successively smaller scale modes. We will analyze two PT models in this analysis, an effective linear bias model ((that is complete only up-to first order)) and an effective 1Loop PT model (that is complete up-to third order). 
+
+For linear bias model, we can write the galaxy-matter cross spectrum as $P_{\mathrm{gm}}(k) = b_1 P^{\rm HF}_{\mathrm{mm}}$ and auto power spectrum of the galaxies as $P_{\mathrm{gg}}(k) = b_1^2 P^{\rm HF}_{\mathrm{mm}}(k)$. Here $b_1$ is the linear bias parameter and $P^{\rm HF}_{\mathrm{mm}}(k)$ is non-linear matter-matter power spectrum for which we use \textit{halofit} model of \cite{Takahashi:2012em}. 
+
+In the effective 1Loop model that we use, $P_{\mathrm{gm}}$ and $P_{\mathrm{gg}}$ can be expressed as:
+\begin{align}\label{eq:P_gg_gm}
+    P_{\mathrm{gm}}(k) &= b_1 P^{\rm HF}_{\mathrm{mm}}(k) +  \frac{1}{2} b_2 P_{\rm b_1 b_2}(k) + \frac{1}{2} b_{\mathrm{s}} P_{\rm b_1 s^2}(k)  +  \nonumber \\
+    &\mathrel{\phantom{=}} \frac{1}{2} b_{\rm 3nl}P_{\rm b_1 b_{\rm 3nl} }(k) + b^{\rm hd}_{\nabla^2 \delta} k^2 P^{\rm HF}_{\mathrm{mm}}(k) , \\
+    P_{\mathrm{gg}}(k) &= b_1^2 P^{\rm HF}_{\mathrm{mm}}(k) + b_1 b_2 P_{\rm b_1 b_2}(k) + b_1 b_{\mathrm{s}}P_{\rm b_1 s^2}(k) +  \nonumber \\
+    &\mathrel{\phantom{=}} b_1b_{\rm 3nl} P_{\rm b_1 b_{\rm 3nl} }(k) + \frac{1}{4}b_2^2 P_{\rm b_2 b_2}(k) + \frac{1}{2} b_2 b_{\mathrm{s}}P_{\rm b_2 s^2}(k) + \nonumber \\ 
+    &\mathrel{\phantom{=}} \frac{1}{4} b^2_{\mathrm{s}} P_{\rm s^2 s^2}(k) + 2 b_1  b^{\rm hd}_{\nabla^2 \delta} k^2 P^{\rm HF}_{\mathrm{mm}}(k) .  
+\end{align}
+
+Here the bias parameters like $ b_1 $, $ b_2 $,	$ b_{\mathrm{s}} $ and $ b_{\rm 3nl} $ are the renormalized bias parameters \citep{McDonald2009}. The bias parameter $b^{\rm hd}_{\nabla^2 \delta}$ is the higher-derivative bias parameter (the term $b^{\rm hd}_{\nabla^2 \delta} k^2 P^{\rm grad}_{\mathrm{mm}}(k)$ captures the spatial non-locality of galaxy formation). In \cite{Pandey:inprep} we analyzed this model using 3D correlation functions ($\xigg$ and $\xigm$, which are Fourier transform of power spectra mentioned above) of \redmagic galaxies measured in DES simulations. We found that this model provides a good description of the high signal-to-noise 3D measurements above scales of 4 Mpc/h and redshift $z < 1$. Our tests also showed that at the projected precision of this analysis, two of the nonlinear bias parameters ($ b_{\mathrm{s}} $ and $ b_{\rm 3nl} $) can be fixed to their co-evolution values, and $b^{\rm hd}_{\nabla^2 \delta}$ set to zero. We will use this result as our \textit{fiducial} modeling choice, but will also later test its impact on our conclusions. 
+
+\begin{itemize}
+    \item Heavily referencing the 3D bias paper, describe range of perturbation theory models for $\xigg(r)$ and $\xigm(r)$ and their expected scales of applicability. 
+    \item To aid discussion, include some plots showing the sensitivity of our statistics to scales in $\xigg(r)$ and $\xigm(r)$.
+    
+\end{itemize}
+
+\subsubsection{Projected statistics}
+\label{sec:proj_2pt}
 \begin{itemize}
     \item Describe the statistics we use, \wtheta\ and \gammat.
     \item Show their relation to the underlying 3d correlation functions $\xigg(r)$ and $\xigm(r)$
 \end{itemize}
 
-Using the catalog of the positions of foreground lens galaxies and the catalog of shape and positions of background source galaxies, one can construct three two point summary statistics. The two point auto-correlation of the positions of lens galaxies (galaxy clustering), auto-correlation of the lensing shear estimated from shape of background source galaxies (cosmic shear) and  cross-correlation of this lensing shear field and position of lens galaxies (galaxy-galaxy lensing). 
+In order to calculate our observable $\wtheta$ and $\gammat$, we first project the power spectra described above. The projected angular power spectrum are given by:
+\begin{align}
+    C^{ij}_{\rm AB}(\ell) &= \frac{2}{\pi} \int d\chi_1 q^{\rm i}_{\rm A}(\chi_1) \int d\chi_2 q^{\rm j}_{\rm B}(\chi_2) \nonumber \\
+    &\mathrel{\phantom{=}} \int dk \ k^2 \ P_{\rm AB}(k,z(\chi_1),z(\chi_2)) j_{\ell}(k \chi_1) j_{\ell}(k \chi_2)
+\end{align}
 
-For the galaxy clustering we use the $w(\theta)$ statistic which quantifies the average excess number of galaxy pairs at a separation $\theta$ over a random distribution. For galaxy-galaxy lensing, we use the statistic of $\gamma_{\rm t}(\theta)$ that describes the average tangential component of the shear with respect to the lens-source separation direction. For cosmic shear, which is a spin-2 field, we use the statistic of $\xi_{+}$ and $\xi_{-}$. 
+Under Limber approximation, this projection can be simplified to:
+\begin{equation}
+    C^{ij}_{\rm AB}(\ell)  = \int d\chi \frac{q^{\rm i}_{\rm A}(\chi) q^{\rm i}_{\rm B}(\chi)}{\chi^2} P_{\rm AB}\bigg(k=\frac{l + 1/2}{\chi},z(\chi)\bigg) 
+\end{equation}
 
-In this study we focus on modeling and analyzing $w(\theta)$ and $\gamma_{\rm t}(\theta)$ 
-
-\subsection{P(k) predictions}
-\label{sec:Pk_pred}
-\begin{itemize}
-    \item Heavily referencing the 3D bias paper, describe range of perturbation theory models for $\xigg(r)$ and $\xigm(r)$ and their expected scales of applicability. 
-    \item To aid discussion, include some plots showing the sensitivity of our statistics to scales in $\xigg(r)$ and $\xigm(r)$.
-    
-    As we saw in the previous section, the statistics of our main interest here $w(\theta)$ and $\gammat$ is related to the underlying 3D correlation functions \xigg and \xigm respectively. 
-    
-\end{itemize}
+The real space projected statistics of our interest can be obtained from these angular correlation via:
+\begin{align}
+    w^{ij}(\theta) &= \sum \frac{2\ell + 1}{4\pi} P_{\ell}(\cos(\theta)) \ C^{ij}_{\rm gg}(\ell) \\
+    \gamma_{\rm t}^{ij}(\theta) &= \sum \frac{2\ell + 1}{4\pi \ell (\ell + 1)} P_{\ell}^2(\cos(\theta)) \ C^{ij}_{\rm gE}(\ell)
+\end{align}
 
 \subsection{The rest of the model}
 \label{sec:full_pk_th}
 Describe the rest of the modelling framework:
 \begin{itemize}
-    \item IAs (NLA)\SP{TATT?}
-    Galaxy galaxy lensing aims to isolate the percent-level coherent shape distortions, or shear, of background source galaxies due to graviataional field of foreground lens galaxies. However, the local environment can align the source galaxies as well as also contribute to the shear signal through lensing distortions. Since this interaction between the source galaxies and their local environment is non-random, it has non-zero contribution to the galaxy-galaxy lensing signal which we need to model. In this analysis we follow the mixed alignment methodolgy of \cite{Blazek_2019}. 
+    \item IAs (NLA)
+    Galaxy galaxy lensing aims to isolate the percent-level coherent shape distortions, or shear, of background source galaxies due to graviataional field of foreground lens galaxies. However, the local environment can align the source galaxies as well as also contribute to the shear signal through lensing distortions. Since this interaction between the source galaxies and their local environment is non-random, it has non-zero contribution to the galaxy-galaxy lensing signal which we need to model. In this analysis we only include the correlations between the density of lens galaxies and the intrinsic shapes of the source galaxies modifies the galaxy-matter correlation as :
+    \begin{equation}
+        P_{gm}(k) \rightarrow P_{gm}(k)  + P_{\rm GI}(k)
+    \end{equation}
     \item Magnification
     All the matter between observed galaxy and the observer acts as a gravitational lens. Hence the galaxies get magnified which results in an increase in the size of galaxy images as well as increase in their total flux. The increase in the size of galaxies results in decrease in observed number density (due to stretching of local sky), whereas due to increase in total flux results in increase in number density (as intrinsically fainter galaxies, which are more numerous, can be observed).  
     \item RSD
