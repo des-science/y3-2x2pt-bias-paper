@@ -1,27 +1,8 @@
-% mnras_template.tex 
-%
-% LaTeX template for creating an MNRAS paper
-%
-% v3.0 released 14 May 2015
-% (version numbers match those of mnras.cls)
-%
-% Copyright (C) Royal Astronomical Society 2015
-% Authors:
-% Keith T. Smith (Royal Astronomical Society)
-
-% Change log
-%
-% v3.0 May 2015
-%    Renamed to match the new package name
-%    Version number matches mnras.cls
-%    A few minor tweaks to wording
-% v1.0 September 2013
-%    Beta testing only - never publicly released
-%    First version: a simple (ish) template for creating an MNRAS paper
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Basic setup. Most papers should leave these options alone.
-\documentclass[fleqn,usenatbib]{mnras}
+\documentclass[aps, prd,twocolumn,superscriptaddress,nofootinbib,preprintnumbers]{revtex4-1}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{natbib}
+\input{journaldef.tex}
 
 % MNRAS is set in Times font. If you don't have this installed (most LaTeX
 % installations will be fine) or prefer the old Computer Modern fonts, comment
@@ -139,6 +120,9 @@
 \newcommand{\Halofit}{{\texttt{Halofit}}}
 \newcommand{\balrog}{{\textsc{Balrog}}}
 
+\newcommand{\isd}{\textsc{ISD}\xspace}
+\newcommand{\enet}{\textsc{ENet}\xspace}
+
 \newcommand{\metacal}{{\textsc{Metacalibration}~}}
 \newcommand{\ttt}{{$3\times2$-point}}
 \newcommand{\twottwo}{{$2\times2$-point}}
@@ -200,41 +184,49 @@
 
 % Title of the paper, and the short title which is used in the headers.
 % Keep the title short and informative.
-\title[Short title, max. 45 characters]{DES Y3 results: Constraints on cosmological parameters and galaxy bias models from galaxy clustering and galaxy-galaxy lensing}
 
 % The list of authors, and the short list which is used in the headers.
 % If you need two or more lines of authors, add an extra line using \newauthor
-\author[DES et al.]{
-DES
-}
+
 
 % These dates will be filled out by the publisher
-\date{Accepted YYY. Received YYY; in original form ZZZ}
+% \date{Accepted YYY. Received YYY; in original form ZZZ}
 
 % Enter the current year, for the copyright statements etc.
-\pubyear{2015}
+% \pubyear{2015}
 
 % Don't change these lines
-\hypersetup{draft}
+% \hypersetup{draft}
 \begin{document}
+
+\title[Short title, max. 45 characters]{DES Y3 results: Constraints on cosmological parameters and galaxy bias models from galaxy clustering and galaxy-galaxy lensing}
+
+
 \label{firstpage}
-\pagerange{\pageref{firstpage}--\pageref{lastpage}}
-\maketitle
+% \pagerange{\pageref{firstpage}--\pageref{lastpage}}
+
 
 % Abstract of the paper
 \begin{abstract}
-We present cosmological constraints from the combination of galaxy clustering and galaxy-galaxy lensing measurements from the DES Y3 data. We describe our modeling framework and choice of scales, validating their robustness to small-scale theoretical uncertainties by analyzing simulated data. We implement non-linear \acsuggest{galaxy} bias models that include parameterizations based on perturbation theory. We present cosmological constraints when using various (coupled) choices of scale cuts and bias models and demonstrate stability of the constraints. We reproduce the baseline choices of the 3x2 cosmology paper, and consider additional choices that make use of small scale information.  Combining with external datasets including Planck, we show constraints on w, as well as higher-order galaxy bias parameters. 
+We present cosmological parameters and galaxy bias constraints from the combination of galaxy clustering and galaxy-galaxy lensing measurements from the DES Y3 data. We describe our modeling framework and choice of scales analyzed, validating their robustness to small-scale theoretical uncertainties by analyzing simulated data. Using a linear galaxy bias model, we obtain constraints on the matter content of universe to be $\Omega_{\rm m} = 0.325^{+0.033}_{-0.034}$. We also implement non-linear galaxy bias models to probe smaller scales that include parameterizations based on hybrid perturbation theory and find that it leads to a 15\% gain in cosmological constraints. Using the \redmagic galaxy sample as foreground lens galaxies, we find the galaxy clustering and galaxy-galaxy lensing measurements to have, unexpectedly, highly de-correlated large scale amplitudes, which impacts our constraints on galaxy bias and the $S_8$ parameter. We perform robustness tests of our methodology pipeline and demonstrate stability of the constraints. We find that a scale, redshift and sky-area independent phenomenological de-correlation parameter can effectively capture this inconsistency between the galaxy clustering and galaxy-galaxy lensing. After accounting for this de-correlation, we infer the constraints on the mean host halo mass of the \redmagic galaxies from the large scale bias constraints, finding the galaxies occupy halos of mass approximately $1.5 \times 10^{13} M_{\odot}/h$. 
 \end{abstract}
+
+
 
 % Select between one and six entries from the list of approved keywords.
 % Don't make up new ones.
-\begin{keywords}
-keyword1 -- keyword2 -- keyword3
-\end{keywords}
+% \begin{keywords}
+% keyword1 -- keyword2 -- keyword3
+% \end{keywords}
 
+\input{authors.tex}
+
+\maketitle
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%% BODY OF PAPER %%%%%%%%%%%%%%%%%%
+
+
 
 \section{Introduction}
 %\IR{Mostly a placeholder introduction, will fill more details soon}
@@ -246,10 +238,10 @@ keyword1 -- keyword2 -- keyword3
 %\end{itemize}
 
 Wide-area imaging surveys of galaxies provide cosmological information through measurements of galaxy clustering and weak gravitational lensing. Galaxies are useful tracers of the full matter distribution, and their spatial clustering is used to infer the matter power spectrum. The shapes of distant galaxies are lensed by the intervening matter, providing a second way to probe the mass distribution. With wide-area galaxy surveys, these two probes of the late time universe have provided  information on both the geometry and growth of structure in the universe. 
-In recent years, two-point correlations and cross-correlations of the galaxy positions and lensing shear have been developed in a theoretical framework \citep{Cacciato_2009,Baldauf_2010,Cacciato_2012,van_den_Bosch_2013} and used to constrain cosmological parameters  \citep{Cacciato_2013,Mandelbaum_2013,Kwan_2016,More_2015,Dvornik_2018,Coupon_2015}. In practice two galaxy samples are used:  {\it lens} galaxies, and {\it source} galaxies whose shapes are used to infer the lensing shear. The three two-point correlations are known as cosmic shear (the lensing shear auto-correlation), galaxy-galaxy lensing (the cross-correlation of lens galaxy positions with shear) and the angular auto-correlation of the lens galaxy positions.
+In recent years, the combination of two-point correlations, auto-correlations of galaxy positions; and cross-correlations of the galaxy positions and lensing shear have been developed in a theoretical framework \citep{Cacciato_2009,Baldauf_2010,Cacciato_2012,van_den_Bosch_2013} and used to constrain cosmological parameters  \citep{Cacciato_2013,Mandelbaum_2013,Kwan_2016,More_2015,Dvornik_2018,Coupon_2015}. In practice two galaxy samples are used:  {\it lens} galaxies tracing the foreground large scale structure, and background {\it source} galaxies whose shapes are used to infer the lensing shear. The three two-point correlations are known as cosmic shear (the lensing shear auto-correlation), galaxy-galaxy lensing (the cross-correlation of lens galaxy positions with shear) and the angular auto-correlation of the lens galaxy positions.
 The Dark Energy Survey (DES) presented cosmological constraints from their Year 1 (Y1) data set from cosmic shear \citep{Troxel_2018} and a joint analysis of all three two-point correlations (henceforth called the ``$3\times2$pt'' datavector) \citep{Abbott_2018}. 
 
-This paper is part of a series describing the methodology and results of DES Year 3 (Y3) $3\times2$pt analysis. The cosmological constraints are presented for cosmic shear \citep{y3-cosmicshear1,y3-cosmicshear2}, the combination of galaxy clustering and galaxy-galaxy lensing using two different lens galaxy samples \citep[this paper; ][]{y3-2x2ptaltlensresults} \AC{cite magnification 2x2 here?}, as well as the $3\times2$pt analysis \citep{y3-3x2ptkp}. These cosmological results are enabled by extensive methodology developments at all stages of the analysis from pixels to cosmology, which are referenced throughout. This paper presents the modeling methodology and cosmology inference from DES Y3 galaxy clustering \citep{y3-galaxyclustering} and galaxy-galaxy lensing \citep{y3-gglensing} measurements. 
+This paper is part of a series describing the methodology and results of DES Year 3 (Y3) $3\times2$pt analysis. The cosmological constraints are presented for cosmic shear \citep{y3-cosmicshear1,y3-cosmicshear2}, the combination of galaxy clustering and galaxy-galaxy lensing using two different lens galaxy samples \citep[this paper; ][]{y3-2x2ptaltlensresults,y3-2x2ptmagnification}, as well as the $3\times2$pt analysis \citep{y3-3x2ptkp}. These cosmological results are enabled by extensive methodology developments at all stages of the analysis from pixels to cosmology, which are referenced throughout. This paper presents the modeling methodology and cosmology inference from DES Y3 galaxy clustering \citep{y3-galaxyclustering} and galaxy-galaxy lensing \citep{y3-gglensing} measurements. 
 We focus on the \redmagic \citep{Rozo_2016} galaxy sample, described further below. A parallel analysis using a different galaxy sample, the \maglim sample \citep{y3-2x2maglimforecast}, is presented in a separate paper \citep{y3-2x2ptaltlensresults}.
 
 
@@ -261,10 +253,12 @@ With a model for galaxy bias, $w(\theta)$ and $\gamma_{\rm t}$ measurements, cal
 A major part of the modeling and validation involves PT models of galaxy bias and tests using mock catalogs based on N-body simulations with various schemes of populating galaxies. The halo occupation distribution (HOD) approach has been widely developed and is used for the DES galaxy samples. For the Year 3 (Y3) dataset of DES, two independent sets of mock catalogs have been developed, based on the $\buzzard$ and \mice simulations. 
 
 
-Figure~\ref{fig:all2pt_comp}, based on simulated data, shows the expected constraints on $S_8$ and $\Omega_{\rm m}$ from the $2\times2$pt datavector and cosmic shear. It is evident that the two have some complementarity, which enables the breaking of degeneracies in both LCDM and wCDM. With data, these somewhat independent avenues to cosmology provide a valuable cross-check, as the leading sources of systematics are largely different. 
+% Figure~\ref{fig:all2pt_comp}, based on simulated data, shows the expected constraints on $S_8$ and $\Omega_{\rm m}$ from the $2\times2$pt datavector and cosmic shear. It is evident that the two have some complementarity, which enables the breaking of degeneracies in both $\Lambda$CDM and $w$CDM. With data, these somewhat independent avenues to cosmology provide a valuable cross-check, as the leading sources of systematics are largely different. 
 
 
 An interesting recent development in cosmology is a possible disagreement between predictions of the expansion rate and the amplitude of mass fluctuations (denoted $\sigma_8$) and direct measurements of these quantities in the late-time universe. The predictions are anchored via measurements of the cosmic microwave background (CMB) and use general relativity and the $\Lambda$CDM model of the universe to extrapolate to late times. This model relies on two ingredients in the energy budget of the universe that have yet to be directly detected: cold dark matter (CDM) and dark energy in the form of a cosmological constant denoted as $\Lambda$. The value of $\sigma_8$ inferred from measurements of cosmic shear and the 3x2 datavector \citep{Abbott_2018,Troxel_2018, Heymans_2021, Hikage_2019, y3-3x2ptkp, y3-cosmicshear1, y3-cosmicshear2}, from galaxy clusters \citep{Abbott_2020_clusters,To_2021} and the redshift space power spectrum \citep{Philcox_2020} tends to be lower than the CMB prediction. The significance of this ``tension''  is a work in progress and crucial to the viability of $\Lambda$CDM. The Hubble tension refers to the measured expansion rate being higher than predicted by the CMB. The resolution of the two tensions, and their possible relationship, is an area of great interest in cosmology and provides additional context for the analysis presented here. 
+
+Figure~\ref{fig:all2pt_comp}, based on simulated data, shows the expected constraints on $S_8$ and $\Omega_{\rm m}$ from the $2\times2$pt datavector and cosmic shear ($1\times 2$pt). It is evident that the two have some complementarity, which enables the breaking of degeneracies in both $\Lambda$CDM and $w$CDM cosmological models (where $w \neq -1$ points towards the departure from standard $\Lambda$CDM model). Particularly noteworthy is the significantly better constraints on dark energy parameter $w$ using $2\times2$pt in the $w$CDM model. With data, these somewhat independent avenues to cosmology provide a valuable cross-check, as the leading sources of systematics are largely different. 
 
 
 %\blue{Internal consistency description -- anticipate X??}
@@ -277,7 +271,7 @@ The formalism used to compute the $2\times2$pt datavector is presented in Sectio
 \begin{figure}
 \includegraphics[width=\columnwidth]{figs/simulated_lcdm_compare.pdf}
 \includegraphics[width=\columnwidth]{figs/simulated_wcdm_compare.pdf}
-\caption[]{Comparison of \textit{simulated} constraints on cosmological parameters $\Omega_{\mathrm{m}}$ and $S_8$ from cosmic shear alone ($1\times2$pt), galaxy clustering + galaxy-galaxy lensing ($2\times2$pt) and including all three probes ($3\times2$pt). This plot uses a \textit{simulated noise-less baseline datavector} (see \S\ref{sec:simlike_analysis}) and shows that $2\times2$pt adds complementary information to cosmic shear constraints, particularly, providing stronger constraints on $\Omega_{\mathrm{m}}$ and $w_0$.}
+\caption[]{Comparison of \textit{simulated} constraints on cosmological parameters $\Omega_{\mathrm{m}}$ and $S_8$ from cosmic shear alone ($1\times2$pt), galaxy clustering + galaxy-galaxy lensing ($2\times2$pt) and including all three probes ($3\times2$pt). This plot uses a \textit{simulated noise-less baseline datavector} (see \S\ref{sec:simlike_analysis}) and shows that $2\times2$pt adds complementary information to cosmic shear constraints, particularly, providing stronger constraints on $\Omega_{\mathrm{m}}$ and $w$.}
 \label{fig:all2pt_comp}
 \end{figure}
 
@@ -310,8 +304,8 @@ In the effective one--loop PT model used here, $P_{\mathrm{gm}}$ and $P_{\mathrm
     P_{\mathrm{gm}}(k, z) &= b_1 P_{\mathrm{mm}}(k, z) +  \frac{1}{2} b_2 P_{\rm b_1 b_2}(k, z) + \frac{1}{2} b_{\mathrm{s}} P_{\rm b_1 s^2}(k, z) \nonumber  \\
     & + \frac{1}{2} b_{\rm 3nl}P_{\rm b_1 b_{\rm 3nl}}(k, z) \\
     P_{\mathrm{gg}}(k, z) &= b_1^2 P_{\mathrm{mm}}(k, z) + b_1 b_2 P_{\rm b_1 b_2}(k, z) + b_1 b_{\mathrm{s}}P_{\rm b_1 s^2}(k, z) \nonumber \\ 
-    & + b_1b_{\rm 3nl} P_{\rm b_1 b_{\rm 3nl} }(k, z) + \frac{1}{4}b_2^2 P_{\rm b_2 b_2}(k, z) + \frac{1}{2} b_2 b_{\mathrm{s}}P_{\rm b_2 s^2}(k, z)  \nonumber \\ 
-    & + \frac{1}{4} b^2_{\mathrm{s}} P_{\rm s^2 s^2}(k, z).  
+    & + b_1b_{\rm 3nl} P_{\rm b_1 b_{\rm 3nl} }(k, z) + \frac{1}{4}b_2^2 P_{\rm b_2 b_2}(k, z)  \nonumber \\
+    &  + \frac{1}{2} b_2 b_{\mathrm{s}}P_{\rm b_2 s^2}(k, z) + \frac{1}{4} b^2_{\mathrm{s}} P_{\rm s^2 s^2}(k, z).  
 \end{align}
 \end{linenomath*}
 Here the parameters $ b_1 $, $ b_2 $, $ b_{\mathrm{s}} $ and $ b_{\rm 3nl} $ are the renormalized bias parameters \citep{McDonald2009}. The kernels $P_{\rm b_1 b_2}$, $P_{\rm b_1 s^2}$, $P_{\rm b_1 b_{\rm 3nl}}$, $P_{\rm b_2 b_2}$, $P_{\rm b_2 s^2}$ and $P_{\rm s^2 s^2}$ are described in \cite{Saito2014a}. We validated this model in \cite{p2020perturbation} using 3D correlation functions ($\xigg$ and $\xigm$, which are the Fourier transforms of power spectra mentioned above) of \redmagic galaxies measured in DES-like simulations. We found this model to describe the high signal-to-noise 3D measurements above scales of 4 Mpc/h and redshift $z < 1$ with a reduced $\chi^2$ consistent with one. Our tests also showed that at the projected precision of this analysis, two of the nonlinear bias parameters ($ b_{\mathrm{s}} $ and $ b_{\rm 3nl} $) can be fixed to their co-evolution values given by $b_{\rm s} = (-4/7) (b_1 - 1)$ and $b_{\rm 3nl} = (b_1 - 1)$. We will use this result as our \textit{fiducial} modeling choice for the one--loop PT model. 
@@ -351,16 +345,18 @@ For the galaxy-galaxy lensing observable, we use the Limber approximation \citep
 In the absence of other modeling ingredients that are described in the next section, we have $C^{ij}_{\rm g\kappa}(\ell) = C^{ij}_{\rm gm}(\ell)$ (similarly $P_{\rm g\kappa} = P_{\rm gm}$). As described in \citet{Fang_nonlimber}, even at the accuracy beyond this analysis, it is sufficient to use  the Limber approximation for the galaxy-galaxy lensing observable, while for galaxy clustering this may cause significant cosmological parameter biases. 
 
 To evaluate galaxy clustering statistics using Eq.~\ref{eq:Cl_exact}, we split the predictions into small and large scales. The non-Limber correction is only significant on large scales where non-linear contributions to the matter power spectra as well as galaxy biasing are sub-dominant. Therefore we use Limber approximation for the small-scale non-linear corrections and use non-limber corrections strictly on large scales using linear theory. Schematically, i.e., ignoring contributions from redshift-space distortions and lens magnification \cite[see][for details]{y3-generalmethods}, the galaxy clustering angular power spectrum between tomographic bins $i$ and $j$ is given by:
-\begin{linenomath*}
+% \begin{linenomath*}
+\begin{widetext}
 \begin{align}
     &C_{\rm gg}^{ij} (\ell) \nonumber\\
     &= \int d\chi\, \frac{W_{\rm g}^i(\chi)W_{\rm g}^j(\chi)}{\chi^2} \left[P_{\rm gg}\left(\frac{\ell+0.5}{\chi},\chi\right)- b_1^{i} b_1^{j} P_{\rm lin}\left(\frac{\ell+0.5}{\chi},\chi\right)\right]\nonumber\\
-    &+\frac{2}{\pi}\int d\chi_1\,b_{1}^i W_{\rm g}^i(\chi_1) D(z(\chi_1))\int d\chi_2\,b_{1}^j W_{\rm g}^j(\chi_2)D(z(\chi_2))\nonumber\\
-    &\;\;\;\;\times \int\frac{dk}{k}k^3 P_{\rm lin}(k,0)j_\ell(k\chi_1)j_\ell(k\chi_2)\,,
+    &+\frac{2}{\pi}\int d\chi_1\,b_{1}^i W_{\rm g}^i(\chi_1) D(z(\chi_1))\int d\chi_2\,b_{1}^j W_{\rm g}^j(\chi_2)D(z(\chi_2)) \int\frac{dk}{k}k^3 P_{\rm lin}(k,0)j_\ell(k\chi_1)j_\ell(k\chi_2)\,,
 \label{eq:Cl-DD_rewrite}
 \end{align}
-\end{linenomath*}
-where $D(z(\chi)$) is the growth factor and $P_{\rm lin}$ is the linear matter power spectrum. The full model of galaxy clustering including the contributions from other modeling ingredients like redshift-space distortions and lens magnification that we describe below is detailed in \cite{Fang_nonlimber} and \cite{y3-generalmethods}. 
+% \end{linenomath*}
+\end{widetext}
+
+where $D(z(\chi)$) is the growth factor, and $P_{\rm lin}$ is the linear matter power spectrum. The full model of galaxy clustering including the contributions from other modeling ingredients like redshift-space distortions and lens magnification that we describe below is detailed in \cite{Fang_nonlimber} and \cite{y3-generalmethods}. 
 
 The real-space projected statistics of our interest can be obtained from these angular correlations via:
 \begin{linenomath*}
@@ -369,7 +365,7 @@ The real-space projected statistics of our interest can be obtained from these a
     \gamma_{\rm t}^{ij}(\theta) &= \sum \frac{2\ell + 1}{4\pi \ell (\ell + 1)} \overline{P_{\ell}^2}(\cos(\theta)) \ C^{ij}_{\rm g\kappa}(\ell)
 \end{align}
 \end{linenomath*}
-where $\overline{P_{\ell}}$ and $\overline{P_{\ell}^2}$ are bin-averaged Legendre Polynomials (see \citet{y3-covariances} for exact expressions). 
+where $\overline{P_{\ell}}$ and $\overline{P_{\ell}^2}$ are bin-averaged Legendre Polynomials (see \citealt{y3-covariances} for exact expressions). 
 
 \subsection{The rest of the model}
 \label{sec:model_rest}
@@ -378,32 +374,32 @@ where $\overline{P_{\ell}}$ and $\overline{P_{\ell}^2}$ are bin-averaged Legendr
 To describe the statistics measured from data, we have to model various other physical phenomena that contribute to the signal to obtain unbiased inferences. In this section, we describe the leading sources of these modeling systematics. We have also validated in \cite{y3-generalmethods} that higher-order corrections do not bias our results. 
 
 \subsubsection{Intrinsic Alignment} 
-Galaxy-galaxy lensing aims to isolate the percent-level coherent shape distortions, or shear, of background source galaxies due to the gravitational potential of foreground lens galaxies. However, the local environment, including the gravitational tidal field, can also impact the intrinsic shapes of source galaxies and contribute to the measured shear signal. This interaction between the source galaxies and their local environment, generally known as ``intrinsic alignments'' (IA) is non-random. When there is a non-zero overlap between the source and lens redshift distributions, IA can have a non-zero contribution to the galaxy-galaxy lensing signal. To account for this effect, we model IAs using the ``tidal alignment and tidal torquing'' (TATT) model \citep{Blazek_2019}. Ignoring higher-order effects, such as lens magnification (see \citealp{y3-gglensing}), IA contribute to the galaxy-shear angular power spectra through the correlation of lens density and the $E$-mode component of intrinsic source shapes: $C^{ij}_{\rm g\kappa}(\ell) \to C^{ij}_{\rm g\kappa}(\ell) + C^{ij}_{\rm gI_{\rm E}}(\ell)$. The $C^{ij}_{\rm gI_{\rm E}}(\ell)$ term is detailed in \cite{y3-generalmethods}, \cite{y3-cosmicshear2}, \cite{y3-gglensing}, and \citet{Blazek_2019}. Within our implementation of the TATT framework, $C^{ij}_{\rm gI_{\rm E}}(\ell)$ for all tomographic bin combinations $i$ and $j$ can be expressed using five IA parameters --- $a_1$ and $a_2$ (normalization of linear and quadratic alignments); $\alpha_1$ and $\alpha_2$ (their respective redshift evolution); and $b_{\rm ta}$ (normalization of a density-weighting term) --- and the linear lens galaxy bias. In principle, there are also contributions at one-loop order in PT involving the non-linear galaxy bias and non-linear IA terms. However, in this analysis, we neglect these terms as we expect them to be subdominant, and they can be largely captured through the free $b_{\rm ta}$ parameter (see \citealp{Blazek_2015} for further discussion of these terms). 
+Galaxy-galaxy lensing aims to isolate the percent-level coherent shape distortions, or shear, of background source galaxies due to the gravitational potential of foreground lens galaxies. However, the local environment, including the gravitational tidal field, can also impact the intrinsic shapes of source galaxies and contribute to the measured shear signal. This interaction between the source galaxies and their local environment, generally known as ``intrinsic alignments'' (IA) is non-random. When there is a non-zero overlap between the source and lens redshift distributions, IA can have a non-zero contribution to the galaxy-galaxy lensing signal. To account for this effect, we model IAs using the ``tidal alignment and tidal torquing'' (TATT) model \citep{Blazek_2019}. Ignoring higher-order effects, such as lens magnification (see \citealp{y3-gglensing,y3-2x2ptmagnification}), IA contribute to the galaxy-shear angular power spectra through the correlation of lens density and the $E$-mode component of intrinsic source shapes: $C^{ij}_{\rm g\kappa}(\ell) \to C^{ij}_{\rm g\kappa}(\ell) + C^{ij}_{\rm gI_{\rm E}}(\ell)$. The $C^{ij}_{\rm gI_{\rm E}}(\ell)$ term is detailed in \cite{y3-generalmethods}, \cite{y3-cosmicshear2}, \cite{y3-gglensing}, and \citet{Blazek_2019}. Within our implementation of the TATT framework, $C^{ij}_{\rm gI_{\rm E}}(\ell)$ for all tomographic bin combinations $i$ and $j$ can be expressed using five IA parameters --- $a_1$ and $a_2$ (normalization of linear and quadratic alignments); $\alpha_1$ and $\alpha_2$ (their respective redshift evolution); and $b_{\rm ta}$ (normalization of a density-weighting term) --- and the linear lens galaxy bias. Therefore this model captures higher order contribution to the intrinsic alignment of source galaxies as compared to the simpler non-linear alignment (NLA) model that was used in the DES Y1 analysis \citep{Krause2017,Abbott_2018}. In principle, there are also contributions at one-loop order in PT involving the non-linear galaxy bias and non-linear IA terms. However, in this analysis, we neglect these terms as we expect them to be subdominant, and they can be largely captured through the free $b_{\rm ta}$ parameter (see \citealp{Blazek_2015} for further discussion of these terms). 
 
 \subsubsection{Magnification}
 All the matter between the observed galaxy and the observer acts as a gravitational lens. Hence, the galaxies get magnified, increasing the size of galaxy images (parameterized by the magnification factor, $\mu$) and increasing their total flux. The increase in the size of galaxies decreases the observed number density (due to stretching of the local sky), whereas increasing the total flux results in an increase in number density (as intrinsically fainter galaxies, which are more numerous, can be observed). This changes the galaxy-galaxy angular power spectrum to: $C^{ij}_{\rm gg}(\ell) \to C^{ij}_{\rm gg}(\ell) + C^{ij}_{\rm \mu g}(\ell) + C^{ij}_{\rm \mu \mu}(\ell) $ and the galaxy-shear angular power spectrum to $C^{ij}_{\rm g\kappa}(\ell) \to C^{ij}_{\rm g\kappa}(\ell) + C^{ij}_{\rm \mu I_{\rm E}}(\ell) + C^{ij}_{\rm \mu \kappa}(\ell)$. The auto and cross-power spectra with magnification are again given by Eq.\ref{eq:Cl_exact}. See \cite{y3-generalmethods} for the detailed description of the equations for each of the power spectra. 
 
-The magnification coefficients are computed with the Balrog image simulations \citep{Suchyta_2016,y3-balrog} in a process described in \cite{y3-2x2ptmagnification}. Galaxy profiles are drawn from the DES deep fields \cite{y3-deepfields} and injected into real DES images. The full photometry pipeline \cite{y3-gold} and \redmagic\ sample selection is applied to the new images to produce a simulated \redmagic\ sample with the same selection effects as the real data. To compute the impact of magnification, the process is repeated, this time applying a constant magnification to each injected galaxy. The magnification coefficients are then derived from the fractional increase in number density when magnification is applied. This method captures both the impact of magnification on the galaxy magnitudes and the galaxy sizes, including all numerous sample selection effects. We refer the reader to \citet{y3-2x2ptmagnification} for further details about the impact of magnification on our observable and their constraints from data. 
+The magnification coefficients are computed with the Balrog image simulations \citep{Suchyta_2016,y3-balrog} in a process described in \cite{y3-2x2ptmagnification}. Galaxy profiles are drawn from the DES deep fields \citep{y3-deepfields} and injected into real DES images \citep{Morganson_2018}. The full photometry pipeline \citep{y3-gold} and \redmagic\ sample selection are applied to the new images to produce a simulated \redmagic\ sample with the same selection effects as the real data. To compute the impact of magnification, the process is repeated, this time applying a constant magnification to each injected galaxy. The magnification coefficients are then derived from the fractional increase in number density when magnification is applied. This method captures both the impact of magnification on the galaxy magnitudes and the galaxy sizes, including all numerous sample selection effects. A similar procedure is repeated to estimate the magnification coefficients for \maglim sample. We refer the reader to \citet*{y3-2x2ptmagnification} for further details about the impact of magnification on our observable and their constraints from data. 
 
 \subsubsection{Non-locality of galaxy-galaxy lensing}  \label{sec:pm_theory}
-The configuration space estimate of the galaxy-galaxy lensing signal is a
+The configuration-space estimate of the galaxy-galaxy lensing signal is a
 non-local statistic even on linear scales. The galaxy-galaxy lensing
-signal of source galaxy at redshift ($z_{\rm s}$) by the matter around
+signal of source galaxy at redshift $z_{\rm s}$ by the matter around
 galaxy at redshift $z_{\rm l}$ at perpendicular to the line of sight
 distance $R$ is related to the mass density of matter around lens
 galaxy by:
 \begin{linenomath*}
 \begin{equation}
-    \gamma_{\rm t}(R;z_{\rm g},z_{\rm s}) = \frac{\Delta \Sigma (R;z_{\rm l})}{\Sigma_{\rm crit} (z_{\rm g},z_{\rm s})},
+    \gamma_{\rm t}(R;z_{\rm g},z_{\rm s}) = \frac{\Delta \Sigma (R;z_{\rm g})}{\Sigma_{\rm crit} (z_{\rm g},z_{\rm s})},
 \end{equation}
 \end{linenomath*}
-where, $\Delta \Sigma(R;z_{\rm l}) = \bar{\Sigma}(0,R; z_{\rm l}) - \Sigma(R;z_{\rm l})$ and $\Sigma(R;z_{\rm l})$ is the surface mass density at a transverse separation $R$ from the lens and $\bar{\Sigma}(0,R)$ is the average surface mass density within a separation $R$ from that lens. Through the $\bar{\Sigma}(0,R)$ term, $\gamma_{\rm t}$  at any scale $R$, is dependent on the mass distribution at all scales less than $R$. This makes $\gamma_{\rm t}$  highly non-local and any model that is valid only on large scales above some $r_{\rm min}$ (like PT) will break down more rapidly than for a more local statistic like \wtheta. However, as the dependence on small scales is through the \textit{mean} surface mass density, the impact of mass distribution inside $r_{\rm min}$ on $\gammat$ can be written as:
+where, $\Delta \Sigma(R;z_{\rm g}) = \bar{\Sigma}(0,R; z_{\rm g}) - \Sigma(R;z_{\rm g})$ and $\Sigma(R;z_{\rm g})$ is the surface mass density at a transverse separation $R$ from the lens and $\bar{\Sigma}(0,R)$ is the average surface mass density within a separation $R$ from that lens. Through the $\bar{\Sigma}(0,R)$ term, $\gamma_{\rm t}$  at any scale $R$, is dependent on the mass distribution at all scales less than $R$. This makes $\gamma_{\rm t}$  highly non-local, and any model that is valid only on large scales above some $r_{\rm min}$ (like PT) will break down more rapidly than for a more local statistic like \wtheta. However, as the dependence on small scales is through the \textit{mean} surface mass density, the impact of mass distribution inside $r_{\rm min}$ on $\gammat$ can be written as:
 \begin{linenomath*}
 \begin{equation}
     \gamma_{\rm t}(R;z_{\rm g},z_{\rm s}) = \frac{1}{\Sigma_{\rm crit}(z_{\rm g},z_{\rm s})} \bigg(\Delta \Sigma_{\rm model}(z_{\rm g}) + \frac{B(z_{\rm g})}{R^2} \bigg),
 \end{equation}
 \end{linenomath*}
-where, $\Delta \Sigma^{\rm model}$ is the prediction from a model (which in here is given by PT) that is valid on scales above $r_{\rm min}$. Here, $B$ is the effective total residual mass below $r_{\rm min}$ and is known as point mass (PM) parameter. In this analysis we use the thin redshift bin approximation (see Appendix~\ref{app:pm} for details of this validation) and hence the average $\gamma_{\rm t}$ signal between lens bin $i$ and source bin $j$ can be written as:
+where, $\Delta \Sigma^{\rm model}$ is the prediction from a model (which is given by PT here) that is valid on scales above $r_{\rm min}$. Here, $B$ is the effective total residual mass below $r_{\rm min}$ and is known as the point mass (PM) parameter. In this analysis we use the thin redshift bin approximation (see Appendix~\ref{app:pm} for details of this validation) and hence the average $\gamma_{\rm t}$ signal between lens bin $i$ and source bin $j$ can be written as:
 \begin{linenomath*}
 \begin{equation}
     \gamma^{ij}_{{\rm t}} = \gamma^{ij}_{{\rm t, model}} + G^{ij}/\theta^2,
@@ -413,7 +409,7 @@ where,
 
 \begin{linenomath*}
 \begin{equation}\label{eq:pm_Cij}
-    G^{ij} = B^i \, \int dz_{\rm g} \ dz_{\rm s} \ n^{i}_{{\rm g}} \ n^{j}_{{\rm s}} \ \Sigma^{-1}_{\rm crit}(z_{\rm g},z_{\rm s}) \ \chi^{-2}(z_{\rm g}) \equiv B^i \, \beta^{ij}
+    G^{ij} = B^i \, \int dz_{\rm g} \ dz_{\rm s} \ n^{i}_{{\rm g}} \ n^{j}_{{\rm s}} \ \Sigma^{-1}_{\rm crit}(z_{\rm g},z_{\rm s}) \ \chi^{-2}(z_{\rm g}) \equiv B^i \, \beta^{ij} \,.
 \end{equation}
 \end{linenomath*}
 Here $B^i$ is the PM for lens bin $i$, $n^{i}_{{\rm g}}$ is the redshift distribution of lens galaxies for tomographic bin $i$, $n^{j}_{{\rm s}}$ is the redshift distribution of source galaxies for tomographic bin $j$. 
@@ -427,28 +423,31 @@ However, instead of directly sampling over the parameters $B^i$ for each tomogra
 
 \subsection{DES Y3}
 
-The full DES survey was completed in 2019 using the Cerro Tololo Inter-American Observatory (CTIO) 4 m Blanco telescope in Chile and covered approximately 5000 square degrees of the South Galactic Cap. This 570- megapixel Dark Energy Camera \citep{Flaugher15} images the field in five broadband filters, \textit{grizY}, which span the wavelength range from approximately 400nm to 1060nm. The raw images are processed by the DES Data Management team \citep{Sevilla11, Morganson18} and after a detailed object selection criteria on the first three years of imaging data (detailed in \citet{Abbott_2018}) Y3 \gold data set containing 400 million sources are constructed.  (data without additional metadata is available as Data Release 1\footnote{https://des.ncsa.illinois.edu/releases/dr1} ). We further process this \gold data set to obtain the lens and source catalogs described in the following sub-sections.
+The full DES survey was completed in 2019 using the Cerro Tololo Inter-American Observatory (CTIO) 4-m Blanco telescope in Chile and covered approximately 5000 square degrees of the South Galactic Cap. This 570-megapixel Dark Energy Camera \citep{Flaugher15} images the field in five broadband filters, \textit{grizY}, which span the wavelength range from approximately 400nm to 1060nm. The raw images are processed by the DES Data Management team \citep{Sevilla11, Morganson18} and after a detailed object selection criteria on the first three years of imaging data (detailed in \citealt{Abbott_2018}), the Y3 \gold data set containing 400 million sources is constructed (single-epoch and coadd images are available as Data Release 1\footnote{https://des.ncsa.illinois.edu/releases/dr1} ). We further process this \gold data set to obtain the lens and source catalogs described in the following sub-sections.
 
 
 \subsubsection{\redmagic lens galaxy sample}
 
-The principal lens sample used in this analysis is selected with the \redmagic algorithm \citep{Rozo_2016} run on DES Year 3 data. \redmagic selects Luminous Red Galaxies (LRGs) according to the magnitude-color-redshift relation of red sequence galaxies, calibrated using an overlapping spectroscopic sample.
+The principal lens sample used in this analysis is selected with the \redmagic algorithm \citep{Rozo_2016} run on DES Year 3 data. \redmagic selects Luminous Red Galaxies (LRGs) according to the magnitude-color-redshift relation of red-sequence galaxies, calibrated using an overlapping spectroscopic sample.
 % from \blue{<SPEC Z SAMPLE, OZDES? ask Eli>}. 
 This sample has a threshold luminosity $L_{\rm min}$ and constant co-moving density. The full \redmagic algorithm is described in \citet{Rozo_2016}, and after application of this algorithm to DES Y3 data, we have approximately 2.6 million galaxies.
 
 % \blue{Mention about high-density and high luminosity differences}
 
-In \cite{y3-galaxyclustering} it was found the \redmagic number density fluctuates with several observational properties of the survey, which imprints a non-cosmological bias into the galaxy clustering. To account for this we assign a weight to each galaxy, which corresponds to the inverse of the angular selection function at that galaxies location. The computation and validation of these weights is described in \cite{y3-galaxyclustering}.  
+\cite{y3-galaxyclustering} found that the \redmagic number density fluctuates with several observational properties of the survey, which imprints a non-cosmological bias into the galaxy clustering. To account for this we assign a weight to each galaxy, which corresponds to the inverse of the angular selection function at that galaxy's location. The computation and validation of these weights are described in \cite{y3-galaxyclustering}.  
 
 
 \subsubsection{\maglim lens galaxy sample}
-\IR{We will detail this more in next few days}
-We also compare and show the constraints using an alternative lens sample selected by implementing a redshift-dependent magnitude cut on the $i$-band magnitude of the \gold catalog. We denote this sample by \maglim, which is detailed in \citet{y3-2x2ptaltlensresults}.
+
+We also compare and show the constraints using an alternative lens sample, $\maglim$, selected by implementing a redshift-dependent magnitude cut on the $i$-band magnitude of the \gold catalog. In particular, we apply the following cut, $i < 4z+18$, where $z$ is the photometric redshift estimate given by $\texttt{DNF}$ \citep{DNF2016}. The motivation for this selection is that it was found to be optimal in terms of its 2$\times$2pt cosmological constraints in \citet*{y3-2x2maglimforecast}.
+We additionally apply a lower magnitude cut, $i>17.5$, to remove contamination from bright objects. The resulting sample has about 10.7 million galaxies. 
+
+Similarly to \redmagic, we correct the impact of observational systematics on the \maglim galaxy clustering by assigning a weight to each galaxy, as described and validated in \cite{y3-galaxyclustering}. This sample is then used in \citet*{y3-2x2ptaltlensresults} to obtain cosmological constraints from the combination of galaxy clustering and galaxy-galaxy lensing from DES Y3 data. We refer to \cite{y3-2x2ptaltlensresults} for a detailed description of the sample and its validation.
 
 
 \subsubsection{Source galaxy shape catalog}
 
-To estimate the weak lensing shear of the observed source galaxies, we use the \metacal algorithm. This method estimates the response of a shear estimator to artificially sheared galaxy images and incorporates improvements like better PSF estimate \citep{y3-piff}, better astrometric methods \citep{y3-gold} and inclusion of inverse variance weighting. The details of the method applied to our galaxy sample are presented in \cite{y3-shapecatalog}. This methodology does not capture the object blending effects and shear-dependent detection biases and we use image simulations to calibrate this bias as detailed in \citet{y3-imagesims}. The galaxies that pass the selection cuts designed to reduce systematic biases (as detailed in \citet{y3-shapecatalog}) are used to make our source sample shape catalog. This catalog consists of approximately 100 million galaxies with effective number density of $n_{\rm eff} = 5.6$ galaxies per ${\rm arcmin}^2$ and an effective shape noise of $\sigma_{\rm e} = 0.26$.
+To estimate the weak lensing shear of the observed source galaxies, we use the \metacal algorithm \citep{Sheldon_2017, huff2017metacalibration}. This method estimates the response of a shear estimator to artificially sheared galaxy images and incorporates improvements like better PSF estimation \citep{y3-piff}, better astrometric methods \citep{y3-gold} and inclusion of inverse variance weighting. The details of the method applied to our galaxy sample are presented in \cite{y3-shapecatalog}. This methodology does not capture the object blending effects and shear-dependent detection biases and we use image simulations to calibrate this bias as detailed in \citet*{y3-imagesims}. The galaxies that pass the selection cuts designed to reduce systematic biases (as detailed in \citealt{y3-shapecatalog}) are used to make our source sample shape catalog. This catalog consists of approximately 100 million galaxies with effective number density of $n_{\rm eff} = 5.6$ galaxies per ${\rm arcmin}^2$ and an effective shape noise of $\sigma_{\rm e} = 0.26$.
 
 
 % \subsubsection{Photoz calibration}
@@ -456,37 +455,40 @@ To estimate the weak lensing shear of the observed source galaxies, we use the \
 \subsection{$\buzzard$ Simulations}
 
 % \subsubsection{$\buzzard$ sims}
-The \buzzard\ simulations are $N$-body lightcone simulations that have been populated with galaxies using the \textsc{Addgals} algorithm \citep{Addgals}, endowing each galaxy with positions, velocities, spectral energy distributions, broad band photometry, half-light radii and ellipticities. Each pair of 2 Y3 simulations are produced from a set of 3 independent $N$-body lightcones with box sizes of $1.05,\, 2.6 \textrm{ and } 4.0\, (h^{-3}\, \rm Gpc^3)$, mass resolutions of $3.3\times10^{10},\, 1.6\times10^{11},\, 5.9\times10^{11}\, h^{-1}M_{\odot}$, spanning redshift ranges $0.0< z \leq 0.32$, $0.32< z \leq 0.84$ and $0.84< z \leq 2.35$ respectively. Together these produce $10,000$ square degrees of unique lightcone. The lightcones are run with the \textsc{L-Gadget2} $N$-body code, a memory optimized version of \textsc{Gadget2} \citet{Springel_2005}, with initial conditions generated using \textsc{2LPTIC} at $z=50$ \citep{Crocce2012}. 
+The \buzzard\ simulations are $N$-body lightcone simulations that have been populated with galaxies using the \textsc{Addgals} algorithm \citep{Addgals}, endowing each galaxy with positions, velocities, spectral energy distributions, broad-band photometry, half-light radii and ellipticities. In order to build a lightcone that spans the entire redshift range covered by DES Y3 galaxies, we combine three lightcones constructed from simulations with box sizes of $1.05,\, 2.6 \textrm{ and } 4.0\, (h^{-3}\, \rm Gpc^3)$, mass resolutions of $3.3\times10^{10},\, 1.6\times10^{11},\, 5.9\times10^{11}\, h^{-1}M_{\odot}$, spanning redshift ranges $0.0< z \leq 0.32$, $0.32< z \leq 0.84$ and $0.84< z \leq 2.35$ respectively. Together these produce $10,000$ square degrees of unique lightcone. The lightcones are run with the \textsc{L-Gadget2} $N$-body code, a memory optimized version of \textsc{Gadget2} \citep{Springel_2005}, with initial conditions generated using \textsc{2LPTIC} at $z=50$ \citep{Crocce2012}. From each $10,000$ square degree catalog, we can create two DES Y3 footprints.
 
-The \textsc{Addgals} model uses the relationship, $P(\delta_{R}|M_r)$, between a local density proxy, $\delta_{R}$, and absolute magnitude $M_r$ measured from a high-resolution subhalo abundance matching (SHAM) model in order to populate galaxies into these lightcone simulations. This model reproduces the absolute--magnitude--dependent clustering of the SHAM. Additionally, we employ a conditional abundance matching (CAM) model, assigning redder SEDs to galaxies that are closer to massive dark matter halo, in a manner that allows us to reproduce the color-dependent clustering measured in the Sloan Digital Sky Survey Main Galaxy Sample (SDSS MGS) \citep{Addgals, DeRose2020b}. 
+The \textsc{Addgals} model uses the relationship, $P(\delta_{R}|M_r)$, between a local density proxy, $\delta_{R}$, and absolute magnitude $M_r$ measured from a high-resolution subhalo abundance matching (SHAM) model in order to populate galaxies into these lightcone simulations. This model reproduces the absolute--magnitude--dependent clustering of the SHAM. Additionally, we employ a conditional abundance matching (CAM) model, assigning redder SEDs to galaxies that are closer to massive dark matter halos, in a manner that allows us to reproduce the color-dependent clustering measured in the Sloan Digital Sky Survey Main Galaxy Sample (SDSS MGS) \citep{Addgals, DeRose2020b}. 
 
-These simulations are ray-traced using the spherical-harmonic transform (SHT) configuration of \textsc{Calclens}, where the SHTs are performed on an $N_{\rm side}=8192$ \textsc{HealPix} grid \citep{Becker2013}. The lensing distortion tensor is computed at each galaxy position and is used to deflect the galaxy angular positions, shear galaxy intrinsic ellipticities, including effects of reduced shear, and magnify galaxy shapes and photometry. We have conducted convergence tests of this algorithm and found that resolution effects are negligible on the scales used for this analysis \citep{DeRose2019}.
+These simulations are ray-traced using the spherical-harmonic transform (SHT) configuration of \textsc{Calclens}, where the SHTs are performed on an $N_{\rm side}=8192$ \textsc{HealPix} grid \citep{Becker2013}. The lensing distortion tensor is computed at each galaxy position and is used to deflect the galaxy angular positions, apply shear to galaxy intrinsic ellipticities, including effects of reduced shear, and magnify galaxy shapes and photometry. We have conducted convergence tests of this algorithm and found that resolution effects are negligible on the scales used for this analysis \citep{DeRose2019}.
 
-Once the simulations have been ray-traced, we apply DES Y3 specific masking and photometric errors. To mask the simulations, we employ the Y3 footprint mask but do not apply the bad region mask \citep{y3-gold}, resulting in a footprint with an area of 4143.17 square degrees. Each set of 3 $N$-body simulations yields 2 Y3 footprints that contain 520 square degrees of overlap.
+Once the simulations have been ray-traced, we apply DES Y3-specific masking and photometric errors. To mask the simulations, we employ the Y3 footprint mask but do not apply the bad region mask \citep{y3-gold}, resulting in a footprint with an area of 4143.17 square degrees. Each set of 3 $N$-body simulations yields 2 Y3 footprints that contain 520 square degrees of overlap.
 
-We apply a photometric error model to simulate wide-field photometric errors in our simulations. To select a lens galaxy sample, we run the \redmagic\ galaxy selection on our simulations using the same configuration as used in the Y3 data, as described in \citet{y3-galaxyclustering}. A weak lensing source selection is applied to the simulations using PSF-convolved sizes and $i$-band SNR to match the non-tomographic source number density, 5.9 $arcmin^{-2}$, in the \metacal\ source catalog. We employ the SOMPZ redshift estimation framework to our simulations in order to place galaxies into four source redshift bins with number densities of 1.46 $\rm arcmin^{-2}$ each. Once binned, we match the shape noise of the simulations to that measured in the \metacal\ catalog per tomographic bin, yielding shape noise values of $\sigma_{e}=[0.247, 0.266, 0.263, 0.314]$.
+We apply a photometric error model to simulate wide-field photometric errors in our simulations. To select a lens galaxy sample, we run the \redmagic\ galaxy selection on our simulations using the same configuration as used in the Y3 data, as described in \citet*{y3-galaxyclustering}. A weak lensing source selection is applied to the simulations using PSF-convolved sizes and $i$-band SNR to match the non-tomographic source number density, 5.9 $\textrm{arcmin}^{-2}$, from the \metacal\ source catalog. This matching was performed using a slightly preliminary version of the \metacal\ catalog, so this number density is slightly different from the final \metacal\ catalog that is used in our DES Y3 analyses. We employ the fiducial redshift estimation framework (see \S~\ref{sec:sourcez}) to our simulations in order to place galaxies into four source redshift bins with number densities of 1.46 $\rm arcmin^{-2}$ each. Once binned, we match the shape noise of the simulations to that measured in the \metacal\ catalog per tomographic bin, yielding shape noise values of $\sigma_{e}=[0.247, 0.266, 0.263, 0.314]$.
 
-Two-point functions are measured in the \buzzard\ simulations using the same pipeline used for the DES Y3 data, where we set \metacal\ responses and inverse variance weights equal to 1 for all galaxies, as these are not assigned in our simulation framework. Lens galaxy weights are produced in a manner similar to that done in the data and applied to measure our clustering and lensing signals. The clustering and galaxy-galaxy lensing predictions match the DES \redmagic\ measurements to $10-20\%$ accuracy over most scales and tomographic bins, except for the first lens bin, which disagrees by $50\%$ in \wtheta\. See \citet{y3-simvalidation} for a more detailed comparison.
+Two-point functions are measured in the \buzzard\ simulations using the same pipeline used for the DES Y3 data, where we set \metacal\ responses and inverse variance weights equal to 1 for all galaxies, as these are not assigned in our simulation framework. We have opted to make measurements without shape noise in order to reduce the variance in the simulated analyses using these measurements. Lens galaxy weights are produced in a manner similar to that done in the data and applied to measure our clustering and lensing signals. The clustering and galaxy-galaxy lensing predictions match the DES \redmagic\ measurements to $10-20\%$ accuracy over most scales and tomographic bins, except for the first lens bin, which disagrees by $50\%$ in \wtheta. We refer the reader to \citet*{y3-simvalidation} for a more detailed comparison.
 
 \subsection{Datavector}
 
 \subsubsection{\redmagic redshift methodology}
 \label{sec:lensz}
-We split the \redmagic sample into $N_{\rm z,g} = 5$ tomographic bins, selected on the \redmagic redshift point estimate quantity ZREDMAGIC. The bin edges used are $z=0.15, 0.35, 0.50, 0.65, 0.80, 0.90$. The first three bins use a luminosity threshold of $L_{\min} > 0.5 L_{*}$ and are known as the high-density sample. The last two redshift bins use a luminosity threshold of $L_{\min} > 1.0 L_{*}$ and are known as the high luminosity sample.
+We split the \redmagic sample into $N_{\rm z,g} = 5$ tomographic bins, selected on the \redmagic redshift point estimate quantity ZREDMAGIC. The bin edges used are $z=0.15, 0.35, 0.50, 0.65, 0.80, 0.90$. The first three bins use a luminosity threshold of $L_{\min} > 0.5 L_{*}$ and are known as the high-density sample. The last two redshift bins use a luminosity threshold of $L_{\min} > 1.0 L_{*}$ and are known as the high-luminosity sample.
 
-The redshift distributions are computed by stacking four samples from the PDF of each \redmagic galaxy, allowing for the non-gaussianity of the PDF. We find an average individual redshift uncertainty of $\sigma_z/(1+z) < 0.0126$ in the redshift range used from the variance of these samples.
+The redshift distributions are computed by stacking four samples from the PDF of each \redmagic galaxy, allowing for non-Gaussianity of the PDF. We find an average individual redshift uncertainty of $\sigma_z/(1+z) < 0.0126$ in the redshift range used from the variance of these samples. We refer the reader to \citealp{Rozo_2016} for more details on the algorithm of redshift assignment for \redmagic galaxies and to \citealp{y3-lenswz} for more details on the calibration of redshift distribution of the Y3 \redmagic sample.  
 
 \subsubsection{\maglim redshift methodology}
-\IR{We will describe this in next few days}
+
+We use $\texttt{DNF}$ for splitting the $\maglim$ sample into tomographic bins and estimating the redshift distributions. $\texttt{DNF}$  uses a training set from a spectroscopic database as reference, and then provides an estimate of the redshift of the object through a nearest-neighbors fit in a hyperplane in color and magnitude space.
+
+We split the $\maglim$ sample into $N_{\rm z,g} = 6$ tomographic bins from $z=0.2$ and $z=1.05$, selected using the $\texttt{DNF}$ photometric redshift estimate. The bin edges are $[0.20, 0.40, 0.55, 0.70, 0.85, 0.95, 1.05]$. The redshift distributions in each bin are then computed by stacking the $\texttt{DNF}$ PDF estimates of each $\maglim$ galaxy. See \cite{y3-2x2ptaltlensresults} for a more comprehensive description and validation of this methodology.
 
 \subsubsection{Source redshift methodology}
 \label{sec:sourcez}
-The methodology for calibrating the photometric redshifts of the distribution of our source galaxies is summarized in \citet{y3-sompz}. Overall, the redshift calibration methodology involves the use of self-organizing maps \citep{y3-sompz}, clustering redshifts \citep{y3-sourcewz} and shear-ratio \citep{y3-shearratio} information. The self-organizing map methodology uses DES deep-field observations \citep{y3-deepfields} as a training dataset and provides redshift distribution samples after including the uncertainties from sample variance and galaxy flux measurements. The clustering redshifts methodology uses the calibration using \redmagic and BOSS/eBOSS dataset and filters out the less likely redshift distribution samples. These two approaches provide us the mean redshift distribution of source galaxies and uncertainty in this distribution. The shear-ratio calibration uses the ratios of small-scales galaxy-galaxy lensing data, which is largely independent of the cosmological but helps calibrate the uncertainties in the redshift distributions. We include as an external likelihood in our analysis, as briefly described in \S\ref{sec:shear_ratio} and detailed in \citet{y3-shearratio}. 
+The description of the tomographic bins of source samples and the methodology for calibrating their photometric redshift distributions are summarized in \citet*{y3-sompz}. Overall, the redshift calibration methodology involves the use of self-organizing maps \citep{y3-sompz}, clustering redshifts \citep{y3-sourcewz} and shear-ratio \citep{y3-shearratio} information. The Self-Organizing Map Photometric Redshift (SOMPZ) methodology leverages additional photometric bands in the DES deep-field observations \citep{y3-deepfields} to characterize a mapping between color-space and redshifts. This mapping is then used to provide redshift distribution samples in the wide field, after including the uncertainties from sample variance and galaxy flux measurements in a way that is not subject to selection biases. The clustering redshift methodology performs the calibration by analyzing cross-correlations between \redmagic and spectroscopic data from Baryon Acoustic Oscillation Survey (BOSS) and its extension (eBOSS); and filters out the less likely redshift distribution samples from the SOMPZ output. These two approaches provide us the mean redshift distribution of source galaxies and uncertainty in this distribution. The shear-ratio calibration uses the ratios of small-scales galaxy-galaxy lensing data, which is largely independent of the cosmological parameters but helps calibrate the uncertainties in the redshift distributions. We include it downstream in our analysis pipeline as an external likelihood, as briefly described in \S\ref{sec:shear_ratio} and detailed in \citet*{y3-shearratio}. 
 
-Finally, we split source catalog into $N_{\rm z,s} = 4$ tomographic bins.The mean redshift distribution of lenses and sources are compared in the Fig.~\ref{fig:nz_comp}.
+Finally, we split the source catalog into $N_{\rm z,s} = 4$ tomographic bins. The mean redshift distribution of \redmagic lens galaxies and source galaxies are compared in Fig.~\ref{fig:nz_comp}. We refer the reader to \citet*{y3-2x2ptaltlensresults} for \maglim sample redshift distribution. 
 \begin{figure}
 \includegraphics[width=0.48\textwidth]{figs/nz_DES.pdf}
-\caption[]{Comparison of the normalized redshift distributions of the source galaxies and \redmagic lens galaxies in the data.}
+\caption[]{Comparison of the normalized redshift distributions of various tomographic bins of the source galaxies and \redmagic lens galaxies in the data.}
 \label{fig:nz_comp}
 \end{figure}
 
@@ -499,21 +501,23 @@ For galaxy clustering, we use the Landy-Szalay estimator given as:
     w(\theta) = \frac{DD - 2DR + RR}{RR}
 \end{equation}
 \end{linenomath*}
-where $DD$, $DR$ and $RR$ are normalized weighted number counts of galaxy-galaxy, galaxy-random and random-random pairs within angular and tomographic bins. For lens tomographic bin, we measure the auto-correlations in $N_{\theta} = 20$ log-spaced angular bins ranging from 2.5arcmin to 250arcmin. Each lens galaxy in the catalog ($g_i$) is weighted with its systematic weight $w_{\rm g_i}$. This systematic weight aims to remove the correlations between the large scale fluctuations due to changing observing conditions in the telescope and the cosmological density field. Our randoms catalog is 40 times larger than the galaxy catalog. The validation of this estimator and systematic weights of the lens galaxies is presented in \cite{y3-galaxyclustering}. In total we have $N_{\wtheta} = N_{\rm z,g} \times N_{\theta} = 100$ measured $\wtheta$ datapoints. 
+where $DD$, $DR$ and $RR$ are normalized weighted number counts of galaxy-galaxy, galaxy-random and random-random pairs within angular and tomographic bins. For lens tomographic bins, we measure the auto-correlations in $N_{\theta} = 20$ log-spaced angular bins ranging from 2.5 arcmin to 250 arcmin. Each lens galaxy in the catalog ($g_i$) is weighted with its systematic weight $w_{\rm g_i}$. This systematic weight aims to remove the correlations between the large-scale fluctuations due to changing observing conditions in the telescope and the cosmological density field. Our catalog of randoms is 40 times larger than the galaxy catalog. The validation of this estimator and systematic weights of the lens galaxies is presented in \cite{y3-galaxyclustering}. In total we have $N_{\wtheta} = N_{\rm z,g} \times N_{\theta} = 100$ measured $\wtheta$ datapoints. 
 
 
-The galaxy-galaxy lensing estimator including the effects of boost factors, random point subtraction and shear responses is given by:
+The galaxy-galaxy lensing estimator used in this analysis is given by:
 \begin{linenomath*}
 \begin{equation}
     \gamma_{\rm t}(\theta) = \frac{\sum_k w_{\textrm{r}_k}}{\sum_i w_{\textrm{g}_i}} \frac{\sum_{ij} w_{\textrm{g}_i} w_{\textrm{s}_j} e^{\rm LS}_{{\rm t},ij}}{\sum_{kj} w_{\textrm{r}_k} w_{\textrm{s}_j}} - \frac{\sum_{kj} w_{\textrm{r}_k} w_{\textrm{s}_j} e^{\rm RS}_{{\rm t},kj}}{\sum_{kj} w_{\textrm{r}_k} w_{\textrm{s}_j}}
 \end{equation}
 \end{linenomath*}
-where $e^{\rm LS}_{{\rm t},ij}$ and $e^{\rm RS}_{{\rm t},kj}$ is the measured tangential ellipticity of source galaxy $j$ around lens galaxy $i$ and random point $k$ respectively. The weights $w_{\textrm{g}_i}$ is the systematic weight of lens galaxy as described above, $w_{\textrm{r}_k}$ is the weight of random point that we fix to 1 and $w_{\textrm{s}_j}$ is the weight of the source galaxy that is computed from inverse variance of the shear response weighted ellipticity of the galaxy (see \cite{y3-shapecatalog} for details). This estimator has been detailed and validated in \cite{y3-gglensing}. We measure this signal for each pair of lens and source tomographic bins and hence in total we have  $N_{\gammat} = N_{\rm z,g} \times N_{\rm z,s} \times N_{\theta} = 400$ measured $\gammat$ datapoints. 
+where $e^{\rm LS}_{{\rm t},ij}$ and $e^{\rm RS}_{{\rm t},kj}$ is the measured tangential ellipticity of source galaxy $j$ around lens galaxy $i$ and random point $k$ respectively. The weight $w_{\textrm{g}_i}$ is the systematic weight of lens galaxy as described above, $w_{\textrm{r}_k}$ is the weight of random point that we fix to 1 and $w_{\textrm{s}_j}$ is the weight of the source galaxy that is computed from inverse variance of the shear response weighted ellipticity of the galaxy (see \citealt{y3-shapecatalog} for details). 
+% including the effects of boost factors, random point subtraction and shear responses is given by
+This estimator has been detailed and validated in \cite{y3-gglensing}. We measure this signal for each pair of lens and source tomographic bins and hence in total we have  $N_{\gammat} = N_{\rm z,g} \times N_{\rm z,s} \times N_{\theta} = 400$ measured $\gammat$ datapoints. 
 
-We analyze both of these measured statistics jointly and hence we have in total $N_{\rm data} = N_{\wtheta} + N_{\gammat} = 500$ datapoints. Our measured signal to noise of $\wtheta$ is 177$\sigma$ \citep{y3-galaxyclustering}, of  $\gammat$ is 121$\sigma$ \citep{y3-gglensing}; giving total joint total signal to noise of 201$\sigma$. 
+We analyze both of these measured statistics jointly and hence we have in total $N_{\rm data} = N_{\wtheta} + N_{\gammat} = 500$ datapoints. Our measured signal to noise \footnote{signal to noise is calculated as $(\vec{\mathbfcal{D}}\, {\mathbfcal{C}}^{-1}_{\vec{\mathbfcal{D}}\vec{\mathbfcal{D}}} \,  \vec{\mathbfcal{D}})$, where $\vec{\mathbfcal{D}}$ is the data under consideration and $\mathbfcal{C}_{\vec{\mathbfcal{D}}\vec{\mathbfcal{D}}}$ is its covariance}, using \redmagic lens sample, of $\wtheta$ is 177 \citep{y3-galaxyclustering}, of  $\gammat$ is 121 \citep{y3-gglensing}; giving total joint total signal to noise of 201. 
 
 \subsubsection{Shear ratios}\label{sec:shear_ratio}
-As will be detailed in \S\ref{sec:scale_cuts}, in this analysis, we remove the small scales' non-linear information from the 2pt measurements that are presented in the above sub-section. However, as presented in \citet{y3-shearratio}, the ratio of $\gammat$ measurements for the same lens bin but different source bins is well described by our model (see \S\ref{sec:stat_theory}) even in small scales. Therefore we include these ratios (referred to as shear-ratio henceforth) as an additional independent dataset in our likelihood. In this shear-ratio datavector, we use the angular scales above the scale cuts of 2Mpc/$h$ and less than our fiducial scale cuts for 2pt measurements described in \S\ref{sec:scale_cuts} (we also leave two datapoints between 2pt scale cuts and shear-ratio scale cuts to remove any potential correlations between the two). The details of the analysis choices for shear ratios measurements and its covariance are detailed in \citet{y3-shearratio} and \citet{y3-3x2ptkp}. 
+As will be detailed in \S\ref{sec:scale_cuts}, in this analysis, we remove the small scales' non-linear information from the 2pt measurements that are presented in the above sub-section. However, as presented in \citet*{y3-shearratio}, the ratio of $\gammat$ measurements for the same lens bin but different source bins is well described by our model (see \S\ref{sec:stat_theory}) even on small scales. Therefore we include these ratios (referred to as shear-ratio henceforth) as an additional independent dataset in our likelihood. In this shear-ratio datavector, we use the angular scales above the scale cuts of 2Mpc/$h$ and less than our fiducial scale cuts for 2pt measurements described in \S\ref{sec:scale_cuts} (we also leave two datapoints between 2pt scale cuts and shear-ratio scale cuts to remove any potential correlations between the two). The details of the analysis choices for shear-ratio measurements and the corresponding covariance matrix are detailed in \citet*{y3-shearratio} and \citet*{y3-3x2ptkp}. 
 
 % \SP{A short paragraph about blinding and tests that we passed before unblinding}
 
@@ -525,37 +529,56 @@ As will be detailed in \S\ref{sec:scale_cuts}, in this analysis, we remove the s
 \subsection{Covariance}
 \label{sec:cov}
 
-In this analysis, the covariance between the statistic $\wtheta$ and $\gammat$ (${\mathbfcal{C}}$) is modeled as sum of gaussian term ($\mathbfcal{C}_{\rm G}$), trispectrum term ($\mathbfcal{C}_{\rm NG}$) and super-sample covariance term ($\mathbfcal{C}_{\rm SSC}$). The analytic model used to describe ($\mathbfcal{C}_{\rm G}$) is described in \cite{y3-covariances}. The terms $\mathbfcal{C}_{\rm NG}$ and $\mathbfcal{C}_{\rm SSC}$ are modeled using a halo model framework as detailed in \cite{Krause:2016jvl, Krause2017}. The covariance calculation has been performed using CosmoCov package \citep{Fang:2020vhc} package and the robustness of this covariance matrix has been tested and detailed in \cite{y3-covariances}. 
+In this analysis, the covariance between the statistic $\wtheta$ and $\gammat$ (${\mathbfcal{C}}$) is modeled as the sum of Gaussian term ($\mathbfcal{C}_{\rm G}$), trispectrum term ($\mathbfcal{C}_{\rm NG}$) and super-sample covariance term ($\mathbfcal{C}_{\rm SSC}$). The analytic model used to describe ($\mathbfcal{C}_{\rm G}$) is described in \cite{y3-covariances}. The terms $\mathbfcal{C}_{\rm NG}$ and $\mathbfcal{C}_{\rm SSC}$ are modeled using a halo model framework as detailed in \cite{Krause:2016jvl, Krause2017}. The covariance calculation has been performed using the CosmoCov package \citep{Fang:2020vhc} package and the robustness of this covariance matrix has been tested and detailed in \cite{y3-covariances}. 
+
+
+\subsubsection{Accounting for LSS systematics}
+
+As described in \cite{y3-galaxyclustering}, we modify the $w(\theta)$ covariance to analytically marginalize over two sources of uncertainty in the correction of survey systematics: the choice of correction method, and the bias of the fiducial method as measured on simulations. 
+
+These systematics are modelled as 
+\begin{equation}
+w\prime(\theta) = w(\theta) + A_{1} \Delta w_{\rm method}(\theta) + A_{2} w_{r. \, s. \, bias}(\theta)
+\end{equation}
+
+where $\Delta w_{\rm method}(\theta)$ is the difference between two systematics correction methods: Iterative Systematic Decontamination (\isd) and Elastic Net (\enet), and $w_{r. \, s. \, bias}(\theta)$ is the residual systematic bias measured on Log-normal mocks. Both terms are presented in detail in \cite{y3-galaxyclustering}. $A_{1}$ and $A_{2}$ are arbitrary amplitudes.  
+
+We analytically marginalise over these terms a unit Gaussian as the prior on the amplitudes $A_{1}$ and $A_{2}$. The measured difference is a $1\sigma$ deviation from the prior centre. The final covariance term is 
+
+\begin{equation}
+\Delta \mathbfcal{C} =  {\bf \Delta w_{\rm method}} {\bf \Delta w_{\rm method}}^{T} \ + \ {\bf w_{r. \, s. \, bias}} {\bf w_{r. \, s. \, bias}}^{T}
+\end{equation}
+
+The systematic contribution to each tomographic bin is treated as independent so the covariance between lens bins is not modified. 
 
 \subsubsection{Point mass analytic marginalization}
 \label{sec:cov_pm}
-As mentioned in \S~\ref{sec:pm_theory}, we modify the inverse-covariance to perform analytic marginalization over the PM parameters. As detailed in \cite{MacCrann:2019ntb}, using generalization of Sherman-Morrison formula, this procedure changes our fiducial inverse-covariance ${\mathbfcal{C}}^{-1}$ to ${\mathbfcal{C}}^{-1}_{\rm wPM}$ as follows:
+As mentioned in \S~\ref{sec:pm_theory}, we modify the inverse-covariance to perform analytic marginalization over the PM parameters. As detailed in \cite{MacCrann:2019ntb}, using the generalization of the Sherman-Morrison formula, this procedure changes our fiducial inverse-covariance ${\mathbfcal{C}}^{-1}$ to ${\mathbfcal{C}}^{-1}_{\rm wPM}$ as follows:
 \begin{linenomath*}
 \begin{equation}
     {\mathbfcal{C}}^{-1}_{\rm wPM} = {\mathbfcal{C}}^{-1} - {\mathbfcal{C}}^{-1} {\mathbfcal{U}} ({\mathbfcal{I}} + {\mathbfcal{U}}^{\rm T} {\mathbfcal{C}}^{-1} {\mathbfcal{U}})^{-1} {\mathbfcal{U}}^{\rm T} {\mathbfcal{C}}^{-1}
 \end{equation}
 \end{linenomath*}
 
-Here ${\mathbfcal{C}}^{-1}$ is the inverse of the halo-model covariance as described above, $\mathbfcal{I}$ is the unity matrix and $\mathbfcal{U}$ is a $N_{\rm data} \times N_{\rm z,g}$ matrix where $i$-th column is given by $\sigma_{B^i} \vec{t}^{i}$. Here $\sigma_{B^i}$ is the standard deviation of gaussian prior on point mass parameter $B^i$ and $\vec{t}^{i}$ is given as:
+Here ${\mathbfcal{C}}^{-1}$ is the inverse of the halo-model covariance as described above, $\mathbfcal{I}$ is the unity matrix and $\mathbfcal{U}$ is a $N_{\rm data} \times N_{\rm z,g}$ matrix where the $i$-th column is given by $\sigma_{B^i} \vec{t}^{i}$. Here $\sigma_{B^i}$ is the standard deviation of the  Gaussian prior on point mass parameter $B^i$ and $\vec{t}^{i}$ is given as:
 \begin{linenomath*}
 \begin{equation}
     \bigg(\vec{t}^{i} \bigg)_{a} = \begin{cases}
-0 & \parbox{5cm}{if $a$-th element is not corresponding to $\gammat$ and if lens-redshift of $a$-th element $\neq i$} \\  
+0 & \parbox{5cm}{if $a$-th element does not correspond to $\gammat$ and if lens-redshift of $a$-th element $\neq i$} \\  
 \\
 \beta^{ij}\theta_{a}^{-2} &\text{otherwise}
 \end{cases}
 \end{equation}
 \end{linenomath*}
-where the expression for $\beta^{ij}$ is shown in Eq.\ref{eq:pm_Cij}. We evaluate that term at fixed \textit{fiducial} cosmology as given in Table \ref{tab:params_all}. In our analysis we put a wide prior on PM parameters $B^i$ by choosing $\sigma_{B^i} = 10000$ which translates to effective mass residual prior of $10^{17} M_{\odot}/h$ (see Eq.~\ref{eq:pm_halo})
-
+where the expression for $\beta^{ij}$ is shown in Eq.\ref{eq:pm_Cij}. We evaluate that term at fixed \textit{fiducial} cosmology as given in Table \ref{tab:params_all}. In our analysis we put a wide prior on PM parameters $B^i$ by choosing $\sigma_{B^i} = 10000$ which translates to the effective mass residual prior of $10^{17} M_{\odot}/h$ (see Eq.~\ref{eq:pm_halo}).
 
 
 \section{Validation of parameter inference}
-
+\label{sec:param_inf}
 We assume the likelihood to be a multivariate Gaussian
 \begin{linenomath*}
 \begin{equation}
-    \ln \mathcal{L}(\vec{\mathbfcal{D}}|\Theta) = -\frac{1}{2} (\vec{\mathbfcal{D}} - \vec{\mathbfcal{T}}(\Theta)) \, {\mathbfcal{C}}^{-1}_{\rm wPM} \,  (\vec{\mathbfcal{D}} - \vec{\mathbfcal{T}}(\Theta))^{\rm T}
+    \ln \mathcal{L}(\vec{\mathbfcal{D}}|\Theta) = -\frac{1}{2} (\vec{\mathbfcal{D}} - \vec{\mathbfcal{T}}(\Theta)) \, {\mathbfcal{C}}^{-1}_{\rm wPM} \,  (\vec{\mathbfcal{D}} - \vec{\mathbfcal{T}}(\Theta))^{\rm T} \,.
 \end{equation}
 \end{linenomath*}
 Here $\vec{\mathbfcal{D}}$ is the measured $\gammat$ and $\wtheta$ datavector of length $N_{\rm data}$ (if we use all the angular and tomograhic bins), $\vec{\mathbfcal{T}}$ is the theoretical prediction for these statistics for the parameter values given by  $\Theta$, and ${\mathbfcal{C}}^{-1}_{\rm wPM}$ is the inverse covariance matrix of shape $N_{\rm data} \times N_{\rm data}$ (including modifications from the PM marginalization term).
@@ -568,7 +591,7 @@ For our analysis we use the \textsc{Polychord} sampler with the settings describ
 \end{linenomath*}
 where ${\rm P}(\Theta)$ are the priors on the parameters of our model, described in \S\ref{sec:prior}, and ${\rm P}(\vec{\mathbfcal{D}})$ is the evidence of data. 
 
-To estimate the constraints on the cosmological parameters, we have to marginalize the posterior over all the rest of the multi-dimensional parameter space. We quote the mean and 1$\sigma$ variance of the marginalized posteriors when quoting the constraints. However, note that these marginalized constraints can be biased if the posterior has significant non-gaussianities due to projection effects. The maximum-a-posteriori (MAP) point is not affected by the projection effects; therefore, we also show this in our plots. However, we note that in high-dimensional parameter space with a non-trivial structure, it is difficult to converge on a global maximum of whole posterior as we have here.
+To estimate the constraints on the cosmological parameters, we have to marginalize the posterior over all the rest of the multi-dimensional parameter space. We quote the mean and 1$\sigma$ variance of the marginalized posteriors when quoting the constraints. However, note that these marginalized constraints can be biased if the posterior has significant non-Gaussianities due to projection effects. The maximum-a-posteriori (MAP) point is not affected by the projection effects; therefore, we also show this in our plots. However, we note that in high-dimensional parameter space with a non-trivial structure, it is difficult to converge on a global maximum of the whole posterior as we have here.
 
 
 \subsection{Analysis choices}
@@ -580,10 +603,10 @@ In this analysis, we test two different galaxy bias models:
 \begin{enumerate}
     \item \textit{Linear bias} model: The simplest model to describe the overdensity of galaxies, valid at large scales, assumes it to be linearly biased with respect to the dark matter overdensity (see \S~\ref{sec:Pk_pred}). In this model, for each lens tomographic bin $j$, the average bias of galaxies is given by a constant free parameter $b^j_1$. 
     \item \textit{Non-linear bias} model: 
-    To describe the clustering of galaxies at smaller scales robustly, we also implement a one--loop PT model. As described in the \S~\ref{sec:Pk_pred}, in general, this model has four free bias parameters for each lens tomographic bin. For each tomographic bin $j$, we fix three of the non-linear parameters to their co-evolution value given by: $b^{j}_{\rm s} = (-4/7) (b^j_1 - 1)$ and $b^{j}_{\rm 3nl} = b^j_1 - 1$ \citep{McDonald2009,Saito2014a}. Therefore, in our implementation, we have two free parameters for each tomographic bin: linear bias $b^{j}_1$ and non-linear bias $b^{j}_2$. This allows us to probe smaller scales with minimal extra degrees of freedom, obtaining tighter constraints on the cosmological parameters while keeping the biases due to projection effects, as described below, in control. 
+    To describe the clustering of galaxies at smaller scales robustly, we also implement a one--loop PT model. As described in \S~\ref{sec:Pk_pred}, in general, this model has four free bias parameters for each lens tomographic bin. For each tomographic bin $j$, we fix three of the non-linear parameters to their co-evolution value given by: $b^{j}_{\rm s} = (-4/7) (b^j_1 - 1)$ and $b^{j}_{\rm 3nl} = b^j_1 - 1$ \citep{McDonald2009,Saito2014a}. Therefore, in our implementation, we have two free parameters for each tomographic bin: linear bias $b^{j}_1$ and non-linear bias $b^{j}_2$. This allows us to probe smaller scales with minimal extra degrees of freedom, obtaining tighter constraints on the cosmological parameters while keeping the biases due to projection effects, as described below, in control. 
     % \jdr{Probably good to emphasize that this choice is largely driven by our desire to minimize projection effects. If we could, we would want to marginalize over all of these parameters}.
     
-    As we describe below, in order to test the robustness of our model, we analyze the bias in the marginalized constraints on cosmological parameters. However, given asymmetric non-Gaussian degeneracies between the parameters of the model (particularly between cosmological parameters and poorly constrained non-linear bias parameters $b^{j}_2$ and intrinsic alignment parameters), the marginalized constraints show projection effects. We find that sampling the non-linear bias model parameters in combination with $\sigma_8$, as $b^{j}_1 \sigma_8$ and $b^{j}_2 \sigma^2_8$ removes much of the posterior projection effect. As detailed later, these parameters are sampled with flat priors. We emphasize that the flat priors imposed on these non-linear combinations of parameters are non-informative and our final constraints on $b^{j}_1$ and $b^{j}_2$ are significantly tighter than the projection of priors on these parameters.
+    As we describe below, in order to test the robustness of our model, we analyze the bias in the marginalized constraints on cosmological parameters. However, given asymmetric non-Gaussian degeneracies between the parameters of the model (particularly between cosmological parameters and poorly constrained non-linear bias parameters $b^{j}_2$ and intrinsic alignment parameters), the marginalized constraints show projection effects. We find that sampling the non-linear bias model parameters in combination with $\sigma_8$, as $b^{j}_1 \sigma_8$ and $b^{j}_2 \sigma^2_8$ removes much of the posterior projection effect. As detailed later, these parameters are sampled with flat priors. We emphasize that the flat priors imposed on these non-linear combinations of parameters are non-informative, and our final constraints on $b^{j}_1$ and $b^{j}_2$ are significantly tighter than the projection of priors on these parameters.
     % \red{In the end, we care about the posterior on the cosmology parameters. This requires marginalizing over all the free parameters of the model. $\wtheta$ and $\gammat$ has a lower signal to noise and hence can not constrain the higher-order parameters like $b^j_2$ tightly. When projecting this to lower dimension space, the posterior-mass due to non-linear parameters being far from the truth can bias the constraints on the marginalized parameters due to subtle degeneracies. This is known as projection effect or volume effect.} We find that using a uniform prior on the linear and non-linear bias parameters lead to large projection effects.  Therefore, we choose to sample the parameters $b^{j}_1 \sigma_8$ and $b^{j}_2 \sigma^2_8$ which helps in removing much of the projection effect. \red{This choice is motivated because the overdensity of galaxy is approximately given by $\delta_g \sim b_1 \delta_m + b_2 \delta_m^2$.} We use wide uninformative uniform priors on these parameters for each tomographic bin $j$ given by : $0.67 < b^{j}_1 \sigma_8 < 3.0$ and $-4.2 < b^{j}_2 \sigma^2_8 < 4.2$. At each point in the parameter space, we calculate the $\sigma_8$ and retrieve the bias parameters $b^{j}_1$ and $b^{j}_2$ from the sampled parameters $b^{j}_1$ and $b^{j}_2$.
 \end{enumerate}
 
@@ -607,26 +630,9 @@ As mentioned earlier, marginalizing over a multi-dimensional parameter space can
 %Due to projection effects, we do not expect the marginalized contours of this \textit{baseline} analysis to be centered at the true cosmology, and the difference between them is a measure of the expected projection effect. 
 We then run our MCMC chain on the \textit{contaminated} datavector that includes higher-order non-linearities, and we measure the bias between the peak of the marginalized \textit{baseline} contours and the peak of the marginalized \textit{contaminated} contours. 
 
-From the tests on 3D correlation functions at fixed cosmology in simulations \citep{p2020perturbation}, we find that the \textit{linear bias} model is a good description above 8Mpc/$h$ while the two-parameter \textit{non-linear bias} model describes the correlations above 4Mpc/$h$. We convert these physical co-moving distances to angular scale cuts for each tomographic bin and treat them as starting guesses. Then for each model, we iterate over scale cuts until we find the minimum scales at which the bias between marginalized \textit{baseline} and \textit{contaminated} contours is less than $0.3\sigma$. For \lcdm\ model, we impose this criterion on the $\Omega_{\rm m}-S_8$ projected plane, and for $w$CDM model, we impose this criterion on all three 2D plane combinations constructed out of $\Omega_{\rm m}$, $S_8$ and $w$. Further validation of these cuts is performed using simulations in \ref{sec:sims} and \citet{y3-simvalidation}. 
-
-
-
-\subsubsection{Priors and Fiducial values}
-\label{sec:prior}
-We use non-informative priors on the cosmological parameters to ensure statistically independent constraints on them. Although our constraints on cosmological parameters like the Hubble constant $h$, spectral index $n_{\rm s}$ and baryon fraction $\Omega_{\rm b}$ are modest compared to surveys like \textit{Planck}, we have verified that our choice of wide priors does not bias the inference on our cosmological parameters of interest, $\Omega_{\rm m}$ and $S_8$. 
-
-When analyzing the \textit{linear bias} model, we use a wide uniform prior on these linear bias parameters, given by $0.5 < b^{j}_1 < 3$. For the \textit{non-linear bias} model, as mentioned above, we sample the parameters $b^{j}_1 \sigma_8$ and $b^{j}_2 \sigma^2_8$. We use uninformative uniform priors on these parameters for each tomographic bin $j$ given by $0.67 < b^{j}_1 \sigma_8 < 3.0$ and $-4.2 < b^{j}_2 \sigma^2_8 < 4.2$. At each point in the parameter space, we calculate  $\sigma_8$ and retrieve the bias parameters $b^{j}_1$ and $b^{j}_2$ from the sampled parameters to get the prediction from the theory model. The fiducial values of the linear bias parameters $b^{j}_1$ used in our simulated likelihood tests are motivated by the  recovered bias values in N-body simulations and are summarized in Table \ref{tab:params_all}. 
-For the non-linear bias parameters, the fiducial value of $b^{j}_2$ are obtained from the interpolated $b_1-b_2$ relation extracted from 3D tests in \mice simulations (see Fig.8 of \cite{p2020perturbation}) for fiducial $b^j_1$ for each tomographic bin.
-
-For the intrinsic alignment parameters, we again choose uniform and uninformative priors. As the IA parameters are directly dependent on the source galaxy population, it is challenging to motivate a reasonable choice of prior from other studies. The fiducial values of these parameters required for the simulated test are motivated by the Y1 analysis as detailed in \cite{Samuroff_2019}.
-
-We impose an informative prior for our measurement systematics parameters, lens photo-z shift errors $\Delta z$, and shear biases. These priors are motivated in \citet{y3-imagesims} and \citet{y3-shapecatalog}. 
-In our simulated tests, we remain conservative and fix the shear systematics to their fiducial values and analyze the datavectors at the mean source redshift distribution $n_{\rm s}(z)$, as shown in Fig.~\ref{fig:nz_comp}.  
-
-
+From tests on 3D correlation functions at fixed cosmology in simulations \citep{p2020perturbation}, we find that the \textit{linear bias} model is a good description above 8Mpc/$h$ while the two-parameter \textit{non-linear bias} model describes the correlations above 4Mpc/$h$. We convert these physical co-moving distances to angular scale cuts for each tomographic bin and treat them as starting guesses. Then for each model, we iterate over scale cuts until we find the minimum scales at which the bias between marginalized \textit{baseline} and \textit{contaminated} contours is less than $0.3\sigma$. For the \lcdm\ model, we impose this criterion on the $\Omega_{\rm m}-S_8$ projected plane, and for the $w$CDM model, we impose this criterion on all three 2D plane combinations constructed out of $\Omega_{\rm m}$, $S_8$ and $w$. Further validation of these cuts is performed using simulations in \ref{sec:sims} and \citet*{y3-simvalidation}. 
 
 \begin{table}[H]
-\label{tab:params_all}
 \centering 
 % \resizebox{\textwidth}{!}
 \tabcolsep=0.11cm
@@ -725,7 +731,131 @@ $w$CDM & $w$ & $\mathcal{U}[-2, -0.33]$ &-1.0\\
 \end{tabular}
 \caption{The parameters varied in different models, their prior range used ($\mathcal{U}[X, Y] \equiv$ Uniform prior between $X$ and $Y$; $\mathcal{G}[\mu, \sigma] \equiv$ Gaussian prior with mean $\mu$ and standard-deviation $\sigma$) in this analysis and the fiducial values used for simulated likelihood tests.}
 % \IR{will update after source n(z) prescription finalizes}}
+\label{tab:params_all}
 \end{table}
+
+
+
+\subsubsection{Priors and Fiducial values}
+\label{sec:prior}
+We use non-informative priors on the cosmological parameters to ensure statistically independent constraints on them. Although our constraints on cosmological parameters like the Hubble constant $h$, spectral index $n_{\rm s}$ and baryon fraction $\Omega_{\rm b}$ are modest compared to surveys like \textit{Planck}, we have verified that our choice of wide priors does not bias the inference on our cosmological parameters of interest, $\Omega_{\rm m}$ and $S_8$. 
+
+When analyzing the \textit{linear bias} model, we use a wide uniform prior on these linear bias parameters, given by $0.5 < b^{j}_1 < 3$. For the \textit{non-linear bias} model, as mentioned above, we sample the parameters $b^{j}_1 \sigma_8$ and $b^{j}_2 \sigma^2_8$. We use uninformative uniform priors on these parameters for each tomographic bin $j$ given by $0.67 < b^{j}_1 \sigma_8 < 3.0$ and $-4.2 < b^{j}_2 \sigma^2_8 < 4.2$. At each point in the parameter space, we calculate  $\sigma_8$ and retrieve the bias parameters $b^{j}_1$ and $b^{j}_2$ from the sampled parameters to get the prediction from the theory model. The fiducial values of the linear bias parameters $b^{j}_1$ used in our simulated likelihood tests are motivated by the  recovered bias values in N-body simulations and are summarized in Table \ref{tab:params_all}. 
+For the non-linear bias parameters, the fiducial values of $b^{j}_2$ are obtained from the interpolated $b_1-b_2$ relation extracted from 3D tests in \mice simulations (see Fig.8 of \citealt{p2020perturbation}) for fiducial $b^j_1$ for each tomographic bin.
+
+For the intrinsic alignment parameters, we again choose uniform and uninformative priors. As the IA parameters are directly dependent on the source galaxy population, it is challenging to motivate a reasonable choice of prior from other studies. The fiducial values of these parameters required for the simulated test are motivated by the Y1 analysis as detailed in \cite{Samuroff_2019}.
+
+We impose an informative prior for our measurement systematics parameters, lens photo-$z$ shift errors ($\Delta z^j_{\rm g}$), lens photo-$z$ width errors ($\sigma z^j_{\rm g}$), source photo-$z$ shift errors ($\Delta z^j_{\rm s}$) and shear calibration biases ($m^j$) for various tomographic bins $i$. The photo-$z$ shift parameter changes the redshift distributions for lenses (g) or sources (s) for any tomographic bin $j$, used in the theory predictions (see \S~\ref{sec:stat_theory}) as $n^j_{\rm g/s}(z) \longrightarrow n^j_{\rm g/s}(z - \Delta z^j_{\rm g/s})$, while the photo-$z$ width results in  $n^j_{\rm g}(z) \longrightarrow n^j_{\rm g}(\sigma z^j_{\rm g}[z - \langle z \rangle^j] + \langle z \rangle^j)$, where $\langle z \rangle^j$ is the mean redshift of the tomographic bin $j$. Lastly, the shear calibration uncertainity modifies the galaxy-galaxy lensing signal prediction between lens bin $i$ and source bin $j$ as $\gamma^{ij}_{\rm t} \longrightarrow (1 + m^j)\gamma^{ij}_{\rm t}$. 
+
+
+For the source photo-$z$, we refer the reader to \citet*{y3-sompz} for characterization of source redshift distribution, \citet*{y3-sourcewz} for reducing the uncertainity in these redshift distribution using cross-correlations with spectroscopic galaxies and \citet*{y3-hyperrank} for a validation of this shift parameterization using a more complete method based on sampling the discrete distribution realizations. \citet*{y3-imagesims} and \citet*{y3-sompz} for methodology of obtaining these priors. For the shear calibration biases, we refer the reader to \citet*{y3-imagesims} which tests the shape measurement pipeline and determine the shear calibration uncertainity while accounting for effects like blending using state-of-art image simulation suite. For the priors on the lens photo-$z$ shift and lens photo-$z$ width errors, we refer the reader to \citet*{y3-lenswz}, which cross-correlated the DES lens samples with spectroscopic galaxy samples from Sloan Digital Sky Survey to calibrate the photometric redshifts of lenses (also see \citet*{y3-2x2ptaltlenssompz} for further details on \maglim redshift calibration)
+
+% The gaussian priors on the lens photo-$z$ shift errors
+Note that in our simulated tests, we remain conservative and fix the shear systematics to their fiducial values and analyze the datavectors at the mean source redshift distribution $n_{\rm s}(z)$, as shown in Fig.~\ref{fig:nz_comp}. 
+
+
+
+% \begin{table}[H]
+% \centering 
+% % \resizebox{\textwidth}{!}
+% \tabcolsep=0.11cm
+% \begin{tabular}{|c| c c c|}
+% \hline
+% % \hline
+% Model & Parameter & Prior & Fiducial  \\ \hline
+% % & & & \\
+% & \multicolumn{3}{c|}{\textbf{Cosmology}} \\ 
+
+% % & & & \\
+% \multirow{24}{*}{\shortstack[c]{Common\\ Parameters}} & $\Omega_{\rm m}$ & $\mathcal{U}[0.1, 0.9]$ & 0.3 \\
+%  & $A_s\times 10^{-9}$ & $\mathcal{U}[0.5, 5]$ & $2.19$\\
+ 
+% & $\Omega_{\rm b}$ & $\mathcal{U}[0.03, 0.07]$ & 0.048 \\
+
+% & $n_{\rm s}$ & $\mathcal{U}[0.87, 1.06]$ & 0.97\\
+
+% & $h$ & $\mathcal{U}[0.55, 0.91]$ &  0.69\\
+
+% & $\Omega_{\nu}h^2 \times 10^{-4}$ & $\mathcal{U}[6.0, 64.4]$ & 8.3 \\  
+% % & & & \\
+% \cline{2-4}
+% % & & & \\
+% & \multicolumn{3}{c|}{\textbf{Intrinsic Alignment}} \\ 
+
+% & $a_1$ & $\mathcal{U}[-5.0, 5.0]$ & 0.7\\
+% & $a_2$ & $\mathcal{U}[-5.0, 5.0]$ & -1.36\\
+% & $\alpha_1$ & $\mathcal{U}[-5.0, 5.0]$ & -1.7\\
+% & $\alpha_2$ & $\mathcal{U}[-5.0, 5.0]$ & -2.5\\
+% & $b_{\rm ta}$ & $\mathcal{U}[0.0, 2.0]$ & 1.0\\ 
+% % & & & \\
+% \cline{2-4}
+% % & & & \\
+% & \multicolumn{3}{c|}{\textbf{Lens photo-$z$}} \\  
+% & $\Delta z_{\rm g}^{1}$ & $\mathcal{G}[0.006, 0.004]$ & 0.0  \\ 
+% & $\Delta z_{\rm g}^{2}$ & $\mathcal{G}[0.001, 0.003]$ & 0.0  \\ 
+% & $\Delta z_{\rm g}^{3}$ & $\mathcal{G}[0.004, 0.003]$ & 0.0  \\ 
+% & $\Delta z_{\rm g}^{4}$ & $\mathcal{G}[-0.002, 0.005]$ & 0.0 \\ 
+% & $\Delta z_{\rm g}^{5}$ & $\mathcal{G}[-0.007, 0.01]$ & 0.0  \\ 
+% & $\sigma z_{\rm g}^{5}$ & $\mathcal{G}[1.23, 0.054]$ & 1.0  \\ 
+% % & & & \\
+% \cline{2-4}
+% % & & & \\
+% & \multicolumn{3}{c|}{\textbf{Shear Calibration}} \\ 
+% & \shortstack[c]{$m^{1}$}   & $\mathcal{G}[-0.0063, 0.0091]$ & 0.0 \\ 
+% & \shortstack[c]{$m^{2}$}   & $\mathcal{G}[-0.0198, 0.0078]$ & 0.0 \\ 
+% & \shortstack[c]{$m^{3}$}   & $\mathcal{G}[-0.0241, 0.0076]$ & 0.0 \\ 
+% & \shortstack[c]{$m^{4}$}   & $\mathcal{G}[-0.0369, 0.0076]$ & 0.0 \\ 
+% % & & & \\
+% \cline{2-4}
+% % & & & \\
+% & \multicolumn{3}{c|}{\textbf{Source photo-$z$}} \\  
+% & $\Delta z_{\rm s}^{1}$ & $\mathcal{G}[0.0, 0.018]$ & 0.0  \\ 
+% & $\Delta z_{\rm s}^{2}$ & $\mathcal{G}[0.0, 0.015]$ & 0.0  \\ 
+% & $\Delta z_{\rm s}^{3}$ & $\mathcal{G}[0.0, 0.011]$ & 0.0  \\ 
+% & $\Delta z_{\rm s}^{4}$ & $\mathcal{G}[0.0, 0.017]$ & 0.0 \\ 
+% \cline{2-4}
+% & \multicolumn{3}{c|}{\textbf{Point Mass}} \\ 
+% & \shortstack[c]{$B_i$\\ $i \in [1,5]$}  & $\mathcal{G}[0.0, 10^4]$ & 0.0\\ 
+% % & {$B_i$\\ $i \in [1,5]$} & $\mathcal{G}[0.0, 10^4]$ & 0.0\\  
+% % & & & \\
+% \hline
+% % & & & \\
+% & \multicolumn{3}{c|}{\textbf{Cosmology}} \\ 
+% $w$CDM & $w$ & $\mathcal{U}[-2, -0.33]$ &-1.0\\  
+% % & & & \\
+% \hline 
+% % & & & \\
+% % & & & \\
+% & \multicolumn{3}{c|}{\textbf{Galaxy Bias}} \\  
+% \multirow{2}{*}{\shortstack[c]{\textit{Linear}\\ \textit{Bias}}} &
+% \shortstack[c]{$b_1^{i}$\\ $i \in [1,3]$}  & $\mathcal{U}[0.8, 3.0]$ & 1.7\\ 
+% % & & & \\
+% & \shortstack[c]{$b_1^{i}$\\ $i \in [4,5]$}  & $\mathcal{U}[0.8, 3.0]$ & 2.0\\ 
+% % & & & \\
+% \hline
+% % & & & \\
+% & \multicolumn{3}{c|}{\textbf{Galaxy Bias}} \\  
+% \multirow{9}{*}{\shortstack[c]{\textit{Non-linear}\\ \textit{Bias}}} &
+% \shortstack[c]{$b_1^{i}\sigma_8$\\ $i \in [1,3]$}  & $\mathcal{U}[0.67, 2.52]$ & 1.42\\ 
+% % & & & \\
+% & \shortstack[c]{$b_1^{i}\sigma_8$\\ $i \in [4,5]$}  & $\mathcal{U}[0.67, 2.52]$ & 1.68\\ 
+% % & & & \\
+
+% & \shortstack[c]{$b_2^{i}\sigma^2_8$\\ $i \in [1,3]$}  & $\mathcal{U}[-3.5, 3.5]$ & 0.16\\ 
+% % & & & \\
+% & \shortstack[c]{$b_2^{i}\sigma^2_8$\\ $i \in [4,5]$}  & $\mathcal{U}[-3.5, 3.5]$ & 0.35\\ 
+% % & & & \\
+
+% % % \cline{2-4}
+% % & & & \\
+% % & \shortstack[c]{$b_2^{i}\sigma^2_8$\\ $i \in [1,5]$} & $\mathcal{U}[0.8, 3.0]$ &\shortstack[c]{Lens Galaxy\\ non-linear bias} \\ 
+% % & & & \\
+% \hline
+% \end{tabular}
+% \caption{The parameters varied in different models, their prior range used ($\mathcal{U}[X, Y] \equiv$ Uniform prior between $X$ and $Y$; $\mathcal{G}[\mu, \sigma] \equiv$ Gaussian prior with mean $\mu$ and standard-deviation $\sigma$) in this analysis and the fiducial values used for simulated likelihood tests.}
+% % \IR{will update after source n(z) prescription finalizes}}
+% \label{tab:params_all}
+% \end{table}
 
 
 
@@ -745,7 +875,7 @@ We perform simulated likelihood tests to validate our choices of scale cuts, gal
 Our baseline case assumes linear galaxy bias and no baryonic impact on the matter-matter power spectrum. We use the linear bias values for the five lens bins (in order of increasing redshift) $b_1 = 1.7, 1.7, 1.7, 2.0$, and  $2.0$. We compare the cosmology constraints from the baseline datavector with a simulated datavector contaminated with contributions from non-linear bias and baryonic physics. For non-linear bias, we use the fiducial $b^j_2$ values as described in the previous section and fix the bias parameters $b^j_s$ and $b^j_{\rm 3nl}$ to their co-evolution values. To capture the effect of baryons, we use the OWLS-AGN datavector, which is based on hydrodynamical simulations that include the effects of supernovae and AGN feedback, metal-dependent radiative cooling, stellar evolution, and kinematic stellar feedback. 
 
 % We define our criteria for scale cuts in the 2D plane of the most constrained cosmological parameters. For $\Lambda$CDM cosmology, we use $\Omega_{\rm m} - S_8$ while for $w$CDM cosmology we use $\Omega_{\rm m}-S_8$, $\Omega_{\rm m}-w_0$ and $S_8-w_0$. Our criterion for the minimum scales is that the distance of the peak of 2D marginalized contours with the baseline datavector to the peak with the contaminated datavector is less than 0.3$\sigma$. 
-Fig.~\ref{fig:sim_lin} shows this test along with the 0.3$\sigma$ contours. The left panel is for $\Lambda$CDM and the right panel for $w$CDM (only the $w- \Omega_{\rm m}$ plane is shown, but we also verified that the criterion is satisfied in the $\Omega_{\rm m}-S_8$ and $S_8-w$  planes.). We find that for the linear bias model, the angular cuts corresponding to (8,6) Mpc/$h$ for $w(\theta)$ and $\gamma_{\rm t}$ pass the above-mentioned criteria. 
+Fig.~\ref{fig:sim_lin} shows this test along with the 0.3$\sigma$ contours. The left panel is for $\Lambda$CDM, and the right panel for $w$CDM (only the $w- \Omega_{\rm m}$ plane is shown, but we also verified that the criterion is satisfied in the $\Omega_{\rm m}-S_8$ and $S_8-w$  planes). We find that for the linear bias model, the angular cuts corresponding to (8,6) Mpc/$h$ for $w(\theta)$ and $\gamma_{\rm t}$ pass the above-mentioned criteria. 
 
 \begin{figure*}
 \centering
@@ -756,28 +886,28 @@ Fig.~\ref{fig:sim_lin} shows this test along with the 0.3$\sigma$ contours. The 
 \subfloat{%
       \includegraphics[width=0.49\textwidth]{figs/compare_cosmo_all_2x2pt_wcdm__v0.4_sc_8_6_0.5_Omw_draftv1.pdf}
      }
-    \caption[]{Simulated datavector: parameter constraints from a datavector contaminated with non-linear bias + baryons but analyzed with a linear bias + halofit model. The left panel shows contours for \lcdm, and the right panel shows \wcdm. The scale cuts are (8,6) Mpc/$h$ for $w(\theta)$ and $\gamma_{\rm t}$ respectively. In both panels, we compare the peak of the marginalized constraints in the 2D  parameter plane for the contaminated datavector (blue circle) and the baseline datavector  (red square). We see that the distance between the peaks of marginalized baseline contours is within 0.3$\sigma$ of the marginalized contaminated contours, which is our criterion for acceptable scale cuts. }
+    \caption[]{Simulated datavector: parameter constraints from a datavector contaminated with non-linear bias + baryons but analyzed with a linear bias + \textsc{Halofit} model. The left panel shows contours for \lcdm, and the right panel shows \wcdm. The scale cuts are (8,6) Mpc/$h$ for $w(\theta)$ and $\gamma_{\rm t}$ respectively. In both panels, we compare the peak of the marginalized constraints in the 2D  parameter plane for the contaminated datavector (blue circle) and the baseline datavector  (red square). We see that the distance between the peaks of marginalized baseline contours is within 0.3$\sigma$ of the marginalized contaminated contours, which is our criterion for acceptable scale cuts. }
 \label{fig:sim_lin}    
 \end{figure*}
 
 
 
-\subsection{Results on Simulations}
+\subsection{\buzzard simulation tests}
 \label{sec:sims}
-Finally, we validate our model with mock catalogs from cosmological simulations for analysis choice combinations that pass the simulated likelihood tests. We use the suite of Y3 \buzzard simulations described above. We again require that our analysis choices return unbiased cosmological parameters. In order to reduce the sample variance, we analyze the mean datavector constructed from 18 \buzzard realizations. 
+Finally, we validate our model with mock catalogs from cosmological simulations for analysis choice combinations that pass the simulated likelihood tests. These tests, and tests of cosmic shear and $3\times2$-point analyses, are presented in full in \citet*{y3-simvalidation}, and we summarize the details relevant for $2\times2$-point analyses here. We use the suite of Y3 \buzzard simulations described above. We again require that our analysis choices return unbiased cosmological parameters. In order to reduce the sample variance, we analyze the mean datavector constructed from 18 \buzzard realizations. 
 % \blue{We analyze the \mice simulations as well, but only one realization is available. The recovered cosmological contours and bestfit are shown in Appendix YYY}.
 
-\subsubsection{Linear Bias Model}
-We ran the simulated $2\times 2$-point analyses on the mean of the measurements from all 18 \buzzard simulations. We compare our model for $w(\theta)$ and $\gamma_{\rm t}(\theta)$ to our measurements at the true \textsc{Buzzard} cosmology, leaving only linear bias and magnification coefficients free. In this case, we have ten free parameters in total, and we find a chi-squared value of 13.6 for 285 data points using our \textit{fiducial} scale cuts (and assuming the covariance of a single simulation, as appropriate for application to the data). The analysis assumes true source redshift distributions and the fiducial model described in \S\ref{sec:sourcez}. Fixing the source redshift uncertainties to zero is a conservative choice; it results in cosmological constraints that have a probability to exceed a parameter bias of $0.3/1\sigma$ in the $S_8-\Omega_{\rm m}$ plane of 0.25/$<$0.01 and 0.35/$<$0.01 in the $w-\Omega_{m}$ plane. A similar analysis, using calibrated photometric redshift (and their uncertainties) shows a probability to exceed a parameter bias of $0.3/1\sigma$ in the $S_8-\Omega_{\rm m}$ plane with respect to the true redshift analysis of 0.08/$<$0.01, and 0.05/$<$0.01 in the $w-\Omega_{m}$ plane.
+\subsubsection{Validation of linear bias model}
+We have run simulated $2\times 2$-point analyses on the mean of the measurements from all 18 \buzzard simulations. We compare our model for $w(\theta)$ and $\gamma_{\rm t}(\theta)$ to our measurements at the true \buzzard cosmology, leaving only linear bias and lens magnification coefficients free. In this case, we have ten free parameters in total, and we find a chi-squared value of 13.6 for 285 data points using our \textit{fiducial} scale cuts and assuming the covariance of a single simulation, as appropriate for application to the data. This analysis assumes true source redshift distributions, and we fix the source redshift uncertainties to zero as a conservative choice. This results in cosmological constraints that have a probability to exceed (PTE) a parameter bias of $0.3\sigma$ ($1\sigma$) in the $S_8-\Omega_{\rm m}$ plane of 0.25 ($<$0.01) and 0.35 ($<$0.01) in the $w-\Omega_{\rm m}$ plane. The mean two-dimensional parameter biases are $0.23\sigma$ in the $S_8-\Omega_{\rm m}$ plane and $0.18\sigma$ in the $w-\Omega_{\rm m}$ plane. These biases are consistent with noise, as they have an approximately $1/\sqrt{18}\sigma$ error associated with them. A similar analysis using calibrated photometric redshift distributions and their uncertainties shows a probability to exceed a parameter bias of $0.3\sigma$ ($1\sigma$) in the $S_8-\Omega_{\rm m}$ plane with respect to the true redshift analysis of 0.08 ($<$0.01), and 0.05 ($<$0.01) in the $w-\Omega_{m}$ plane. The mean two-dimensional parameter biases for this analysis are $0.07\sigma$ in the $S_8-\Omega_{\rm m}$ plane and $0.05\sigma$ in the $w-\Omega_{\rm m}$ plane. For a more detailed discussion how these PTE values are calculated, see Section V of \citet*{y3-simvalidation}.
 
 % Note that the projected baseline contours 
-The left panels of Fig.~\ref{fig:bcc_des_lcdm} and Fig.~\ref{fig:bcc_des_wcdm} show the 0.3$\sigma$ constraints obtained from analyzing both linear and non-linear bias models in $\Lambda$CDM and $w$CDM cosmologies on \buzzard datavector in blue colored contours. Since we expect the marginalized posteriors to be effected by the projection effects, we compare these contours to a simulated noiseless baseline datavector obtained at the input cosmology of \buzzard (denoted by gray dashed lines in Fig.~\ref{fig:bcc_des_lcdm} and Fig.~\ref{fig:bcc_des_wcdm}, also see \citet{DeRose2019}). Note that since \buzzard simulations do not include the impact of intrinsic alignment of the source galaxies, we fix the intrinsic alignment parameters in Table~\ref{tab:params_all} to zero. As changing the input truth values of the parameters impacts the shape of the multi-dimensional posterior, we find that the effective magnitude and direction of the projection effects of the baseline contours (comparison of red contours in  Fig.~\ref{fig:sim_lin} with Fig.~\ref{fig:bcc_des_lcdm} and Fig.~\ref{fig:bcc_des_wcdm}) are different. 
+The left panels of Fig.~\ref{fig:bcc_des_lcdm} and Fig.~\ref{fig:bcc_des_wcdm} show the 0.3$\sigma$ constraints obtained from analyzing both linear and non-linear bias models in $\Lambda$CDM and $w$CDM cosmologies on the \buzzard datavector in blue colored contours. Since we expect the marginalized posteriors to be affected by the projection effects, we compare these contours to a simulated noiseless baseline datavector obtained at the input cosmology of \buzzard (denoted by gray dashed lines in Fig.~\ref{fig:bcc_des_lcdm} and Fig.~\ref{fig:bcc_des_wcdm}, also see \citealt{DeRose2019}). As changing the input truth values of the parameters impacts the shape of the multi-dimensional posterior, we find that the effective magnitude and direction of the projection effects of the baseline contours (comparison of red contours in  Fig.~\ref{fig:sim_lin} with Fig.~\ref{fig:bcc_des_lcdm} and Fig.~\ref{fig:bcc_des_wcdm}) are different. 
 % \blue{Make the case about projection effects being different for wcdm baseline compared to simulated DV analysis in previous section. i.e. projection effects are dependent upon the parameter values.}
 
-\subsubsection{Scale cuts for non-linear bias}
-Likewise, we have run simulated $2\times 2$-point analyses, including our non-linear bias model on the mean of the measurements from all 18 simulations. Similar to the procedure used to determine the linear bias scale cuts in \S\ref{sec:sc_linbias}, we iterate over scale cuts for each tomographic bin defined from varying physical scale cuts. We find that angular scale cuts corresponding to (4,4) Mpc/$h$ for $\wtheta$ and $\gammat$ pass our threshold scale cut criteria.  
+\subsubsection{Scale cuts for non-linear bias model}
+Likewise, we have run simulated $2\times 2$-point analyses including our non-linear bias model on the mean of the measurements from all 18 simulations. Similar to the procedure used to determine the linear bias scale cuts in \S\ref{sec:sc_linbias}, we iterate over scale cuts for each tomographic bin defined from varying physical scale cuts. We find that angular scale cuts corresponding to (4,4) Mpc/$h$ for $\wtheta$ and $\gammat$ pass our threshold scale cut criteria.  
 
-We compare our model for $w(\theta)$ and $\gamma_{\rm t}(\theta)$ to our measurements at the true \textsc{Buzzard} cosmology, leaving our bias model parameters and magnification coefficients free, which add 15 free parameters. We find a $\chi^2$ value of 15.6 for 340 data points using our non-linear bias scale cuts and assuming the covariance of a single simulation. Simulated analyses using true redshift distributions result in cosmological constraints that have a probability to exceed a parameter bias of $0.3/1\sigma$ in the $S_8-\Omega_{m}$ plane of 0.20/$<$0.01 and 0.26/$<$0.01 in the $w-\Omega_{m}$ plane.
+We compare our model for $w(\theta)$ and $\gamma_{\rm t}(\theta)$ to our measurements at the true \textsc{Buzzard} cosmology, leaving our bias model parameters and magnification coefficients free, which add 15 free parameters. We find a $\chi^2$ value of 15.6 for 340 data points using our non-linear bias scale cuts and assuming the covariance of a single simulation. Simulated analyses using true redshift distributions result in cosmological constraints that have a probability to exceed a parameter bias of $0.3\sigma$ ($1\sigma$) in the $S_8-\Omega_{m}$ plane of 0.20 ($<$0.01) and 0.26 ($<$0.01) in the $w-\Omega_{m}$ plane. The associated mean two-dimensional parameter biases for these analyses are $0.04\sigma$ in the $S_8-\Omega_{\rm m}$ plane and $0.11\sigma$ in the $w-\Omega_{m}$ plane.
 
 
 \begin{figure*}
@@ -785,16 +915,13 @@ We compare our model for $w(\theta)$ and $\gamma_{\rm t}(\theta)$ to our measure
 \includegraphics[width=\columnwidth]{figs/Buzzard_nlbias44_2x2pt_lcdm.pdf}
 \caption[]{The blue contours show constraints from \buzzard simulations (blue contours) compared with  \buzzard-like theory datavector (red contours) in the $\Lambda$CDM cosmological model.
 %The blue contours correspond to the result from the mean (over all Y3-like realizations) of Buzzard 2x2pt measurements, with covariance corresponding to single realization. 
-The left (right) panel shows the constraints for linear (non-linear) bias models with the scale cuts given in the legend. The linear and non-linear bias values are extracted from fits to the 3D correlation functions ($\xigg$ and $\xigm$). We see that both the scale cut choices satisfy our validation criterion. 
+The left (right) panel shows the constraints for linear (non-linear) bias models with the scale cuts given in the legend. The linear and non-linear bias values are extracted from fits to the 3D correlation functions ($\xigg$ and $\xigm$). We see that both the scale-cut choices satisfy our validation criterion. 
 % \IR{we will update these plots with all 18 realizations in Y3 settings including varying neutrino masses}
 }
 \label{fig:bcc_des_lcdm}
 \end{figure*}
 
-In \fig{fig:bcc_des_lcdm} we show the constraints on $\Omega_{\rm m}$ and $S_8$ from the mean Buzzard $2\times2$pt measurements for \lcdm. The results for the linear and non-linear bias models are shown, and again, the criterion for unbiased cosmology is satisfied for the fiducial choice of scale cuts. 
-The \fig{fig:bcc_des_wcdm} shows the same analysis for $\Omega_{\rm m}$ and $w$.
-
-
+In \fig{fig:bcc_des_lcdm} we show the constraints on $\Omega_{\rm m}$ and $S_8$ from the mean Buzzard $2\times2$pt measurements for \lcdm. The results for the linear and non-linear bias models are shown, and again, the criterion for unbiased cosmology is satisfied for the fiducial choice of scale cuts. \fig{fig:bcc_des_wcdm} shows the same analysis for $\Omega_{\rm m}$ and $w$.
 
 \begin{figure*}
 \includegraphics[width=\columnwidth]{figs/Buzzard_linbias86_2x2pt_wcdm.pdf}
@@ -806,98 +933,137 @@ The \fig{fig:bcc_des_wcdm} shows the same analysis for $\Omega_{\rm m}$ and $w$.
 
 
 \section{Results}
+In this section we present the main cosmology results using the DES Y3 \redmagic lens galaxy sample, compare them to a similar analysis done using \maglim lens galaxy sample and study the implications of our constraints on  galaxy bias. 
+\subsection{\redmagic cosmology constraints}
 
-\subsection{Cosmology constraints}
+In Fig.~\ref{fig:des_comp}, we compare the constraints on the cosmological parameters obtained from jointly analyzing $\wtheta$ and $\gammat$ with both linear and non-linear bias models. The 2x2pt constraints on $\om$ are at the 10\% level with DES Y3. We find $\om = 0.325^{+0.033}_{-0.034}$ from the linear bias model at the fiducial scale cuts of (8,6) Mpc/$h$ (for $(w(\theta),\gamma_{\rm t}(\theta))$ respectively), while using the non-linear bias model at same scale cuts gives completely consistent constraints.
+% us $\om = 0.30^{+0.035}_{-0.037}$. 
+We also show the results for the scale cuts of (4,4) Mpc/$h$ using the non-linear bias model where we find $\om=0.323^{+0.034}_{-0.035}$. These marginalized constraints on $\om$ are completely consistent with the public DES-Y1  $2\times 2$pt results \citep{Abbott_2018} and \Planck results (including all  three correlations between temperature and E-mode polarization, see \citet{Planck_2018_cosmo} for details). 
 
-In Fig.~\ref{fig:des_comp}, we compare the constraints on the cosmological parameters obtained from jointly analyzing $\wtheta$ and $\gammat$ with both linear and non-linear bias models. We find $\om = 0.325^{+0.033}_{-0.034}$ from the linear bias model at our fiducial scale cuts, while using the non-linear bias for same scale cuts gives us $\om = 0.3^{+0.035}_{-0.037}$. We also show the results for the scale cuts of (4,4) Mpc/$h$ using the non-linear bias model where we find $\om=0.323^{+0.034}_{-0.035}$. These marginalized constraints on $\om$ are completely consistent with the DES-Y1 results and \Planck results. 
+With the fiducial analysis of linear bias model with (8,6) Mpc/$h$ scale cuts, we find $S_8 = 0.668^{+0.026}_{-0.033}$. As is evident from the contour plot in Fig.~\ref{fig:des_comp}, our constraints prefer lower $S_8$ compared to previous analyses.  We use the Monte-Carlo parameter difference distribution methodology (as detailed in \citealt{y3-tensions}) to assess the tension between our fiducial constraints and \Planck results. Using this criterion, we find a tension of 4.1$\sigma$, largely driven by the differences in the $S_8$ parameter. We find similar constraints on $S_8$ from the non-linear bias as well for both the scale cuts. We investigate the cause of this low $S_8$ value in the following sub-sections. 
 
-With our fiducial analysis of linear bias model with (8,6) Mpc/$h$ scale cuts, we find $S_8 = 0.668^{+0.026}_{-0.033}$. As is evident from the contour plot in Fig.~\ref{fig:des_comp}, our constraints prefer lower $S_8$ compared to previous analyses.  We use the Monte-Carlo parameter difference distribution methodology (as detailed in \cite{y3-tensions}) to assess the tension between our fiducial constraints and \Planck results. Using this criterion, we find a tension of 4.1$\sigma$, largely driven by the differences in the $S_8$ parameter. We find similar constraints on $S_8$ from the non-linear bias as well for both our scale cuts. We investigate the cause of this low $S_8$ value in the following sub-sections. 
-
-Note that non-linear bias model at (4,4)Mpc/$h$ scale cuts results in tighter constraints in the $\om-S_8$ plane. We estimate the total constraining power in this $\om-S_8$ plane by integrating the marginalized posterior for each model. 
+Note that the non-linear bias model at (4,4) Mpc/$h$ scale cuts results in tighter constraints in the $\om-S_8$ plane. We estimate the total constraining power in this $\om-S_8$ plane by integrating the marginalized posterior for each model. 
 % We find that non-linear bias model at  (4,4)Mpc/$h$ results in the value of $0.005226$. In comparison, linear bias at (8,6)Mpc/$h$ results in a value of $0.00613$; therefore non-linear bias model results in a $14.8$\% increase in constraining power. 
-We find that non-linear bias model at  (4,4)Mpc/$h$ results in a $14.8$\% increase in constraining power compared to linear bias at (8,6)Mpc/$h$. 
+We find that the non-linear bias model at  (4,4) Mpc/$h$ results in a $15$\% increase in constraining power compared to the linear bias model at (8,6) Mpc/$h$. 
 
 
 \begin{figure}
 \includegraphics[width=\columnwidth]{figs/data_lcdm_comp.pdf}
-\caption[]{Comparison of the $2\times2$pt $\Lambda$CDM constraints for both linear bias and non-linear bias models at their respectively defined scale cuts given in the legend. We find a preference for low value of $S_8$ with both models of galaxy bias which we investigate in \S\ref{sec:internal_consistency}. We also show that using non-linear bias leads to better constraints in the $\Omega_{\rm m} - S_8$ plane. }\label{fig:des_comp}
+\caption[]{Comparison of the $2\times2$pt $\Lambda$CDM constraints, using \redmagic lens galaxy sample, for both linear bias and non-linear bias models at their respectively defined scale cuts given in the legend. We find a preference for a low value of $S_8$, compared to DES Y1 $2\times2$pt public result \citep{Abbott_2018} and Planck 2018 public result \citep{Planck_2018_cosmo}, with both models of galaxy bias which we investigate in \S\ref{sec:internal_consistency}. We also show that analyzing smaller scales using the non-linear galaxy bias model leads to 15\% better constraints in the $\Omega_{\rm m} - S_8$ plane. }\label{fig:des_comp}
 \end{figure}
 
-\subsection{Comparison with Maglim results}
-In \citet{y3-2x2ptaltlensresults} we analyze an alternative magnitude limited lens sample and present the results obtained from a $2\times2$pt analysis of that. We find that that sample gives consistent results with the DES Y1 results. This also suggests some lingering systematic rather than some physical process happening with the \redmagic sample.  
-\subsubsection{Non-linear bias results on Maglim}
-% \blue{Refer to the 3D residuals in Buzzard sims plot in the appendix.}
-We also show the constraints obtained from the non-linear bias analysis on the Maglim sample in Fig.~\ref{fig:maglim_comp}. 
+\subsection{Comparison with \maglim results}
+% In \citet*{y3-2x2ptaltlensresults}, $2\times 2$pt analysis using the \maglim lens sample is presented. We find that sample gives consistent results with the DES Y1 results. This also suggests a lingering systematic rather than a physical process happening with the \redmagic sample.  
+% % \subsubsection{Non-linear bias results on Maglim}
+% % \blue{Refer to the 3D residuals in Buzzard sims plot in the appendix.}
+% We also show the constraints obtained from the non-linear bias analysis on the \maglim sample in Fig.~\ref{fig:maglim_comp}. 
 
+In Fig.~\ref{fig:maglim_comp}, we show the comparison of the cosmology constraints obtained from $2\times 2$pt analysis using \maglim sample (see \citet*{y3-2x2ptaltlensresults}) with the results obtained here with the \redmagic lens galaxy sample. The top panel compares the $\Omega_{\rm m}- S_8$ contours assuming $\Lambda$CDM cosmology while the bottom panel compares the $\Omega_{\rm m}- w$ contours assuming $w$CDM cosmology. We compare both the linear bias and the non-linear bias model at the (8,6) Mpc/$h$ and (4,4) Mpc/$h$ scale cuts respectively. We again find that the $S_8$ constraints obtained with the \redmagic sample are low compared to the \maglim sample for both linear and non-linear bias models. As the source galaxy sample, the measurement pipeline and the modeling methodology used are the same for the two $2\times 2$pt analysis, this suggests that the preference for low $S_8$ in our fiducial results is driven by the Y3 \redmagic lens galaxy sample, which we investigate in the following sub-sections. 
+
+In the bottom panel showing the $w$CDM cosmology constraints, we also show the maximum a posteriori (MAP) estimate in the $\Omega_{\rm m}- w$ plane, in order to estimate the projection effects arising from marginalizing over the large multi-dimensional space to these two dimensional contours (see Fig.~\ref{fig:sim_lin} and Fig.~\ref{fig:bcc_des_wcdm}). We find that the non-linear bias model suffers from mild projection effects (although note the caveats about MAP estimator mentioned in \S~\ref{sec:param_inf}). We also emphasize that using the non-linear galaxy bias model with smaller scale cuts gives similar improvement in the figure-of-merit of the cosmology contours shown in Fig.~\ref{fig:maglim_comp}, using both \redmagic and \maglim lens galaxy samples. 
 
 \begin{figure}
 \includegraphics[width=\columnwidth]{figs/compare_maglim_rm_lcdm.pdf}
 \includegraphics[width=\columnwidth]{figs/compare_maglim_rm_wcdm.pdf}
 % \vfil
 % \includegraphics[width=\columnwidth]{figs/data_wcdm_comp.pdf}
-\caption[]{Comparing the constraints from $2\times2$pt between \redmagic and Maglim sample. The black dot and blue star denote the MAP point estimate for \redmagic linear and non-linear bias model respectively. \IR{The Maglim Non-linear bias (4,4) chain is old one with using all six tomographic bins. The one with four bins is still running.}}\label{fig:maglim_comp}
+\caption[]{Comparing the constraints from $2\times2$pt between the \redmagic and Maglim samples. The black dot and blue star denote the MAP point estimate for \redmagic linear and non-linear bias model respectively, while the gray triangle and red square show the same for the \maglim sample.  }\label{fig:maglim_comp}
 \end{figure}
-
-
-
-
-\subsection{Internal consistency of the cosmology results}
-\label{sec:internal_consistency}
-
-To investigate the low $S_8$ constraints from our fiducial analysis, we first check various aspects of our modeling pipeline. We show summary constraints on $\om$, $S_8$ and galaxy bias for third tomographic bin $b_3$ in Fig.~\ref{fig:2x2pt_consistency}. We divide the figure into three parts, separated by horizontal black lines. The top panel shows the marginalized constraints from the results described in the previous subsection (see Fig.~\ref{fig:des_comp}). As mentioned previously, we obtain completely consistent constraints from both linear and non-linear bias models. To check the robustness and keep the interpretation simple, we use the linear bias model using the scale cuts of (8,6)Mpc/$h$ in the following variations.  
-
-In the next part of the figure, we test the robustness of the model. In particular, we check the robustness of our fiducial intrinsic alignment model by using the NLA model. We also run our analysis by fixing the neutrino masses to $\Omega_{\nu}h^2 = 0.00083$. Lastly, we test the impact of varying the dark energy parameter using $w$CDM model. We find entirely consistent constraints for all of the above variations. 
-
-In the next part of the figure, we test the robustness of parts of our datavector. Firstly we remove the contribution of shear-ratio information in our likelihood, resulting in completely consistent constraints. Also, note that the constraints on the cosmological parameters do not change in this case compared to our fiducial constraints, which shows that most constraints on cosmological and bias parameters are obtained from the $\wtheta$ and $\gammat$ themselves. We also test the impact of removing one tomographic bin at a time from our datavector. We find consistent constraints in all five cases, demonstrating that no single tomographic bin drives the constraints on $S_8$ to a low value. Lastly, we also dissect the datavector into large and small scales. The small scales run only analyzes the datavector between the angular scales corresponding to (8,6)Mpc/$h$ and (30,30)Mpc/$h$. The large scales run analyzes the datavector between angular scales corresponding to (30,30)Mpc/$h$ and 250 arcmin. When analyzing the large scales, we also remove the point-mass marginalization from our analysis. In both cases, we find similar constraints, demonstrating that the low $S_8$ is not originating from either large or small scales.
-
-Finally, to check the robustness of our pipeline, we analyze the $\wtheta$ and $\gammat$ measurements as measured from DES Y1 data \citet{Abbott_2018}. Note that in this analysis, we keep the same scale cuts as described and validated in \citet{Abbott_2018, MacCrann2018}, which are $8$Mpc/$h$ for $\wtheta$ and $12$Mpc/$h$ for $\gammat$. To analyze this datavector, while we use the model described in this paper, we fix the point-mass parameters to zero because of the large degradation of constraining power at these larger-scale cuts due to degeneracy between point-mass parameters, galaxy bias and cosmological parameter $\sigma_8$. We compare these constraints to the public results as described in \citet{Abbott_2018}, finding that we obtain consistent constraints with our pipeline.
-
-Lastly, to assess the impact of the projection effect on the $S_8$ parameter, we compare the profile posterior to the marginalized posterior. The profile posterior is obtained by calculating the maximum posterior value for a given value of $S_8$. Therefore, unlike marginalized posterior, the profile posterior does not involve the projection of high dimensional posterior to a single $S_8$ parameter. Hence the histogram of the profile posterior is not impacted by projection effects. We compare the marginalized posterior and profile posterior in Fig.~\ref{fig:prof_like}, demonstrating that projection effects do not impact the inferred $S_8$ constraints from the marginalized posterior.  
- 
-These results demonstrate that our methodology pipeline is completely robust, and it is our data that is resulting in low $S_8$ constraints. Moreover, as described above, no individual part of our data drives a low value of $S_8$; therefore we perform global checks of our datavector in the following sections.
-
-
-\subsection{Galaxy bias from individual probes at fixed cosmology}
-
-In this sub-section, we test the compatibility of $\wtheta$ and $\gammat$ part of our datavector. As we will lose the complementarity when analyzing  $\wtheta$ and $\gammat$ parts of datavector individually, we fix the cosmological parameters to the maximum posterior obtained from \citet{Abbott_2018}. We find that the best-fit bias values from $\wtheta$ part of our datavector are systematically higher than $\gammat$ for each tomographic bin. We parameterize this difference in bias values with a parameter $X^{i}_{\rm lens} = b^i_{\gammat}/b^i_{\wtheta}$. The constraints on the parameter $X^{i}_{\rm lens}$ are shown in Fig.~\ref{fig:Xlens_5X_y1y3}. We also compare the constraints of these $X^{i}_{\rm lens}$ parameters obtained from DES Y1 $2 \times 2$pt (see \citet{Abbott_2018} and \citet{MacCrann2018} for details). For this datavector,  we fix the scale cuts and priors on the calibration of photometric redshifts of lens and source galaxies as described in the \citet{Abbott_2018}. Our model of the correlation function for both DES Y1 and DES Y3 data is linear bias model of perturbation theory and rest of the model is same as described in \S\ref{sec:model_rest}. We find that the DES Y1 $2\times 2$pt data prefers  $X^{i}_{\rm lens} = 1$ for all the tomographic bins while DES Y3 $2\times 2$pt data has a consistent preference for $X^{i}_{\rm lens} < 1$ for all the tomographic bins.
-
-
-In summary we find that, for the current choice of cosmological parameters, our datavector prefers a value of $X^{i}_{\rm lens} \sim 0.85$ for each tomographic bin. Therefore, in order to keep the interpretation simple, we use a single parameter $X_{\rm lens}$ to describe the ratio of galaxy bias $b^i_{\gammat}/b^i_{\wtheta}$ for all tomographic bins $ i \in [1,5]$.  
-
 
 \begin{figure*}
 \includegraphics[width=\textwidth]{figs/2x2pt_consistency.pdf}
-\caption[]{The consistency of the $2\times2$pt cosmology and galaxy bias constraints when changing the analysis choices (see \S\ref{sec:internal_consistency} for details). We also compare our constraints to the DES Y1 public $2\times2$pt results as well as its re-analysis with our current pipeline ($*$-- we fix the point mass parameters when re-analyzing the DES Y1 data due to large degeneracy between point mass parameters and cosmology at the scale cuts described and validated in \citet{Abbott_2018}).}
+\caption[]{The consistency of the $2\times2$pt cosmology and galaxy bias constraints when changing the analysis choices (see \S\ref{sec:internal_consistency} for details). We also compare our constraints to the DES Y1 public $2\times2$pt results as well as its re-analysis with the current analysis pipeline ($*$ -- we fix the point mass parameters when re-analyzing the DES Y1 data due to large degeneracy between point mass parameters and cosmology at the scale cuts described and validated in \citet{Abbott_2018}).}
 \label{fig:2x2pt_consistency}
 \end{figure*}
 
+
+\subsection{Internal consistency of the \redmagic results}
+\label{sec:internal_consistency}
+
+To investigate the low $S_8$ constraints in the fiducial analysis of the \redmagic galaxy sample, we first check various aspects of the modeling pipeline. In Fig.~\ref{fig:2x2pt_consistency}, we show the summary constraints on $\om$, $S_8$ and galaxy bias for the third tomographic bin $b_3$, for various robustness tests. We choose to show the third tomographic bin for the galaxy bias constraints as this bin has the highest signal-to-noise ratio. We divide the figure into three parts, separated by horizontal black lines. The bottom panel shows the marginalized constraints from the results described in the previous subsection (see Fig.~\ref{fig:des_comp}). As mentioned previously, we obtain completely consistent constraints from both linear and non-linear bias models. To check the robustness and keep the interpretation simple, we use the linear bias model using the scale cuts of (8,6) Mpc/$h$ in the following variations.  
+
+In the next part of the figure, we test the robustness of the model. In particular, we check the robustness of the fiducial intrinsic alignment model by using the NLA model. We also run the analysis by fixing the neutrino masses to $\Omega_{\nu}h^2 = 0.00083$. This choice of $\Omega_{\nu}h^2$ parameter corresponds to the sum of neutrino masses, $\sum m_{\nu}=0.06$eV at the fiducial cosmology described in Table~\ref{tab:params_all} (which is the baseline value used in the \textit{Planck} 2018 cosmology results as well \citep{Planck_2018_cosmo}). Lastly, we test the impact of varying the dark energy parameter using the $w$CDM model. We find entirely consistent constraints for all of the above variations. 
+
+In the next part of the figure, we test the internal consistency of the datavector. Firstly we remove the contribution of shear-ratio information to the total likelihood, resulting in entirely consistent constraints. Also, note that the size of constraints on the cosmological parameters do not change in this case compared to the fiducial results. This demonstrates that the majority of constraints on the cosmological and bias parameters are obtained from the $\wtheta$ and $\gammat$ themselves. We also test the impact of removing one tomographic bin at a time from the datavector. We find consistent constraints in all five cases. % demonstrating that no single tomographic bin drives the constraints on $S_8$ to a low value. 
+Lastly, we also split the datavector into large and small scales. The small scales run uses the datavector between  angular scales corresponding to (8,6) Mpc/$h$ and (30,30) Mpc/$h$. The large scales run uses the datavector between angular scales corresponding to (30,30) Mpc/$h$ and 250 arcmins. When analyzing the large scales, we fix the point-mass parameters to their fiducial values (see Table~\ref{tab:params_all}), because of the large degradation of constraining power at these larger-scale cuts due to degeneracy between point-mass parameters, galaxy bias and cosmological parameter $\sigma_8$ (see Appendix~\ref{app:pm} and \citet{MacCrann:2019ntb}). In both of these cases, we find similar constraints on all parameters, demonstrating that the low $S_8$ does not originate from either large or small scales.
+
+As an additional test of the robustness of the modeling pipeline, we analyze the $\wtheta$ and $\gammat$ measurements as measured from DES Y1 data \citep{Abbott_2018}. Note that in this analysis, we keep the same scale cuts as described and validated in \citet{Abbott_2018}, which are $8$ Mpc/$h$ for $\wtheta$ and $12$ Mpc/$h$ for $\gammat$. To analyze this datavector, while we use the model described in this paper, we fix the point-mass parameters again to zero due to similar reasons as described above in the analysis of large scales. The constraints we obtain are consistent with  the public results  described in \citet{Abbott_2018}. We attribute an approximately $1\sigma$ shift in the marginalized $\Omega_{\rm m}$ posterior to the improvements made in the current model, compared to the model used for the public Y1 results \citep{Krause2017}. In particular, we use the full non-limber calculation for galaxy clustering and use the TATT model of intrinsic alignment in the model of galaxy-galaxy lensing (also see \citet{Fang_nonlimber}). 
+
+Lastly, to assess the impact of projection effects on the $S_8$ parameter, we compare the profile posterior to the marginalized posterior. The profile posterior is obtained by calculating the maximum posterior value for a given value of $S_8$. Therefore, unlike the marginalized posterior, the profile posterior does not involve the projection of a high dimensional posterior to a single $S_8$ parameter. Hence the histogram of the profile posterior is not impacted by projection effects. We compare the marginalized posterior and profile posterior in Fig.~\ref{fig:prof_like}, demonstrating that projection effects do not impact the inferred $S_8$ constraints from the marginalized posterior.  
+ 
+In summary,  the results presented in this sub-section demonstrate that our modeling methodology is entirely robust, and hence we believe our data is driving the low $S_8$ constraints with the \redmagic  sample. Moreover, as described above, no individual part of the data drives a low value of $S_8$; therefore, we perform global checks of the datavector in the following sub-sections.
+
+\subsection{Galaxy bias from individual probes}
+
+In this sub-section, we test the compatibility of the $\wtheta$ and $\gammat$ parts of the datavector. As we will lose the power of complementarity when analyzing them individually, we fix the cosmological parameters to the maximum posterior obtained from DES Y1 $3\times 2$pt analysis \citep{Abbott_2018}. We find that the best-fit bias values from the $\wtheta$ part of the datavector are systematically higher than $\gammat$ for each tomographic bin. We parameterize this difference in bias values with a phenomenological de-correlation parameter for each tomographic bin $i$ as:
+\begin{equation}
+    X^{i}_{\rm lens} = b^i_{\gammat}/b^i_{\wtheta}
+\end{equation}
+% $X^{i}_{\rm lens} = b^i_{\gammat}/b^i_{\wtheta}$. 
+The constraints on the parameter $X^{i}_{\rm lens}$ are shown in Fig.~\ref{fig:Xlens_5X_y1y3}. We also compare the constraints of these $X^{i}_{\rm lens}$ parameters obtained from Y1 \redmagic $2 \times 2$pt (see \citealt{Abbott_2018} and \citealt{gglpaper} for details) and the $2 \times 2$pt datavector using Y3 \maglim lens galaxy sample. For the Y1 \redmagic datavector,  we fix the scale cuts and priors on the calibration of photometric redshifts of lens and source galaxies as described in the \citet{Abbott_2018} and for analysis of Y3 \maglim datavector we follow the analysis choices detailed in \citet*{y3-2x2ptaltlensresults}. In this analysis of all the datavectors, we use the linear bias galaxy bias model while keeping the rest of the model the same as described in \S\ref{sec:model_rest}. We find that the Y1 \redmagic as well as Y3 \maglim $2\times 2$pt data prefer $X^{i}_{\rm lens} = 1$ for all the tomographic bins, while \redmagic Y3 $2\times 2$pt data have a consistent preference for $X^{i}_{\rm lens} < 1$ for all the tomographic bins.
+
+Noticeably, we find that for the DES Y1 best-fit cosmological parameters, the Y3 \redmagic datavector prefers a value of $X^{i}_{\rm lens} \sim 0.9$ for each tomographic bin. Therefore, in order to keep the interpretation simple, we use a single parameter $X_{\rm lens}$ to describe the ratio of galaxy bias $b^i_{\gammat}/b^i_{\wtheta}$ for all tomographic bins $ i \in [1,5]$. We constrain this single redshift independent parameter to be $X_{\rm lens} = 0.9^{+0.03}_{-0.03}$ for Y3 \redmagic, a 3.5$\sigma$ deviation from $X_{\rm lens} = 1$. Within general relativity, even when including the impact of non-linear astrophysics, we do not expect a de-correlation between galaxy clustering and galaxy-galaxy lensing to be present at more than a few percent level. We comment on the impact of this de-correlation on the \redmagic cosmology constraints in \S~\ref{sec:X_cosmo_impact}. 
+
+Note that the inferred value of $X_{\rm lens}$ depends on the cosmological parameters, because the large scale amplitudes of galaxy clustering and galaxy-galaxy lensing involve different combination of galaxy bias, $\sigma_8$ and $\Omega_{\rm m}$. Therefore, a self-consistent inference of $X_{\rm lens}$ requires the full $3\times2$pt datavector and is presented in \citet*{y3-3x2ptkp}. However, the DES Y1 best-fit cosmological parameters are fairly close to the DES Y3 best-fit parameters, therefore we expect  the results presented here to be good approximations to those obtained with the Y3 $3\times2$pt datavector. 
+
+
+
+
 \begin{figure}
 \includegraphics[width=\columnwidth]{figs/profile_likelihood_emcee.pdf}
-\caption[]{The comparison of the profile posterior and marginalized posterior on $S_8$ parameter from the $2\times2$pt \redmagic LCDM chain}
+\caption[]{Comparison of the profile posterior and marginalized posterior on the $S_8$ parameter from the $2\times2$pt \redmagic LCDM chain}
 \label{fig:prof_like}
 \end{figure}
 
 
-
-\subsection{Is lensing low?}
-\label{sec:boss_x}
-\IR{This sub-section and its results will be updated in next few days as updated chains finish}
-% \blue{Which external datasets to include?}
-In this section, we try to identify which particular part of our datavector, $\wtheta$ or $\gammat$, is driving $X_{\rm lens} \neq 1$. To that end, we correlate our lens galaxy sample with BOSS/eBOSS catalogs. There is a 650 square degrees of overlap between the DES Y3 and BOSS survey. This is the same catalog as used to calibrate the redshift distribution of lens galaxies using clustering redshifts (see \citet{y3-lenswz} for details on catalog). Dor simplicity, in what follows, we refer to this combined catalog as BOSS catalog. As the BOSS galaxies have a spectroscopic redshift assignment with negligible uncertainty, we divide that sample into finer tomographic bins. The sample is split into 10 tomographic bins, two sub-bins within each of five DES lens galaxy sample tomographic bins (see Fig.\ref{fig:boss_nz} for the split of BOSS sample when correlating with \redmagic sample). We then measure the correlations between the \redmagic and \maglim galaxies in each bin with the BOSS galaxies corresponding to each sub-bin. We parameterize the power spectrum of auto-correlations between the external BOSS galaxies ($P_{\rm ee}$) and cross-correlations between BOSS and DES lens galaxies ($P^{\rm RM}_{\rm eg}$, for \redmagic and $P^{\rm Mag}_{\rm eg}$ for \maglim) as: $P_{\rm ee} = b^2_{\rm e} P_{\rm mm}$, $P^{\rm RM}_{\rm eg} = X_{\rm BOSS} X_{\rm lens, RM} b_{\rm e} b_{\rm g} P_{\rm mm}$ and $P^{\rm Mag}_{\rm eg} = X_{\rm BOSS} X_{\rm lens, Mag} b_{\rm e} b_{\rm g, Mag} P_{\rm mm}$. The power spectra of the auto-correlations of the DES galaxies, $P^{\rm RM}_{\rm gg}$ and $P^{\rm Mag}_{\rm gg}$ for \redmagic and \maglim respectively are described in \S\ref{sec:Pk_pred}. The final two-point correlations are then obtained from these power spectrum using the framework described in \S\ref{sec:proj_2pt}. Note that we neglect the corrections from non-limber and RSD in the cross-correlations between BOSS and \redmagic catalogs, because of smaller signal-to-noise as these measurements are limited to only 650 square degrees. 
-% We have validated that the impact from these is significantly smaller than our errorbars in these measurements, giving $\Delta \chi^2 = YYY$. 
-The covariance between them is a Gaussian covariance using the code described in \S\ref{sec:cov}. We now jointly analyze the three two-point projected angular correlations constructed from DES lens galaxies and BOSS galaxies. The details of the measurement methodology is shown in Appendix.
-
-
-In Fig.~\ref{fig:X_boss_rm_mag}, we compare the marginalized posterior on $X_{\rm lens}$ parameter from this BOSS cross-correlations with the result from analyzing $2\times2$pt datavector from DES Y3 or DES Y1. We find that while DES Y1 is completely consistent with $X_{\rm lens} = 1$, both DES Y3 $2\times2$pt and Y3xBOSS prefer similar low value of $X_{\rm lens}$. Note that all these contours fix the cosmological parameters to the maximum posterior from \citet{Abbott_2018}. This suggests that our datavector has a preference for high auto-correlation of galaxies, and the cross-correlations prefer lower bias values. We refer the readers to \citet{y3-galaxyclustering} for more tests related to clustering of \redmagic galaxies. 
+% \subsection{Is lensing low?}
+% \label{sec:boss_x}
+% \IR{This sub-section and its results will be updated in next few days as updated chains finish}
+% % \blue{Which external datasets to include?}
+% In this section, we try to identify which particular part of our datavector, $\wtheta$ or $\gammat$, is driving $X_{\rm lens} \neq 1$. To that end, we correlate our lens galaxy sample with BOSS/eBOSS catalogs. There is a 650 square degrees of overlap between the DES Y3 and BOSS survey. This is the same catalog as used to calibrate the redshift distribution of lens galaxies using clustering redshifts (see \citet*{y3-lenswz} for details on catalog). Dor simplicity, in what follows, we refer to this combined catalog as BOSS catalog. As the BOSS galaxies have a spectroscopic redshift assignment with negligible uncertainty, we divide that sample into finer tomographic bins. The sample is split into 10 tomographic bins, two sub-bins within each of five DES lens galaxy sample tomographic bins (see Fig.\ref{fig:boss_nz} for the split of BOSS sample when correlating with \redmagic sample). We then measure the correlations between the \redmagic and \maglim galaxies in each bin with the BOSS galaxies corresponding to each sub-bin. We parameterize the power spectrum of auto-correlations between the external BOSS galaxies ($P_{\rm ee}$) and cross-correlations between BOSS and DES lens galaxies ($P^{\rm RM}_{\rm eg}$, for \redmagic and $P^{\rm Mag}_{\rm eg}$ for \maglim) as: $P_{\rm ee} = b^2_{\rm e} P_{\rm mm}$, $P^{\rm RM}_{\rm eg} = X_{\rm BOSS} X_{\rm lens, RM} b_{\rm e} b_{\rm g} P_{\rm mm}$ and $P^{\rm Mag}_{\rm eg} = X_{\rm BOSS} X_{\rm lens, Mag} b_{\rm e} b_{\rm g, Mag} P_{\rm mm}$. The power spectra of the auto-correlations of the DES galaxies, $P^{\rm RM}_{\rm gg}$ and $P^{\rm Mag}_{\rm gg}$ for \redmagic and \maglim respectively are described in \S\ref{sec:Pk_pred}. The final two-point correlations are then obtained from these power spectrum using the framework described in \S\ref{sec:proj_2pt}. Note that we neglect the corrections from non-limber and RSD in the cross-correlations between BOSS and \redmagic catalogs, because of smaller signal-to-noise as these measurements are limited to only 650 square degrees. 
+% % We have validated that the impact from these is significantly smaller than our errorbars in these measurements, giving $\Delta \chi^2 = YYY$. 
+% The covariance between them is a Gaussian covariance using the code described in \S\ref{sec:cov}. We now jointly analyze the three two-point projected angular correlations constructed from DES lens galaxies and BOSS galaxies. The details of the measurement methodology is shown in appendix.
 
 
-We note some of the approximations and caveats in the above test. This test assumes that the weights of \redmagic galaxies are the same even when there is only a partial overlap between the full Y3 area and BOSS area. We also assume that the BOSS area and full DES Y3 area have the same galaxy number density parameterization. We leave a more careful analysis of the cross-correlations to future work. 
+% In Fig.~\ref{fig:X_boss_rm_mag}, we compare the marginalized posterior on $X_{\rm lens}$ parameter from this BOSS cross-correlations with the result from analyzing $2\times2$pt datavector from DES Y3 or DES Y1. We find that while DES Y1 is completely consistent with $X_{\rm lens} = 1$, both DES Y3 $2\times2$pt and Y3xBOSS prefer similar low value of $X_{\rm lens}$. Note that all these contours fix the cosmological parameters to the maximum posterior from \citet{Abbott_2018}. This suggests that our datavector has a preference for high auto-correlation of galaxies, and the cross-correlations prefer lower bias values. We refer the readers to \citet*{y3-galaxyclustering} for more tests related to clustering of \redmagic galaxies. 
+
+
+% We note some of the approximations and caveats in the above test. This test assumes that the weights of \redmagic galaxies are the same even when there is only a partial overlap between the full Y3 area and BOSS area. We also assume that the BOSS area and full DES Y3 area have the same galaxy number density parameterization. We leave a more careful analysis of the cross-correlations to future work. 
+
+% \begin{figure}
+% \includegraphics[width=\columnwidth]{figs/X_comp_bossrm_y3.pdf}
+% % \vfil
+% % \includegraphics[width=\columnwidth]{figs/data_wcdm_comp.pdf}
+% \caption[]{Comparison of the decorrelation parameter ($X_{\rm lens}$), the ratio of bias of \redmagic estimated from cross-correlations and its auto-correlation ($\wtheta$). We compare the posterior on $X_{\rm lens}$ when using either BOSS$\times \redmagic$ or $\gammat$ and find consistent posteriors. \IR{This is a preliminary figure and will be revised when the final chains are finished} }\label{fig:X_boss_rm_mag}
+% \end{figure}
 
 \begin{figure}
-\includegraphics[width=\columnwidth]{figs/X_comp_bossrm_y3.pdf}
-% \vfil
-% \includegraphics[width=\columnwidth]{figs/data_wcdm_comp.pdf}
-\caption[]{Comparison of the decorrelation parameter ($X_{\rm lens}$), the ratio of bias of \redmagic estimated from cross-correlations and its auto-correlation ($\wtheta$). We compare the posterior on $X_{\rm lens}$ when using either BOSS$\times \redmagic$ or $\gammat$ and find consistent posteriors. \IR{This is a preliminary figure and will be revised when the final chains are finished} }\label{fig:X_boss_rm_mag}
+\includegraphics[width=\columnwidth]{figs/xlens_comp.pdf}
+\caption[]{Constraints on the phenomenological de-correlation parameter, $X_{\rm lens}$, for each tomographic bin obtained from $2\times 2$pt analysis using Y1 and Y3 \redmagic and Y3 \maglim as the lens galaxies (the cosmological parameters are fixed to the DES Y1 best-fit values \citep{Abbott_2018})}
+\label{fig:Xlens_5X_y1y3}
+\end{figure}
+
+\subsection{Area split of the de-correlation parameter}
+In order to further study the properties of this de-correlation parameter $X_{\rm lens}$, we estimate it independently in 10 approximately equal area patches  of the DES Y3 footprint.  We measure the datavectors, $w(\theta)$ and $\gammat$ in each of these 10 patches, using the same methodology presented in \S~\ref{sec:2pt_data}. In order to obtain the covariance for each patch, we rescale the fiducial covariance (see \S~\ref{sec:cov}) of the full footprint to the area of each patch. We then estimate  $X_{\rm lens}$ from each patch while keeping all the other analysis choices the same. 
+
+In Fig.~\ref{fig:Xlens_area_split} we show the DES footprint split into 10 regions. In this figure, each region is colored in proportion to the mean value of the $X_{\rm lens}$ parameter we obtain using the \redmagic as the lens galaxy sample. We run a similar analysis when using \maglim as the lens sample. 
+
+% \SP{make the point that it is not necessarily the galactic latitudes that show low value of X.}
+
+In Fig.~\ref{fig:Xrm_mag_scatter} we show a scatter plot between the value of $X_{\rm lens}$ recovered from each of 10 regions using \redmagic and \maglim as lens samples. We find a tight correlation between the value of $X_{\rm lens}$ from the two lens samples. This shows that, compared with \maglim, the \redmagic lens sample has a preference for $X_{\rm lens} < 1$ in the whole DES footprint. Fig.~\ref{fig:Xrm_mag_scatter} also suggests a large variation  in the inferred $X_{\rm lens}$ over the footprint, when compared to \maglim. This correlation and area independence of the ratio $X_{\rm Redmagic}/X_{\rm Maglim}$ is remarkable and suggests that the potential systematic in the \redmagic sample has a more global origin. 
+
+% \SP{make the point that whole footprint seems to have a preference for X=0.9 compared to maglim}
+
+\begin{figure}
+\includegraphics[width=\columnwidth]{figs/X_rm_area_split.pdf}
+\caption[]{The DES footprint split into 10 regions. The color of each area corresponds to the mean value of the constraints on $X_{\rm lens}$ from that particular area, using the \redmagic lens sample. }
+\label{fig:Xlens_area_split}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=\columnwidth]{figs/X_rm_mag_area_scatter.pdf}
+\caption[]{Each red errorbar corresponds to the 68\% credible interval constraints on  $X_{\rm lens}$ from each of the 10 regions (see Fig.~\ref{fig:Xlens_area_split}), using either \redmagic or \maglim lens galaxy sample. The blue errorbar corresponds to the constraints on $X_{\rm lens}$ from the full Y3 area. We find a tight correlation between $X_{\rm Redmagic}$ and $X_{\rm Maglim}$. }
+\label{fig:Xrm_mag_scatter}
 \end{figure}
 
 
@@ -905,18 +1071,28 @@ We note some of the approximations and caveats in the above test. This test assu
 \includegraphics[width=\columnwidth]{figs/data_lcdm_wX_comp.pdf}
 % \vfil
 % \includegraphics[width=\columnwidth]{figs/data_wcdm_comp.pdf}
-\caption[]{Comparing the constraints from $2\times2$pt when correcting the datavector with the mean value of decorrelation parameter as estimated and described in \citet{y3-3x2ptkp} }\label{fig:X_comp_main}
+\caption[]{Comparing the constraints from $2\times2$pt when using the mean value of $X_{\rm lens}$ parameter for \redmagic lens sample analysis, as estimated and described in \citet*{y3-3x2ptkp} }\label{fig:X_comp_main}
 \end{figure}
 
+\subsection{Impact of de-correlation on $2\times 2$pt cosmology}
+\label{sec:X_cosmo_impact}
+% Under the paradigm of general relativity, even when including the impact of non-linear astrophysics, we do not expect a de-correlation between galaxy clustering and galaxy-galaxy lensing to be present at more than a few percent level. As described in the previous sub-sections, we find that this hypothesis remains true when using either \maglim Y3 or \redmagic Y1 as the lens galaxy sample. However, with \redmagic Y3 lens galaxies, we constrain this de-correlation, parameterized with a phenomenological redshift, scale and sky-area independent parameter to be $X_{\rm lens} = 0.9^{+0.03}_{-0.03}$. Note that this inference is made at the bestfit 
+To summarize, we have identified that assuming a standard cosmological model, the galaxy-clustering and galaxy-galaxy lensing signal measured using the Y3 \redmagic lens galaxy sample are incompatible with each other (at the set of comsological parameters preferred by previous studies). We have further identified that this incompatibility is well captured by a redshift, scale and area independent phenomenological parameter $X_{\rm lens}$. Using Y3 \redmagic lens sample, we detect $X_{\rm lens} \sim 0.9$, at the 3.5$\sigma$ confidence level away from the expected value of $X_{\rm lens} = 1$. This $2\times2$pt analysis is done when the cosmological parameters are fixed to their DES Y1 best-fit values; a self-consistent $X_{\rm lens}$ inference analysis requires the full $3\times2$pt datavector. This is presented in \citet*{y3-3x2ptkp}, where the inferred constraints on this de-correlation parameter are $X_{\rm lens} = 0.87^{+0.02}_{-0.02}$. 
 
-% \subsubsection{Results}
+In Fig.~\ref{fig:X_comp_main}, we fix  $X_{\rm lens} = 0.87$ in our model and re-run the Y3 \redmagic $2\times2$pt analysis. We find, as expected, that this has a significant impact on the marginalized $S_8$ values and results in the marginalized constraints $S_8 = 0.76_{-0.037}^{+0.034}$, completely consistent with $2\times2$pt Y1 \redmagic public results as well as Y3 \maglim results. Also note that the marginalized constraints on $\Omega_{\rm m}$ remains consistent with previous result. 
+
+% \subsubsection{}
+
+
+\subsection{\redmagic host halo mass inference}
+
+In the halo model framework, the value of the linear bias of a tracer of dark matter can be related to the host halo mass of that tracer. The standard halo occupation distribution (HOD) approach parameterizes the distribution of  galaxies inside  halos, and hence the observed number density as well as the large scale bias values of any galaxy sample can be expressed in terms of its HOD parameters. The same HOD parameters can also be used to infer the mean host halo mass of the galaxy sample. We use the constraints on  linear galaxy bias and the co-moving number density to infer the mean host halo mass of the \redmagic galaxy sample by marginalizing over HOD parameters. We use the linear bias constraints from the $2\times2$pt Y3 \redmagic analysis after fixing $X_{\rm lens}=0.87$. This de-correlation parameter results in $w(\theta)$ and $\gamma_{\rm t}$ preferring different linear bias parameters, related by $b^{i}(w(\theta)/b^{i}(\gamma_{\rm t}(\theta) = X_{\rm lens} = 0.87$, for all tomographic bins $i$. Therefore, we infer the host halo masses using both linear bias parameter values. 
+
+The details of the halo model framework used here are given in Appendix \ref{app:halo_mass}. Note that we have neglected the effects of assembly bias and the correlation between number density and bias constraints in this analysis. With these caveats in mind, in Fig.~\ref{fig:bias_mass_nbar} we show approximately 25\% constraints on mean host halo mass of \redmagic galaxies and the constraints for different tomographic bins show its evolution with redshift. This redshift evolution trend is broadly consistent with the psedo-evolution of halo masses due to changing background reference density with redshift (see \citep{Diemer_2013} for more details). Therefore we find that the DES Y3 \redmagic sample lives in halos of mass of approximately $1.6 \times 10^{13} M_{\odot}/h$, which remains broadly constant with redshift. We find that our results are broadly consistent with the analysis of \citep{Clampitt_2016}, which used the \redmagic galaxies of DES Science-Verification dataset and estimated the mean halo masses by studying high signal-to-noise small scale galaxy-galaxy lensing signal using HOD model \footnote{Note that we use $M_{\rm 200c}$ as our halo mass definition, which denotes the total mass within a sphere enclosing a mean density which is 200 times the \textit{critical} density of the universe. \citet{Clampitt_2016} work with $M_{\rm 200m}$ as their mass definition, denoting the total mass within a sphere enclosing a mean density which is 200 times the \textit{mean} density of the universe, therefore we convert their constraints to $M_{\rm 200c}$ in the above figure}. 
 
 
 
-
-\subsection{Halo mass inference}
-
-We show the constraints on the mean host halo masses of \redmagic galaxies using the linear bias parameters for five tomographic lens bins in Fig.~\ref{fig:bias_mass_nbar}. We use the linear bias constraints from a $2\times2$pt analysis fixing $X_{\rm lens}=0.87$ (see blue contour in Fig.~\ref{fig:X_comp_main}) and the constraints on the co-moving number density to infer the mean host halo mass of our lens galaxy sample. We use a halo model framework and marginalize over the unknown halo model parameters to make a robust inference. The details of the halo model framework used here are given in Appendix \ref{app:halo_mass}. Note that we have neglected the effects of assembly bias in this analysis and the correlation between number density and bias constraints. With these caveats in mind, we report approximately 25\% constraints on mean host halo mass for our five tomographic bins.
+% We show the constraints on the mean host halo masses of \redmagic galaxies using the linear bias parameters for five tomographic lens bins in Fig.~\ref{fig:bias_mass_nbar}. We use the linear bias constraints from the $2\times2$pt analysis fixing $X_{\rm lens}=0.87$ and the constraints on the co-moving number density to infer the mean host halo mass of our lens galaxy sample. We use a halo model framework and marginalize over the unknown halo model parameters to make a robust inference. 
 
 % \blue{We also use the wtheta * X bias value and the fiducial bias values (with corresponding cosmology), to infer the constraints on the halo masses of our galaxies. }
 
@@ -926,9 +1102,9 @@ We show the constraints on the mean host halo masses of \redmagic galaxies using
 \includegraphics[width=\columnwidth]{figs/M_const.pdf}
 \caption[]{
 % This figure shows the marginalized constraints on the large-scale bias for the five tomographic bins on the left panel. The black dots denote the mean, and the error bars correspond to 16th and 84th percentile, respectively. Using this and co-moving number density (middle panel), we infer the constraints on mean halo mass, as shown in the right panel for five tomographic bins. We use the HOD framework to make this inference as detailed in Appendix \ref{app:halo_mass}. \blue{Make this a single panel figure only showing the halo masses constraints, but for fiducial linear bias chain as well as one with an X-prior run. }
-This figure shows the inferred constraints on mean host halo masses of \redmagic galaxies for five tomographic bins. We use the HOD framework to make this inference as detailed in Appendix \ref{app:halo_mass} and use the bias constraints from a linear bias model $2\times2$pt chain, fixing $X_{\rm lens} = 0.87$. 
+This figure shows the inferred constraints on mean host halo masses of \redmagic galaxies for five tomographic bins. We use the HOD framework to make this inference as detailed in Appendix \ref{app:halo_mass} and use the bias constraints from a linear bias model $2\times2$pt chain, fixing $X_{\rm lens} = 0.87$. We infer the mean host halo masses from the linear bias constraints, $b^{i}(w(\theta))$ and $b^{i}(\gamma_{\rm t}(\theta))$, where they are related as $b^{i}(w(\theta)/b^{i}(\gamma_{\rm t}(\theta) = X_{\rm lens} = 0.87$ for all the five tomographic bins $i$. We compare our results to \citet{Clampitt_2016} and also show the expected psuedo-evolution of a halo having $M_{\rm halo} = 1.6\times 10^{13} M_{\odot}/h$ at $z=0$. 
 % \blue{Make this a single panel figure only showing the halo masses constraints, but for fiducial linear bias chain as well as one with an X-prior run. }
-
+% \SP{put the mass estimates from bias*X, expected pseudo mass evolution curve and Clampitt et al results}
 }
 \label{fig:bias_mass_nbar}
 \end{figure}
@@ -938,33 +1114,35 @@ This figure shows the inferred constraints on mean host halo masses of \redmagic
 
 \section{Conclusions}
 
-This paper has presented the cosmological analysis of the $2\times2$pt datavector of the DES Year 3 dataset. The $2\times2$pt datavector comprises the 2-point correlations of galaxy clustering and galaxy lensing using five redshift bins for the lens galaxies and four bins for source galaxies. It provides independent constraints on the two primary parameters of interest, the mass density $\Omega_{\rm m}$ and amplitude of fluctuations $S_8$. As shown in Fig.~\ref{fig:all2pt_comp}, these constraints are complementary to those from cosmic shear. The combination is thus better able to constrain $\Omega_{\rm m}, S_8$ as well as the dark energy equation of state parameter $w$. Perhaps more importantly, this provides a robustness check on the results from either approach. 
+This paper has presented the cosmological analysis of the $2\times2$pt datavector of the DES Year 3 dataset. The $2\times2$pt datavector comprises the 2-point correlations of galaxy clustering and galaxy lensing using five redshift bins for the lens galaxies and four bins for source galaxies. It provides independent constraints on two primary parameters of interest, the mass density $\Omega_{\rm m}$ and amplitude of fluctuations $S_8$. As shown in Fig.~\ref{fig:all2pt_comp}, these constraints are complementary to those from cosmic shear. The combination is thus better able to constrain $\Omega_{\rm m}, S_8$ as well as the dark energy equation of state parameter $w$. Perhaps more importantly, this provides a robustness check on the results from either approach. 
 
 The estimation and marginalization of galaxy bias parameters is one of the central tasks in extracting cosmology from the $2\times2$pt datavector. We have developed and validated the methodology for this based on perturbation theory. We use a five-parameter description of galaxy bias per redshift bin, with three of the parameters fixed based on theoretical considerations. We validated these choices using mock catalogs built on N-body simulations as detailed in our earlier study \citep{p2020perturbation} and Section \S\ref{sec:sims}.  
 We carry out two analyses: the first using linear bias with more conservative scale cuts, and the second using the full PT bias model going down to smaller scales. Other  elements of our model include intrinsic alignments, magnification and ``point mass marginalization'' (see \S\ref{sec:model_rest}). The validation of the analysis choice and scale cuts with simulated datavectors (both idealized and from mock catalogs) is presented in \S\ref{sec:analysis_choices}. 
 
 
-Our cosmological results are presented in Figs. \ref{fig:des_comp}, \ref{fig:maglim_comp} and \ref{fig:2x2pt_consistency}. After unblinding the fiducial cosmological parameter constraints, we discovered that the reason for the high $\chi^2$ was due to inconsistencies in the inferred halo bias from the galaxy-lensing and galaxy clustering signals.  The source of this inconsistency is still undetermined. We found that a single parameter $X_{\rm lens}$, representing the ratio of the bias inferred from $w(\theta)$ and $\gamma_{\rm t}$, substantially improves the goodness of fit. This ratio is cosmology dependent and can only be inferred consistently (along with our other model parameters)  when using full $3\times2$pt analysis, presented in \citet{y3-3x2ptkp}.
+Our cosmological results are presented in Figs. \ref{fig:des_comp}, \ref{fig:maglim_comp} and \ref{fig:2x2pt_consistency}. After unblinding the fiducial cosmological parameter constraints, we discovered that the reason for the high $\chi^2$ was due to inconsistencies in the inferred galaxy bias from the galaxy-lensing and galaxy clustering signals.  The source of this inconsistency is still undetermined. We found that a single parameter $X_{\rm lens}$, representing the ratio of the bias inferred from $w(\theta)$ and $\gamma_{\rm t}$, substantially improves the goodness of fit. This ratio is cosmology dependent and can only be inferred consistently (along with the other model parameters)  when using full $3\times2$pt analysis, presented in \citet*{y3-3x2ptkp}.
 % (at fixed cosmology, namely the best fit model to the 3x2 datavector). 
-This ratio is expected to be unity in the absence of galaxy stochasticity, an effect that is expected to be only at the percent level on scales above $\sim 10$ Mpc. However, we detect a value of $X_{\rm lens}=0.87$, below 1 at the 5-$\sigma$ level. This purely phenomenological model assumes no scale or redshift dependence, and we found consistent values of $X_{\rm lens}$ when fitting to different scales, and when fitting separate values for each \emph{lens} redshift bin. 
+This ratio is expected to be unity in the absence of galaxy stochasticity, an effect that is expected to be only at the percent level on scales above $\sim 10$ Mpc. However, we detect a value of $X_{\rm lens}=0.87$, below 1 at the 5-$\sigma$ level. This purely phenomenological model assumes no scale or redshift dependence, and we found consistent values of $X_{\rm lens}$ when fitting to different scales and when fitting separate values for each \emph{lens} redshift bin. 
 Since no known cosmological effect can produce such a large deviation in clustering and galaxy lensing, we pursued possible systematic errors that could lead to this unusual result. 
 We were unable to find any such systematics.  
 %We have detected a clear signal of systematics in the auto-correlation of redmagic galaxies: the clustering signal for the low and high galactic latitudes are inconsistent with one another for the lowest redshift bin.  However, it is unclear whether this signature is related to the detection of $X_{\rm lens}$.  Likewise, we found $\approx 1\sigma$ fluctuations in the clustering of redmagic galaxies based on the detailed algorithm used to correct for observing conditions. However, these differences do little to bring $X_{\rm lens}$ closer to unity (we refer the reader to \citep{y3-galaxyclustering} for details of clustering datavector robustness tests).
 % We found that the \redmagic $w(\theta)$ was sensitive to the choice of weights used to correct for survey properties. We then pursued an independent estimate of $X$. 
 %Figure~\ref{fig:2x2pt_consistency} shows that the fiducial cosmology constraints are robust to splits of the data vector, such as leaving out lens redshift bins, splitting small and large angular scales, as well as variations to the baseline model parameterization. This supports our conclusion that a scale and redshift-independent $X_{\rm lens}$ captures the dominant systematic.
 
-We then used the BOSS galaxy sample (see Appendix~\ref{app:bossxrm} and \S\ref{sec:boss_x} for details) to arrive at an independent probe of galaxy clustering. The BOSS footprint overlaps with the DES Y3 footprint over approximately 650 square degrees,
-enabling us to measure the cross-correlation between BOSS and DES \redmagic galaxies.  Assuming no stochasticity in the BOSS galaxy sample and a fixed cosmology, we analyze three correlation functions simultaneously: the BOSS galaxy auto-correlation, the DES \redmagic auto-correlation, and the BOSSxDES cross-correlation.  We define a decorrelation parameter $X_{\rm lens}$ that modulates the amplitude of the cross-correlation function.  Using an analysis at fixed cosmology, we find a value of $X_{\rm lens}$ consistent with the galaxy-lensing signal in  DES.    
-\IR{We need to mention about maglim results as well here, but we are waiting to finish final chains for this analysis.}
-% This allowed us to obtain the \redmagic galaxy bias without using our 2x2 datavector over the overlap area. We found that
+% We then used the BOSS galaxy sample (see Appendix~\ref{app:bossxrm} and \S\ref{sec:boss_x} for details) to arrive at an independent probe of galaxy clustering. The BOSS footprint overlaps with the DES Y3 footprint over approximately 650 square degrees,
+% enabling us to measure the cross-correlation between BOSS and DES \redmagic galaxies.  Assuming no stochasticity in the BOSS galaxy sample and a fixed cosmology, we analyze three correlation functions simultaneously: the BOSS galaxy auto-correlation, the DES \redmagic auto-correlation, and the BOSSxDES cross-correlation.  We define a de-correlation parameter $X_{\rm lens}$ that modulates the amplitude of the cross-correlation function.  Using an analysis at fixed cosmology, we find a value of $X_{\rm lens}$ consistent with the galaxy-lensing signal in  DES.    
+% \IR{We need to mention about maglim results as well here, but we are waiting to finish final chains for this analysis.}
 
-In summary, we conclude that there is evidence for a constant offset at the 10\% level between the \redmagic clustering and lensing signals, and the BOSS analysis suggests that the clustering amplitude is anomalously high. This signal appears to be too large to be produced by known sources of galaxy stochasticity. We have also been unable to identify a systematic in the data responsible for this surprising discrepancy. We, therefore, chose to introduce $X_{\rm lens}$ as an additional parameter to marginalize over in the 3x2 analysis. Fig.~\ref{fig:X_comp_main} shows the result of fixing $X_{\rm lens}=0.87$, the best fit value. There is a significant shift in $S_8$, while $\Omega_{\rm m}$ remains stable. Interestingly the resulting contours are fully consistent with our Y1 analysis.  
+
+In summary, we conclude that there is evidence for a constant offset at the 10\% level between the \redmagic clustering and lensing signals.
+% and the BOSS analysis suggests that the clustering amplitude is anomalously high. 
+This signal appears to be too large to be produced by known sources of galaxy stochasticity. We have also been unable to identify a systematic in the data responsible for this surprising discrepancy. We, therefore, chose to introduce $X_{\rm lens}$ as an additional parameter to marginalize over in the 3x2 analysis. Fig.~\ref{fig:X_comp_main} shows the result of fixing $X_{\rm lens}=0.87$, the best fit value. There is a significant shift in $S_8$, while $\Omega_{\rm m}$ remains stable. Interestingly the resulting contours are fully consistent with the Y1 analysis.  
 %Note that  Fig.~\ref{fig:2x2pt_consistency} shows the comparison with both the published Y1 results and the re-analysis of the Y1 data with the Y3 pipeline. The $S_8$ results there are discrepant since they do not include the $X_{\rm lens}$ parameter. 
 
-To access the information in the measurements on smaller scales, we use higher order perturbation theory. We use a 1-loop effective field theory model for galaxy bias that is complete to third order in the overdensity. We have tested and validated our model using 3-dimensional correlation functions from DES-mock catalogs in \citet{p2020perturbation}; in this study, we validate the bias model with mocks for the $2\times2$pt datavector at scales above 4Mpc/$h$. We apply it to the data and find that the non-linear bias model results in a gain in constraining power of approximately 15\% for \redmagic lens galaxies and YYY\% with \maglim lens galaxies. 
+To access the information in the measurements on smaller scales, we use higher-order perturbation theory. We use a 1-loop effective field theory model for galaxy bias that is complete to third order in the overdensity field. We have tested and validated our model using 3-dimensional correlation functions from DES-mock catalogs in \citet{p2020perturbation} as well as with projected statistics in \citet*{y3-simvalidation}; in this study, we validate the bias model with mocks for the $2\times2$pt datavector at scales above 4Mpc/$h$. We apply it to the data and find that the non-linear bias model results in a gain in constraining power of approximately 15\% for \redmagic and \maglim lens galaxies. 
 
 
-A different approach, the halo occupation distribution in the halo model, enables a connection to be made between the masses of halos in which galaxies live and their large-scale bias. We use our constraints on linear bias parameters (along with the galaxy number density) and estimate the host halo masses of \redmagic galaxies. We marginalize over the halo occupation distribution parameters and obtain 25\% constraints on the mean mass of halos. We show these constraints, including its evolution with redshift in Fig.~\ref{fig:bias_mass_nbar}.
+A different approach, the halo occupation distribution in the halo model, enables a connection between the masses of halos in which galaxies live and their large-scale bias. We use our constraints on linear bias parameters (along with the galaxy number density) and estimate the host halo masses of \redmagic galaxies. We marginalize over the halo occupation distribution parameters and obtain 25\% constraints on the mean mass of halos. We show these constraints, including its evolution with redshift in Fig.~\ref{fig:bias_mass_nbar}.
 % Non-linear bias and halo mass: 
 
 Outlook: 
@@ -982,7 +1160,7 @@ EK is supported by the Department of Energy grant DE-SC0020247 and the David \& 
 
 % The best way to enter references is to use BibTeX:
 
-\bibliographystyle{mnras}
+\bibliographystyle{mnras_2author}
 \bibliography{ref,des_y3kp} % if your bibtex file is called example.bib
 
 
@@ -1042,38 +1220,72 @@ The baseline model parameterization assumes the point mass parameter to be const
 
 
 \section{Datavector residuals}
-\IR{In this appendix, we will show the bestfit residuals of the measured correlation functions in data. }
+We show the comparison between our measurements and bestfit theory datavector in Fig.~\ref{fig:data_2pt}. 
+% \IR{In this appendix, we will show the bestfit residuals of the measured correlation functions in data. }
 
 % \subsection{DES Y3}
-\begin{figure}
-\includegraphics[width=\columnwidth,draft]{figs/temp.png}
-\caption[]{Measurements and best-fit of $\wtheta$ and $\gammat$ with DES Y3 data \IR{We will put the residuals very soon at the bestfits} }
+\begin{figure*}
+\includegraphics[width=\textwidth]{figs/gt_wx_data.pdf}
+\includegraphics[width=\textwidth]{figs/wt_wx_data.pdf}
+\caption[]{The measurements of $\wtheta$ and $\gammat$ with \redmagic sample are shown with black dots. We show the bestfit using the fiducial \textit{Linear bias} model in blue and model with $X_{\rm lens}=0.87$ in orange.  }
 \label{fig:data_2pt}
-\end{figure}
+\end{figure*}
 
 % \section{Scale cuts validation}\label{app:scale_cuts}
 % \subsection{Projection effects}\label{app:projection_effects}
-\section{De-correlation parameter constraints}
-\blue{Show the constraints on the five $X^{i}_{\rm lens}$ parameters. Show how it is fairly similar for atleast the first few tomographic bins. }
-We show the constraints on the decorrelation parameter, parameterized as $X^{i}_{\rm lens}$ for the \redmagic galaxies split into five tomographic bins. We analyze the $2\times2$pt datavector using both DES Y1 data and DES Y3 data, and analyze them at MAP cosmology described in \citet{Abbott_2018}. We find that while DES Y1 dataset gives $X^{i}_{\rm lens} = 1$ completely consistent with expectations, in the DES Y3 data consistently prefers $X^{i}_{\rm lens} < 1$ for all five tomographic bins. Moreover, we find all five bins have a preference for approximately similar value of $X^{i}_{\rm lens} \approx 0.9$. 
+% \section{De-correlation parameter constraints}
+% % \blue{Show the constraints on the five $X^{i}_{\rm lens}$ parameters. Show how it is fairly similar for atleast the first few tomographic bins. }
+% We show the constraints on the decorrelation parameter, parameterized as $X^{i}_{\rm lens}$ for the \redmagic galaxies split into five tomographic bins, $1 \leq i \leq 5$. We analyze the $2\times2$pt datavector using both DES Y1 data and DES Y3 data, and analyze them at MAP cosmology described in \citet{Abbott_2018}. We find that while DES Y1 dataset gives $X^{i}_{\rm lens} = 1$ completely consistent with expectations, in the DES Y3 data consistently prefers $X^{i}_{\rm lens} < 1$ for all five tomographic bins. Moreover, we find all five bins have a preference for approximately similar value of $X^{i}_{\rm lens} \approx 0.9$. 
 
-\begin{figure}
-\includegraphics[width=\columnwidth]{figs/Xlens_5_y1_y3_comp.pdf}
-\caption[]{Constraints on the de-correlation parameter for each tomographic bin as compared between Y1 and Y3 \redmagic galaxy sample}
-\label{fig:Xlens_5X_y1y3}
-\end{figure}
+% \begin{figure}
+% \includegraphics[width=\columnwidth]{figs/Xlens_5_y1_y3_comp.pdf}
+% \caption[]{Constraints on the de-correlation parameter for each tomographic bin as compared between Y1 and Y3 \redmagic galaxy sample}
+% \label{fig:Xlens_5X_y1y3}
+% \end{figure}
 
-\section{BOSS $\times$ $\redmagic$ correlation}
-\label{app:bossxrm}
-\blue{Describe the methodology to measure and analyze the BOSS cross-correlations. Mention how we split the BOSS into finer bins, show the n(z)'s combined, approximations we make for now. Mention the area overlap and the covariance estimate.}
-\IR{This appendix is still in flux and will be updated in next few days}
+% \section{Area split of the De-correlation parameter}
+% In order to further study the properties of this de-correlation parameter $X_{\rm lens}$, we estimate it independently in parts of our data footprint in sky. We split our footprint into 10 approximately equal area patches. We measure our datavectors, $w(\theta)$ and $\gammat$ in each of these 10 patches. In order to obtain the covaraince for each patch, we rescale the fiducial covariance (see \S~\ref{sec:cov}) for full footprint with the area of each patch. We then estimate the $X_{\rm lens}$ from each patch. 
+
+% In Fig.~\ref{fig:Xlens_area_split} we show the DES footprint split into 10 regions. In that figure, each region is colored by the mean value of the $X_{\rm lens}$ parameter we obtain using the \redmagic sample. 
+
+% \SP{make the point that it is not necessarily the galactic latitudes that show low value of X.}
 
 
-\begin{figure}
-\includegraphics[width=\columnwidth]{figs/BOSS_nz.pdf}
-\caption[]{Normalized redshift distribution of the BOSS galaxy catalog split into 10 bins (shown in solid red colors) and its comparison with \redmagic redshift distribution of five tomographic bins (shown with blue dashed line).}
-\label{fig:boss_nz}
-\end{figure}
+% In Fig.~\ref{fig:Xrm_mag_scatter} we show a scatter plot between the value of $X_{\rm lens}$ recovered from each of 10 regions using \redmagic and \maglim as lens sample. We find a tight correlation between the value of $X_{\rm lens}$ from the two lens samples. This shows that, when compared with \maglim, the \redmagic lens sample has a preference for $X_{\rm lens} < 1$ in whole DES footprint. 
+
+
+% % \SP{make the point that whole footprint seems to have a preference for X=0.9 compared to maglim}
+
+% \begin{figure}
+% \includegraphics[width=\columnwidth]{figs/X_rm_area_split.pdf}
+% \caption[]{The DES footprint split into 10 regions. The color of each area corresponds to the mean value of the constraints on $X_{\rm lens}$ from that particular area, using \redmagic lens sample. }
+% \label{fig:Xlens_area_split}
+% \end{figure}
+
+% \begin{figure}
+% \includegraphics[width=\columnwidth]{figs/X_rm_mag_area_scatter.pdf}
+% \caption[]{Each red errorbar corresponds to 68\% credible interval constraints on the $X_{\rm lens}$ from each of the 10 regions (see Fig.~\ref{fig:Xlens_area_split}), using either \redmagic or \maglim lens galaxy sample. The blue errorbar corresponds to the constraints on $X_{\rm lens}$ from full Y3 area. We find a tight correlation between $X_{\rm Redmagic}$ and $X_{\rm Maglim}$. }
+% \label{fig:Xrm_mag_scatter}
+% \end{figure}
+
+
+% \section{BOSS $\times$ $\redmagic$ correlation}
+% \label{app:bossxrm}
+% \blue{Describe the methodology to measure and analyze the BOSS cross-correlations. Mention how we split the BOSS into finer bins, show the n(z)'s combined, approximations we make for now. Mention the area overlap and the covariance estimate.}
+% \IR{This appendix is still in flux and will be updated in next few days}
+
+
+% \begin{figure}
+% \includegraphics[width=\columnwidth]{figs/BOSS_nz.pdf}
+% \caption[]{Normalized redshift distribution of the BOSS galaxy catalog split into 10 bins (shown in solid red colors) and its comparison with \redmagic redshift distribution of five tomographic bins (shown with blue dashed line).}
+% \label{fig:boss_nz}
+% \end{figure}
+
+\begin{figure*}
+\includegraphics[width=\textwidth]{figs/b1_nbar_Mh_sim_marg_wcov.pdf}
+\caption[]{This figure shows the marginalized constraints on the large-scale bias of \redmagic sample for the five tomographic bins on the left panel. The black dots denote the mean, and the error bars correspond to 68\% credible interval. Using these constraints and co-moving number density (middle panel), we infer the constraints on mean halo mass, as shown in the right panel for five tomographic bins. The red line and dots correspond to MCMC samples. We use the \textit{Linear bias} model with $X_{\rm lens}=0.87$.  }
+\label{fig:b1_nbar_Mh}
+\end{figure*}
 
 \section{Halo mass inference}
 \label{app:halo_mass}
@@ -1097,20 +1309,19 @@ Here we have five free parameters, $f^j_{\rm cen}$, $(\log{M_{\rm min}})^j$, $(\
 \end{linenomath*}
 We use \cite{Tinker_2008} halo mass function ($dn/dM$) and \cite{Tinker_2010} relation for linear halo bias ($b^{\rm halo}_{1}(M,z)$). 
 
-Therefore, Eqs.~\ref{eq:nbar_b1b2} allow us to predict the number density and galaxy bias values. We then sampling these HOD parameters to fit the datavector $\vec{\mathbfcal{D}_H} = \overline{n}^j(z_1)...\overline{n}^j(z_{n}),b^j_1,b^j_2]$ of length $d$ where $\overline{n}^j(z_1)...\overline{n}^j(z_{n})$ are the $n=d-2$ observed comoving number density of \redmagic galaxies as shown in middle panel of Fig.\ref{fig:bias_mass_nbar} and $b^j_1$ and $b^j_2$ are the marginalized mean bias values obtained at our \textit{fiducial} scale cut. For a given set of HOD parameters ($\Theta_{\rm H}$), the theoretical prediction is given by $\mathbfcal{T}_{\rm H}$ and we write our log-likelihood as:
+Therefore, Eqs.~\ref{eq:nbar_b1b2} allow us to predict the number density and galaxy bias values. We then sampling these HOD parameters to fit the datavector $\vec{\mathbfcal{D}_H} = \overline{n}^j(z_1)...\overline{n}^j(z_{n}),b^j_1,b^j_2]$ of length $d$ where $\overline{n}^j(z_1)...\overline{n}^j(z_{n})$ are the $n=d-2$ observed comoving number density of \redmagic galaxies as shown in middle panel of Fig.\ref{fig:b1_nbar_Mh} and $b^j_1$ and $b^j_2$ are the marginalized mean bias values obtained at our \textit{fiducial} scale cut. For a given set of HOD parameters ($\Theta_{\rm H}$), the theoretical prediction is given by $\mathbfcal{T}_{\rm H}$ and we write our log-likelihood as:
 \begin{linenomath*}
 \begin{multline}
     \ln \mathcal{L}(\vec{\mathbfcal{D}_H}|\Theta) = -\frac{1}{2} \bigg[ (\vec{\mathbfcal{D}_H} - \vec{\mathbfcal{T}_H}(\Theta_{\rm H})) \, {\mathbfcal{C}_H}^{-1} \,  (\vec{\mathbfcal{D}_H} - \vec{\mathbfcal{T}_H}(\Theta_{\rm H}))^{\rm T} \\ -  \ln(|\mathbfcal{C}_H|) \bigg]
 \end{multline}
 \end{linenomath*}
-In order to account for variation of HOD within a tomographic bin that contributes to the variation on $\overline{n}^j(z)$ within each tomographic bin as seen in Fig.\ref{fig:bias_mass_nbar}, we implement an analytical marginalization scheme. We change the covariance of our datavector $\mathbfcal{C}_H$ as :
+In order to account for variation of HOD within a tomographic bin that contributes to the variation on $\overline{n}^j(z)$ within each tomographic bin as seen in Fig.\ref{fig:b1_nbar_Mh}, we implement an analytical marginalization scheme. We change the covariance of our datavector $\mathbfcal{C}_H$ as :
 \begin{linenomath*}
 \begin{equation}
     \mathbfcal{C}_H \to \mathbfcal{C}_H + \alpha_{c} \mathbfcal{I}_D
 \end{equation}
 \end{linenomath*}
 where $\mathbfcal{I}_D$ is a diagonal matrix of dimension $d\times d$ whose diagonal elements equal to 1 from index 1 to d-1, and equal to 0 otherwise. We sample over the parameter $\alpha_{c}$, treating it as a free parameter. 
-
 
 
 

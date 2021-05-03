@@ -163,7 +163,7 @@ INTEGERS { maxauthors threeauthorvar }
 
 FUNCTION {initialise.mn2e}
 {
-  #8 'maxauthors :=
+  #3 'maxauthors :=
   #0 'threeauthorvar :=
 }
 
@@ -472,7 +472,17 @@ FUNCTION {format.names}
 { duplicate$ num.names$ maxauthors >
     { % Too many authors -- format as First author et al.
       #1 "{vv }{ll}{ jj}{ f., }" format.name$  % last name first
-      " et~al.," *
+      % If the author list is "Blah Collaboration and others", then don't use et al.
+      % Here's the stack logic here:
+      % At this point the top of the stack is the author so far.
+      % Duplicate that.  Then strip out non-alpha characters to get a pure string.
+      % The take the substring of that with 13 characters ending at the last one (-1).
+      % If that is = to "Collaboration", then don't add anything.
+      % Otherwise at " et al." (* means concatenate).
+      duplicate$ purify$ #-1 #13 substring$ "Collaboration" =
+        'skip$
+        { " et~al." * }
+      if$
     }
     { 'print.all.names.plain.trailer swap$ " " "{vv }{ll}{ jj}{ f., }" print.all.names }
   if$
@@ -480,12 +490,30 @@ FUNCTION {format.names}
 
 % Format an author/editor field, for inclusion in a label
 % (ie, "Surname, Surname \& Surname")
+% Note: This is what gets called for \citep*, \citet*, etc.
 %
 % On call, the stack contains an author/editor field.
 FUNCTION {format.names.label}
 { duplicate$ num.names$ maxauthors >
-    { % Too many authors -- format as First author et al.
-      #1 "{vv }{ll}{ jj}" format.name$  % last name first
+    { % Too many authors -- format as First author & Second author et al.
+      % Info for future developers:
+      % The top of the stack at this point is a string with all the author names
+      % First duplicate it.
+      duplicate$
+      % Then format the first author as von Last
+      % Note: The formatting is slightly arcane.  A name is First von Last, Jr.
+      %       vv means the von part, ll means the Last part, etc.
+      %       Single letters mean just the initial.  Usually used for f.
+      %       If a part is absent that {} is skipped.
+      %       cf. http://texdoc.net/texmf-dist/doc/bibtex/base/btxhak.pdf
+      #1 "{vv~}{ll}" format.name$  % last name only
+      % Append & after the first name.
+      " \& " *
+      % Swap the top two items, so the full author list is on top.
+      swap$
+      % Format the second name as von Last and append it to the string so far (*)
+      #2 "{vv~}{ll}" format.name$ *
+      % Finally append et al. to the end.
       " et~al.," *
     }
     { 'print.all.names.label.trailer swap$ ", " "{vv }{ll}" print.all.names }
@@ -1438,7 +1466,15 @@ FUNCTION {format.lab.names}
   s #1 "{vv~}{ll}" format.name$
   s num.names$ duplicate$
   #2 >
-    { pop$ " et~al." * }
+    {
+      pop$
+      % If the author list is "Blah Collaboration and others", then don't use et al.
+      % See format.names for the stack logic of this step.
+      duplicate$ purify$ #-1 #13 substring$ "Collaboration" =
+        'skip$
+        { " et~al." * }
+      if$
+    }
     { #2 <
         'skip$
         { s #2 "{ff }{vv }{ll}{ jj}" format.name$ "others" =

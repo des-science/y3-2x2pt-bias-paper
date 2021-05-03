@@ -102,7 +102,6 @@
 
 % Silently execute these options. I'm not convinced this actually does anything.
 \ExecuteOptions{a4paper,twoside,final,fleqn}
-% \ExecuteOptions{twoside,final,fleqn}
 
 % Throw warning if the user tries to use US Letter paper
 \newif\if@letterpaper
@@ -117,11 +116,11 @@
 \usepackage[a4paper]{geometry}
 
 % Fix several errors with LaTeX2e, including 2-column floats out of order
-% \usepackage{fixltx2e}  %% Unnecessary since TL2015
+\usepackage{fixltx2e}
 
 % Include hyperref, so we can have clickable links
-\usepackage[pdfpagelabels=false]{hyperref}	% Hyperlinks
-\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,filecolor=blue,urlcolor=blue,}
+\usepackage{hyperref}	% Hyperlinks
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,filecolor=blue,urlcolor=blue}
 
 %
 %  ****************************************
